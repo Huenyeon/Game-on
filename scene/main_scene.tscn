@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cv1h4my5y6ttg"]
+
+[ext_resource type="Texture2D" uid="uid://b2mtfi2lamwl4" path="res://assets/bg_placeholder.png" id="1_wgwml"]
+
+[node name="main-scene" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 323)
+
+[node name="BgPlaceholder" type="Sprite2D" parent="."]
+position = Vector2(578, 330)
+scale = Vector2(1.38783, 1.26426)
+texture = ExtResource("1_wgwml")
