@@ -1,0 +1,261 @@
+[gd_scene load_steps=14 format=3 uid="uid://c7trr7x0cru6m"]
+
+[ext_resource type="Script" uid="uid://6axrely6bisx" path="res://scripts/inside_desktop.gd" id="1_obpd4"]
+[ext_resource type="Texture2D" uid="uid://clasan6etehjj" path="res://assets/desktop/desktop-container.png" id="2_ofnyq"]
+[ext_resource type="ButtonGroup" uid="uid://bn5loh716mh40" path="res://assets/publishers-news.tres" id="3_ae7f0"]
+[ext_resource type="Texture2D" uid="uid://d381n4dn4rvvn" path="res://assets/desktop/publishers-unclicked.png" id="4_2flab"]
+[ext_resource type="Texture2D" uid="uid://chhhfieeu03u3" path="res://assets/desktop/publishers-clicked.png" id="5_ug3hc"]
+[ext_resource type="Texture2D" uid="uid://4snvctsmlgtj" path="res://assets/desktop/news-unclicked-updated.png" id="6_843rd"]
+[ext_resource type="Texture2D" uid="uid://dj17kxhrauq5b" path="res://assets/desktop/news-clicked-upadated.png" id="7_pwwv0"]
+[ext_resource type="Texture2D" uid="uid://c2axt3tnw41xh" path="res://assets/desktop/publisher-card1.png" id="8_cyjqy"]
+[ext_resource type="Texture2D" uid="uid://cde4eyvixpuke" path="res://assets/desktop/publisher-card2.png" id="9_auwcg"]
+[ext_resource type="Texture2D" uid="uid://bsmn505bdr1fb" path="res://assets/desktop/publisher-card3.png" id="10_14kj4"]
+[ext_resource type="Texture2D" uid="uid://cvm2dcudf4h0m" path="res://assets/desktop/news-cover1.png" id="11_hv70y"]
+[ext_resource type="Texture2D" uid="uid://bx1skw2tj7u40" path="res://assets/desktop/news-cover2.png" id="12_pl64k"]
+[ext_resource type="Texture2D" uid="uid://bps66c50njl1r" path="res://assets/desktop/news-cover3.png" id="13_lkogr"]
+
+[node name="InsideDesktop" type="Node2D"]
+script = ExtResource("1_obpd4")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -229.0
+offset_top = -664.0
+offset_right = 1364.0
+offset_bottom = 877.0
+texture = ExtResource("2_ofnyq")
+
+[node name="PublishersButton" type="TextureButton" parent="."]
+offset_left = 241.0
+offset_top = -84.0
+offset_right = 341.0
+offset_bottom = 16.0
+scale = Vector2(4, 4)
+toggle_mode = true
+button_group = ExtResource("3_ae7f0")
+texture_normal = ExtResource("4_2flab")
+texture_pressed = ExtResource("5_ug3hc")
+
+[node name="NewsButton" type="TextureButton" parent="."]
+offset_left = -5.0
+offset_top = -99.0
+offset_right = 95.0
+offset_bottom = 1.0
+scale = Vector2(4, 4)
+toggle_mode = true
+button_group = ExtResource("3_ae7f0")
+texture_normal = ExtResource("6_843rd")
+texture_pressed = ExtResource("7_pwwv0")
+
+[node name="PublishersContent" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = -229.0
+offset_top = -664.0
+offset_right = -189.0
+offset_bottom = -624.0
+
+[node name="TextureButton" type="TextureButton" parent="PublishersContent"]
+offset_left = 969.0
+offset_top = 870.0
+offset_right = 1069.0
+offset_bottom = 970.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("8_cyjqy")
+metadata/_edit_group_ = true
+
+[node name="TextureButton2" type="TextureButton" parent="PublishersContent"]
+offset_left = 609.0
+offset_top = 870.0
+offset_right = 709.0
+offset_bottom = 970.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("9_auwcg")
+metadata/_edit_group_ = true
+
+[node name="TextureButton3" type="TextureButton" parent="PublishersContent"]
+offset_left = 247.0
+offset_top = 870.0
+offset_right = 347.0
+offset_bottom = 970.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("10_14kj4")
+metadata/_edit_group_ = true
+
+[node name="NewsContent" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = -32.0
+offset_top = -149.0
+offset_right = 336.0
+offset_bottom = -109.0
+
+[node name="TextureButton" type="TextureButton" parent="NewsContent"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 333.0
+offset_right = 112.0
+offset_bottom = 373.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("11_hv70y")
+metadata/_edit_group_ = true
+
+[node name="TextureButton2" type="TextureButton" parent="NewsContent"]
+offset_left = 412.0
+offset_top = 313.0
+offset_right = 512.0
+offset_bottom = 413.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("12_pl64k")
+metadata/_edit_group_ = true
+
+[node name="TextureButton3" type="TextureButton" parent="NewsContent"]
+offset_left = 765.0
+offset_top = 313.0
+offset_right = 865.0
+offset_bottom = 413.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("13_lkogr")
+metadata/_edit_group_ = true
+
+[node name="NewsDetails" type="Node2D" parent="."]
+
+[node name="set1" type="Node2D" parent="NewsDetails"]
+
+[node name="DatePublished" type="Label" parent="NewsDetails/set1"]
+offset_left = 641.0
+offset_top = 469.0
+offset_right = 1560.0
+offset_bottom = 622.0
+theme_override_font_sizes/font_size = 24
+text = "SET 1"
+autowrap_mode = 3
+
+[node name="Headline" type="Label" parent="NewsDetails/set1"]
+offset_left = 77.0
+offset_top = 206.0
+offset_right = 1049.0
+offset_bottom = 316.0
+theme_override_constants/line_spacing = 0
+theme_override_constants/paragraph_spacing = 0
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/font_size = 40
+text = "SET 1"
+autowrap_mode = 3
+
+[node name="Content" type="Label" parent="NewsDetails/set1"]
+offset_left = 77.0
+offset_top = 357.0
+offset_right = 996.0
+offset_bottom = 510.0
+theme_override_font_sizes/font_size = 24
+text = "SET 1"
+autowrap_mode = 3
+
+[node name="5ws" type="Label" parent="NewsDetails/set1"]
+offset_left = 77.0
+offset_top = 469.0
+offset_right = 996.0
+offset_bottom = 622.0
+theme_override_font_sizes/font_size = 24
+text = "SET1"
+autowrap_mode = 3
+
+[node name="set2" type="Node2D" parent="NewsDetails"]
+
+[node name="Headline" type="Label" parent="NewsDetails/set2"]
+offset_left = 77.0
+offset_top = 206.0
+offset_right = 1049.0
+offset_bottom = 316.0
+theme_override_constants/line_spacing = 0
+theme_override_constants/paragraph_spacing = 0
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/font_size = 40
+text = "SET2"
+autowrap_mode = 3
+
+[node name="Content" type="Label" parent="NewsDetails/set2"]
+offset_left = 77.0
+offset_top = 357.0
+offset_right = 996.0
+offset_bottom = 510.0
+theme_override_font_sizes/font_size = 24
+text = "SET2"
+autowrap_mode = 3
+
+[node name="5ws" type="Label" parent="NewsDetails/set2"]
+offset_left = 685.0
+offset_top = 206.0
+offset_right = 1604.0
+offset_bottom = 359.0
+theme_override_font_sizes/font_size = 24
+text = "SET2"
+autowrap_mode = 3
+
+[node name="DatePublished" type="Label" parent="NewsDetails/set2"]
+offset_left = 501.0
+offset_top = 316.0
+offset_right = 1420.0
+offset_bottom = 469.0
+theme_override_font_sizes/font_size = 24
+text = "SET2"
+autowrap_mode = 3
+
+[node name="set3" type="Node2D" parent="NewsDetails"]
+
+[node name="Headline" type="Label" parent="NewsDetails/set3"]
+offset_left = 270.0
+offset_top = 277.0
+offset_right = 1242.0
+offset_bottom = 387.0
+theme_override_constants/line_spacing = 0
+theme_override_constants/paragraph_spacing = 0
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/font_size = 40
+text = "SET3"
+autowrap_mode = 3
+
+[node name="Content" type="Label" parent="NewsDetails/set3"]
+offset_left = 353.0
+offset_top = 374.0
+offset_right = 1272.0
+offset_bottom = 527.0
+theme_override_font_sizes/font_size = 24
+text = "SET3"
+autowrap_mode = 3
+
+[node name="5ws" type="Label" parent="NewsDetails/set3"]
+offset_left = 353.0
+offset_top = 510.0
+offset_right = 1272.0
+offset_bottom = 663.0
+theme_override_font_sizes/font_size = 24
+text = "SET3"
+autowrap_mode = 3
+
+[node name="DatePublished" type="Label" parent="NewsDetails/set3"]
+offset_left = 501.0
+offset_top = 510.0
+offset_right = 1420.0
+offset_bottom = 663.0
+theme_override_font_sizes/font_size = 24
+text = "SET3"
+autowrap_mode = 3
+
+[node name="BackButton" type="Button" parent="NewsDetails"]
+offset_left = 1062.0
+offset_top = 28.0
+offset_right = 1112.0
+offset_bottom = 59.0
+text = "BACK"

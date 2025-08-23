@@ -1,5 +1,8 @@
 extends Control
-
+func _on_desktop_clicked(event):
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		get_tree().change_scene_to_file("res://scene/inside_desktop.tscn")
+		
 func _ready():
 	# Show news by default, hide publishers
 	$NewsContent.visible = true
@@ -12,6 +15,9 @@ func _ready():
 	# Connect button signals
 	$NewsButton.pressed.connect(_on_news_button_pressed)
 	$PublishersButton.pressed.connect(_on_publisher_button_pressed)
+	
+	$".".mouse_filter = Control.MOUSE_FILTER_STOP
+	$".".gui_input.connect(_on_desktop_clicked)
 
 
 func _on_news_button_pressed():
@@ -26,3 +32,4 @@ func _on_publisher_button_pressed():
 	$PublishersContent.visible = true
 	$NewsButton.button_pressed = false
 	$PublishersButton.button_pressed = true
+	

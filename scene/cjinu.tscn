@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://gmjua7fxgkqx"]
+
+[ext_resource type="Texture2D" uid="uid://ddxj8r8367u76" path="res://assets/characters/jinu.png" id="1_vlelc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6dgk"]
+atlas = ExtResource("1_vlelc")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1y0j"]
+atlas = ExtResource("1_vlelc")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xsxku"]
+atlas = ExtResource("1_vlelc")
+region = Rect2(0, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78dao"]
+atlas = ExtResource("1_vlelc")
+region = Rect2(512, 512, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w12j7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h6dgk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1y0j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xsxku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78dao")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[node name="cjinu" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_w12j7")
+animation = &"new_animation"
