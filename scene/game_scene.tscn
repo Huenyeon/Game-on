@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=13 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://14byfc7qjks0" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://xj4ir0ohnlic" path="res://assets/images/Teachers Table.png" id="2_d2lej"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="7_f3g3v"]
 [ext_resource type="Script" uid="uid://bdm1jxmjx5vdq" path="res://scene/clipboard_ui.gd" id="8_c8mr4"]
 [ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="9_w3nls"]
+[ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="10_desktop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_famsg"]
 size = Vector2(175.207, 240.258)
@@ -104,5 +105,11 @@ position = Vector2(138, 245)
 
 [node name="Checkbox4" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("9_w3nls")]
 position = Vector2(139, 295)
+
+[node name="Desktop" parent="." instance=ExtResource("10_desktop")]
+offset_left = 826.0
+offset_top = 318.0
+offset_right = 1041.0
+offset_bottom = 539.0
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
