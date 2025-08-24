@@ -5,10 +5,8 @@ extends Node2D
 @onready var paper_text: RichTextLabel = $paper/MarginContainer/Text
 
 @onready var checklist_icon: Sprite2D = $checklist_icon
-@onready var checklist_ui: Control = $ChecklistUI
+@onready var checklist_ui: Node2D = $ChecklistUI
 @onready var close_button: Button = $CloseButton
-
-var checklist_open = false
 
 var paper_open = false
 var rng := RandomNumberGenerator.new()
@@ -49,8 +47,10 @@ func _ready() -> void:
 	checklist_ui.visible = false
 	close_button.visible = false
 	
-	$checklist_icon/Area2D.connect("input_event", _on_checklist_icon_input_event)
+	$checklist_icon/Area2D.input_event.connect(_on_checklist_icon_input_event)
 	close_button.pressed.connect(_on_close_button_pressed)
+	
+
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -79,12 +79,10 @@ func _unhandled_input(event: InputEvent) -> void:
 # When the checklist icon is clicked
 func _on_checklist_icon_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
-		checklist_open = true
 		checklist_ui.visible = true
 		close_button.visible = true
  
 # Close button
 func _on_close_button_pressed() -> void:
-	checklist_open = false
 	checklist_ui.visible = false
 	close_button.visible = false

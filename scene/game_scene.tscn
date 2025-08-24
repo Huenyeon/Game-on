@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=12 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://14byfc7qjks0" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://xj4ir0ohnlic" path="res://assets/images/Teachers Table.png" id="2_d2lej"]
@@ -7,7 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://wv2vg617ijxf" path="res://assets/images/paper_table-removebg-preview.png" id="5_vweb5"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="7_f3g3v"]
-[ext_resource type="Texture2D" uid="uid://de1i3di3wvrdb" path="res://assets/checklist/checklist- empty.png" id="8_juocg"]
+[ext_resource type="Script" uid="uid://bdm1jxmjx5vdq" path="res://scene/clipboard_ui.gd" id="8_c8mr4"]
+[ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="9_w3nls"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_famsg"]
 size = Vector2(175.207, 240.258)
@@ -81,60 +82,27 @@ offset_right = 1150.0
 offset_bottom = 34.0
 text = "X"
 
-[node name="ChecklistUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 343.0
-offset_top = -1.0
-offset_right = 822.0
-offset_bottom = 583.0
+[node name="ChecklistUI" type="Node2D" parent="."]
+script = ExtResource("8_c8mr4")
 
-[node name="ClipboardImage" type="TextureRect" parent="ChecklistUI"]
-layout_mode = 0
-offset_left = -10.0
-offset_top = 33.0
-offset_right = 425.0
-offset_bottom = 493.0
-texture = ExtResource("8_juocg")
+[node name="Clipboard" type="Sprite2D" parent="ChecklistUI"]
+position = Vector2(591, 260.875)
+scale = Vector2(4.1, 4.5775)
+texture = ExtResource("7_f3g3v")
 
-[node name="Label" type="Label" parent="ChecklistUI/ClipboardImage"]
-modulate = Color(0, 0, 0, 1)
-self_modulate = Color(0.0214346, 0.0214346, 0.0214346, 1)
-layout_mode = 2
-offset_left = 118.0
-offset_top = 141.0
-offset_right = 298.0
-offset_bottom = 164.0
-text = "Checklist"
-horizontal_alignment = 1
+[node name="CheckboxContainer" type="Node2D" parent="ChecklistUI"]
+position = Vector2(333, 62)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ChecklistUI/ClipboardImage"]
-modulate = Color(0.00566115, 0.00566115, 0.00566115, 1)
-layout_mode = 0
-offset_left = 108.0
-offset_top = 202.0
-offset_right = 288.0
-offset_bottom = 373.0
+[node name="Checkbox" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("9_w3nls")]
+position = Vector2(138, 145)
 
-[node name="CheckBox" type="CheckBox" parent="ChecklistUI/ClipboardImage/VBoxContainer"]
-modulate = Color(0.000113828, 0.000113828, 0.000113828, 1)
-layout_mode = 2
-text = "Verify ID"
+[node name="Checkbox2" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("9_w3nls")]
+position = Vector2(137, 196)
 
-[node name="CheckBox2" type="CheckBox" parent="ChecklistUI/ClipboardImage/VBoxContainer"]
-modulate = Color(0.0338533, 0.0338533, 0.0338533, 1)
-layout_mode = 2
-text = "Publisher
-"
+[node name="Checkbox3" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("9_w3nls")]
+position = Vector2(138, 245)
 
-[node name="CheckBox3" type="CheckBox" parent="ChecklistUI/ClipboardImage/VBoxContainer"]
-modulate = Color(0.0295066, 0.0295066, 0.0295066, 1)
-layout_mode = 2
-text = "Date"
-
-[node name="CheckBox4" type="CheckBox" parent="ChecklistUI/ClipboardImage/VBoxContainer"]
-modulate = Color(0.00566115, 0.00566115, 0.00566115, 1)
-layout_mode = 2
-text = "Content"
+[node name="Checkbox4" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("9_w3nls")]
+position = Vector2(139, 295)
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
