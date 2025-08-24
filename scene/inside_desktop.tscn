@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c7trr7x0cru6m"]
+[gd_scene load_steps=15 format=3 uid="uid://c7trr7x0cru6m"]
 
 [ext_resource type="Script" uid="uid://6axrely6bisx" path="res://scripts/inside_desktop.gd" id="1_obpd4"]
 [ext_resource type="Texture2D" uid="uid://clasan6etehjj" path="res://assets/desktop/desktop-container.png" id="2_ofnyq"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cvm2dcudf4h0m" path="res://assets/desktop/news-cover1.png" id="11_hv70y"]
 [ext_resource type="Texture2D" uid="uid://bx1skw2tj7u40" path="res://assets/desktop/news-cover2.png" id="12_pl64k"]
 [ext_resource type="Texture2D" uid="uid://bps66c50njl1r" path="res://assets/desktop/news-cover3.png" id="13_lkogr"]
+[ext_resource type="Script" uid="uid://dfa6gw0eeiahd" path="res://scripts/news_details.gd" id="14_ofnyq"]
 
 [node name="InsideDesktop" type="Node2D"]
 script = ExtResource("1_obpd4")
@@ -56,6 +57,7 @@ offset_right = -189.0
 offset_bottom = -624.0
 
 [node name="TextureButton" type="TextureButton" parent="PublishersContent"]
+layout_mode = 0
 offset_left = 969.0
 offset_top = 870.0
 offset_right = 1069.0
@@ -65,6 +67,7 @@ texture_normal = ExtResource("8_cyjqy")
 metadata/_edit_group_ = true
 
 [node name="TextureButton2" type="TextureButton" parent="PublishersContent"]
+layout_mode = 0
 offset_left = 609.0
 offset_top = 870.0
 offset_right = 709.0
@@ -74,6 +77,7 @@ texture_normal = ExtResource("9_auwcg")
 metadata/_edit_group_ = true
 
 [node name="TextureButton3" type="TextureButton" parent="PublishersContent"]
+layout_mode = 0
 offset_left = 247.0
 offset_top = 870.0
 offset_right = 347.0
@@ -102,6 +106,7 @@ texture_normal = ExtResource("11_hv70y")
 metadata/_edit_group_ = true
 
 [node name="TextureButton2" type="TextureButton" parent="NewsContent"]
+layout_mode = 0
 offset_left = 412.0
 offset_top = 313.0
 offset_right = 512.0
@@ -111,6 +116,7 @@ texture_normal = ExtResource("12_pl64k")
 metadata/_edit_group_ = true
 
 [node name="TextureButton3" type="TextureButton" parent="NewsContent"]
+layout_mode = 0
 offset_left = 765.0
 offset_top = 313.0
 offset_right = 865.0
@@ -120,19 +126,11 @@ texture_normal = ExtResource("13_lkogr")
 metadata/_edit_group_ = true
 
 [node name="NewsDetails" type="Node2D" parent="."]
+script = ExtResource("14_ofnyq")
 
 [node name="set1" type="Node2D" parent="NewsDetails"]
 
-[node name="DatePublished" type="Label" parent="NewsDetails/set1"]
-offset_left = 641.0
-offset_top = 469.0
-offset_right = 1560.0
-offset_bottom = 622.0
-theme_override_font_sizes/font_size = 24
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="Headline" type="Label" parent="NewsDetails/set1"]
+[node name="HeadlineLabel" type="Label" parent="NewsDetails/set1"]
 offset_left = 77.0
 offset_top = 206.0
 offset_right = 1049.0
@@ -147,7 +145,7 @@ theme_override_font_sizes/font_size = 40
 text = "SET 1"
 autowrap_mode = 3
 
-[node name="Content" type="Label" parent="NewsDetails/set1"]
+[node name="BodyLabel" type="Label" parent="NewsDetails/set1"]
 offset_left = 77.0
 offset_top = 357.0
 offset_right = 996.0
@@ -156,7 +154,7 @@ theme_override_font_sizes/font_size = 24
 text = "SET 1"
 autowrap_mode = 3
 
-[node name="5ws" type="Label" parent="NewsDetails/set1"]
+[node name="PublisherLabel" type="Label" parent="NewsDetails/set1"]
 offset_left = 77.0
 offset_top = 469.0
 offset_right = 996.0
@@ -165,9 +163,27 @@ theme_override_font_sizes/font_size = 24
 text = "SET1"
 autowrap_mode = 3
 
+[node name="DateLabel" type="Label" parent="NewsDetails/set1"]
+offset_left = 641.0
+offset_top = 469.0
+offset_right = 1560.0
+offset_bottom = 622.0
+theme_override_font_sizes/font_size = 24
+text = "SET 1"
+autowrap_mode = 3
+
+[node name="AdditionalInfo" type="Label" parent="NewsDetails/set1"]
+offset_left = 77.0
+offset_top = 564.0
+offset_right = 996.0
+offset_bottom = 717.0
+theme_override_font_sizes/font_size = 24
+text = "SET 1"
+autowrap_mode = 3
+
 [node name="set2" type="Node2D" parent="NewsDetails"]
 
-[node name="Headline" type="Label" parent="NewsDetails/set2"]
+[node name="HeadlineLabel" type="Label" parent="NewsDetails/set2"]
 offset_left = 77.0
 offset_top = 206.0
 offset_right = 1049.0
@@ -182,7 +198,7 @@ theme_override_font_sizes/font_size = 40
 text = "SET2"
 autowrap_mode = 3
 
-[node name="Content" type="Label" parent="NewsDetails/set2"]
+[node name="BodyLabel" type="Label" parent="NewsDetails/set2"]
 offset_left = 77.0
 offset_top = 357.0
 offset_right = 996.0
@@ -191,31 +207,40 @@ theme_override_font_sizes/font_size = 24
 text = "SET2"
 autowrap_mode = 3
 
-[node name="5ws" type="Label" parent="NewsDetails/set2"]
-offset_left = 685.0
-offset_top = 206.0
-offset_right = 1604.0
-offset_bottom = 359.0
+[node name="PublisherLabel" type="Label" parent="NewsDetails/set2"]
+offset_left = 77.0
+offset_top = 469.0
+offset_right = 996.0
+offset_bottom = 622.0
 theme_override_font_sizes/font_size = 24
 text = "SET2"
 autowrap_mode = 3
 
-[node name="DatePublished" type="Label" parent="NewsDetails/set2"]
-offset_left = 501.0
-offset_top = 316.0
-offset_right = 1420.0
-offset_bottom = 469.0
+[node name="DateLabel" type="Label" parent="NewsDetails/set2"]
+offset_left = 641.0
+offset_top = 469.0
+offset_right = 1560.0
+offset_bottom = 622.0
 theme_override_font_sizes/font_size = 24
 text = "SET2"
+autowrap_mode = 3
+
+[node name="AdditionalInfo" type="Label" parent="NewsDetails/set2"]
+offset_left = 77.0
+offset_top = 564.0
+offset_right = 996.0
+offset_bottom = 717.0
+theme_override_font_sizes/font_size = 24
+text = "SET 1"
 autowrap_mode = 3
 
 [node name="set3" type="Node2D" parent="NewsDetails"]
 
-[node name="Headline" type="Label" parent="NewsDetails/set3"]
-offset_left = 270.0
-offset_top = 277.0
-offset_right = 1242.0
-offset_bottom = 387.0
+[node name="HeadlineLabel" type="Label" parent="NewsDetails/set3"]
+offset_left = 77.0
+offset_top = 206.0
+offset_right = 1049.0
+offset_bottom = 316.0
 theme_override_constants/line_spacing = 0
 theme_override_constants/paragraph_spacing = 0
 theme_override_constants/shadow_offset_x = 0
@@ -226,31 +251,40 @@ theme_override_font_sizes/font_size = 40
 text = "SET3"
 autowrap_mode = 3
 
-[node name="Content" type="Label" parent="NewsDetails/set3"]
-offset_left = 353.0
-offset_top = 374.0
-offset_right = 1272.0
-offset_bottom = 527.0
+[node name="BodyLabel" type="Label" parent="NewsDetails/set3"]
+offset_left = 77.0
+offset_top = 357.0
+offset_right = 996.0
+offset_bottom = 510.0
 theme_override_font_sizes/font_size = 24
 text = "SET3"
 autowrap_mode = 3
 
-[node name="5ws" type="Label" parent="NewsDetails/set3"]
-offset_left = 353.0
-offset_top = 510.0
-offset_right = 1272.0
-offset_bottom = 663.0
+[node name="PublisherLabel" type="Label" parent="NewsDetails/set3"]
+offset_left = 77.0
+offset_top = 469.0
+offset_right = 996.0
+offset_bottom = 622.0
 theme_override_font_sizes/font_size = 24
 text = "SET3"
 autowrap_mode = 3
 
-[node name="DatePublished" type="Label" parent="NewsDetails/set3"]
-offset_left = 501.0
-offset_top = 510.0
-offset_right = 1420.0
-offset_bottom = 663.0
+[node name="DateLabel" type="Label" parent="NewsDetails/set3"]
+offset_left = 641.0
+offset_top = 469.0
+offset_right = 1560.0
+offset_bottom = 622.0
 theme_override_font_sizes/font_size = 24
 text = "SET3"
+autowrap_mode = 3
+
+[node name="AdditionalInfo" type="Label" parent="NewsDetails/set3"]
+offset_left = 77.0
+offset_top = 564.0
+offset_right = 996.0
+offset_bottom = 717.0
+theme_override_font_sizes/font_size = 24
+text = "SET 1"
 autowrap_mode = 3
 
 [node name="BackButton" type="Button" parent="NewsDetails"]
