@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="game on"
-run/main_scene="uid://cv1h4my5y6ttg"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+run/main_scene="res://scene/menu.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [rendering]
