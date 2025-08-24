@@ -54,8 +54,7 @@ func _ready() -> void:
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		# Play cursor effect
-		GlobalCursorManager.play_press_effect()
+		# Cursor effect will play automatically via global input
 		paper_open = true
 		paper.visible = true
 		student_paper.visible = false

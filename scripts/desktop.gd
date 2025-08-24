@@ -9,12 +9,7 @@ func _on_desktop_clicked(event):
 		
 		# Only trigger if clicking within the desktop bounds
 		if desktop_rect.has_point(local_pos):
-			# Play cursor effect before changing scene
-			GlobalCursorManager.play_press_effect()
-			# Wait for effect to complete before changing scene
-			await GlobalCursorManager.is_effect_playing()
-			while GlobalCursorManager.is_effect_playing():
-				await get_tree().process_frame
+			# Change scene immediately - cursor effect will play automatically via global input
 			get_tree().change_scene_to_file("res://scene/inside_desktop.tscn")
 	# Ignore all other input events - don't trigger cursor effect
 
