@@ -1,8 +1,24 @@
 extends Control
 func _on_desktop_clicked(event):
+	# Only handle left mouse button presses
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		get_tree().change_scene_to_file("res://scene/inside_desktop.tscn")
+		# Only play cursor effect if clicking on the actual desktop area
+		# Check if the click is within the desktop bounds
+		var desktop_rect = Rect2(Vector2.ZERO, size)
+		var local_pos = get_local_mouse_position()
 		
+		# Only trigger if clicking within the desktop bounds
+		if desktop_rect.has_point(local_pos):
+			# Play cursor effect before changing scene
+			GlobalCursorManager.play_press_effect()
+			# Wait for effect to complete before changing scene
+			await GlobalCursorManager.is_effect_playing()
+			while GlobalCursorManager.is_effect_playing():
+				await get_tree().process_frame
+			get_tree().change_scene_to_file("res://scene/inside_desktop.tscn")
+	# Ignore all other input events - don't trigger cursor effect
+
+
 func _ready():
 	# Show news by default, hide publishers
 	$NewsContent.visible = true

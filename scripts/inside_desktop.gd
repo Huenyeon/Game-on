@@ -21,6 +21,8 @@ func _ready():
 
 
 func _on_news_button_pressed():
+	# Play cursor effect
+	GlobalCursorManager.play_press_effect()
 	$NewsContent.visible = true
 	$PublishersContent.visible = false
 	$NewsDetails.visible = false
@@ -29,6 +31,8 @@ func _on_news_button_pressed():
 
 
 func _on_publisher_button_pressed():
+	# Play cursor effect
+	GlobalCursorManager.play_press_effect()
 	$NewsContent.visible = false
 	$PublishersContent.visible = true
 	$NewsDetails.visible = false
@@ -37,6 +41,8 @@ func _on_publisher_button_pressed():
 
 
 func _on_news_item_pressed(index: int):
+	# Play cursor effect
+	GlobalCursorManager.play_press_effect()
 	$NewsContent.visible = false
 	$NewsDetails.visible = true
 	$PublishersButton.visible = false
@@ -53,6 +59,8 @@ func _on_news_item_pressed(index: int):
 
 
 func _on_back_button_pressed():
+	# Play cursor effect
+	GlobalCursorManager.play_press_effect()
 	# Hide details, return to news list
 	$NewsDetails.visible = false
 	$NewsContent.visible = true

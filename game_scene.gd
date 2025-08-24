@@ -42,6 +42,8 @@ func _ready() -> void:
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
+		# Play cursor effect
+		GlobalCursorManager.play_press_effect()
 		paper_open = true
 		paper.visible = true
 		student_paper.visible = false
@@ -60,6 +62,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var paper_rect = Rect2(top_left, tex_size)
 		
 		if not paper_rect.has_point(mouse_pos):
+			# Don't play cursor effect here - this was causing it to play everywhere
 			paper_open = false
 			paper.visible = false
 			student_paper.visible = true

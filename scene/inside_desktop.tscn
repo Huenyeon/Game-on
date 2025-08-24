@@ -56,6 +56,7 @@ offset_right = -189.0
 offset_bottom = -624.0
 
 [node name="TextureButton" type="TextureButton" parent="PublishersContent"]
+layout_mode = 0
 offset_left = 969.0
 offset_top = 870.0
 offset_right = 1069.0
@@ -65,6 +66,7 @@ texture_normal = ExtResource("8_cyjqy")
 metadata/_edit_group_ = true
 
 [node name="TextureButton2" type="TextureButton" parent="PublishersContent"]
+layout_mode = 0
 offset_left = 609.0
 offset_top = 870.0
 offset_right = 709.0
@@ -74,6 +76,7 @@ texture_normal = ExtResource("9_auwcg")
 metadata/_edit_group_ = true
 
 [node name="TextureButton3" type="TextureButton" parent="PublishersContent"]
+layout_mode = 0
 offset_left = 247.0
 offset_top = 870.0
 offset_right = 347.0
@@ -102,6 +105,7 @@ texture_normal = ExtResource("11_hv70y")
 metadata/_edit_group_ = true
 
 [node name="TextureButton2" type="TextureButton" parent="NewsContent"]
+layout_mode = 0
 offset_left = 412.0
 offset_top = 313.0
 offset_right = 512.0
@@ -111,6 +115,7 @@ texture_normal = ExtResource("12_pl64k")
 metadata/_edit_group_ = true
 
 [node name="TextureButton3" type="TextureButton" parent="NewsContent"]
+layout_mode = 0
 offset_left = 765.0
 offset_top = 313.0
 offset_right = 865.0
