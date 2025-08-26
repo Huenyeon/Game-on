@@ -9,7 +9,7 @@ func _ready():
 func _on_start_pressed() -> void:
 	#generate news reports
 	
-	# Call your singleton’s function
+	# Call your singleton's function
 	Global.get_random_reports(3)
 	# Print them nicely
 	for report in Global.active_reports:
@@ -25,8 +25,12 @@ func _on_start_pressed() -> void:
 		print("More info:", report["body"])
 		print("==========================")
 	
+	# Cursor effect will play automatically via global input
+	# Change scene immediately
 	get_tree().change_scene_to_file("res://scene/game_scene.tscn")
 	
 
 func _on_quit_pressed() -> void:
+	# Cursor effect will play automatically via global input
+	# Quit immediately
 	get_tree().quit()

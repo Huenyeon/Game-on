@@ -1,15 +1,21 @@
-[gd_scene load_steps=9 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=13 format=3 uid="uid://eg8aervxc26f"]
 
-[ext_resource type="Script" uid="uid://cqtqvhp1pbjox" path="res://game_scene.gd" id="1_3ad2y"]
+[ext_resource type="Script" uid="uid://14byfc7qjks0" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://xj4ir0ohnlic" path="res://assets/images/Teachers Table.png" id="2_d2lej"]
 [ext_resource type="Texture2D" uid="uid://b5u7bu5y3ro0h" path="res://assets/images/book-removebg-preview.png" id="3_5hqqe"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
 [ext_resource type="Texture2D" uid="uid://wv2vg617ijxf" path="res://assets/images/paper_table-removebg-preview.png" id="5_vweb5"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
-[ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="7_f3g3v"]
+[ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="7_f3g3v"]
+[ext_resource type="Script" uid="uid://bdm1jxmjx5vdq" path="res://scene/clipboard_ui.gd" id="8_c8mr4"]
+[ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="9_w3nls"]
+[ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="10_desktop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_famsg"]
 size = Vector2(175.207, 240.258)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_juocg"]
+size = Vector2(65.926, 82.7587)
 
 [node name="Game Scene" type="Node2D"]
 script = ExtResource("1_3ad2y")
@@ -58,7 +64,49 @@ position = Vector2(0.04399, -8.99287)
 position = Vector2(-3.30152, 7.17491)
 shape = SubResource("RectangleShape2D_famsg")
 
-[node name="Desktop" parent="." instance=ExtResource("7_f3g3v")]
+[node name="checklist_icon" type="Sprite2D" parent="."]
+position = Vector2(750, 486)
+scale = Vector2(1.35, 1.45)
+texture = ExtResource("7_f3g3v")
+
+[node name="Area2D" type="Area2D" parent="checklist_icon"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checklist_icon/Area2D"]
+position = Vector2(-1.85181, 6.20679)
+shape = SubResource("RectangleShape2D_juocg")
+
+[node name="CloseButton" type="Button" parent="."]
+visible = false
+offset_left = 1116.0
+offset_top = 3.0
+offset_right = 1150.0
+offset_bottom = 34.0
+text = "X"
+
+[node name="ChecklistUI" type="Node2D" parent="."]
+script = ExtResource("8_c8mr4")
+
+[node name="Clipboard" type="Sprite2D" parent="ChecklistUI"]
+position = Vector2(591, 260.875)
+scale = Vector2(4.1, 4.5775)
+texture = ExtResource("7_f3g3v")
+
+[node name="CheckboxContainer" type="Node2D" parent="ChecklistUI"]
+position = Vector2(333, 62)
+
+[node name="Checkbox" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("9_w3nls")]
+position = Vector2(138, 145)
+
+[node name="Checkbox2" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("9_w3nls")]
+position = Vector2(137, 196)
+
+[node name="Checkbox3" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("9_w3nls")]
+position = Vector2(138, 245)
+
+[node name="Checkbox4" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("9_w3nls")]
+position = Vector2(139, 295)
+
+[node name="Desktop" parent="." instance=ExtResource("10_desktop")]
 offset_left = 826.0
 offset_top = 318.0
 offset_right = 1041.0

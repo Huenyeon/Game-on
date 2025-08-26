@@ -18,6 +18,12 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://scripts/Global.gd"
+GlobalCursorManager="*res://scripts/autoload_cursor_manager.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
+mouse_cursor/custom_image="uid://vtcq5lvk1t1u"
 
 [rendering]
 
