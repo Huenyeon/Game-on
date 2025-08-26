@@ -9,7 +9,7 @@ enum State { ENTERING, STOPPED }
 var state = State.ENTERING
 
 # Target position for the middle of the table
-var target_x = 640  # Adjust based on your table's position
+var target_x = 350 # Adjust based on your table's position
 var stop_distance = 5  # Distance threshold before stopping
 
 signal reached_middle

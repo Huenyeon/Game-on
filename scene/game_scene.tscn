@@ -1,18 +1,18 @@
 [gd_scene load_steps=10 format=3 uid="uid://eg8aervxc26f"]
 
-[ext_resource type="Script" path="res://game_scene.gd" id="1_3ad2y"]
+[ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://lejy6igsihyt" path="res://assets/images/background.png" id="2_x4c55"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="4_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
-[ext_resource type="Texture2D" uid="uid://wv2vg617ijxf" path="res://assets/images/paper_table-removebg-preview.png" id="5_vweb5"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
 [ext_resource type="PackedScene" uid="uid://dyatst8ufsccn" path="res://scene/player.tscn" id="6_28rmr"]
+[ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_famsg"]
-size = Vector2(155.17, 215.386)
+size = Vector2(167.177, 103.165)
 
 [node name="Game Scene" type="Node2D"]
 script = ExtResource("1_3ad2y")
@@ -23,8 +23,8 @@ scale = Vector2(0.994791, 1.00617)
 texture = ExtResource("2_x4c55")
 
 [node name="Player" parent="." instance=ExtResource("6_28rmr")]
-position = Vector2(118, 366)
-scale = Vector2(5.12355, 5.93322)
+position = Vector2(157, 412)
+scale = Vector2(5.45353, 5.9233)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -34,7 +34,7 @@ scale = Vector2(1.24, 1)
 shape = SubResource("WorldBoundaryShape2D_qvnrh")
 
 [node name="table" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(549, 367)
+position = Vector2(545, 367)
 scale = Vector2(1.22656, 0.549154)
 texture = ExtResource("4_foe2p")
 
@@ -59,16 +59,16 @@ scroll_active = false
 tab_size = 1
 
 [node name="student paper" type="Sprite2D" parent="."]
-position = Vector2(283, 504)
-rotation = 0.0214092
-scale = Vector2(0.448665, 0.422569)
-texture = ExtResource("5_vweb5")
+position = Vector2(305, 560)
+rotation = -0.00409461
+scale = Vector2(0.346952, 0.589293)
+texture = ExtResource("7_54f4s")
 
 [node name="Area2D" type="Area2D" parent="student paper"]
 position = Vector2(0.04399, -8.99287)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="student paper/Area2D"]
-position = Vector2(-1.73721, 10.8118)
+position = Vector2(-23.0503, -17.6372)
 shape = SubResource("RectangleShape2D_famsg")
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
