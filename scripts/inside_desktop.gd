@@ -62,3 +62,19 @@ func _on_back_button_pressed():
 	$NewsContent.visible = true
 	$PublishersButton.visible = true
 	$NewsButton.visible = true
+	
+
+
+
+
+func _on_back_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_button_pressed() -> void:
+	pass # Replace with function body.
+
+
+
+func on_pressed_back_to_scene_button() -> void:
+	get_tree().change_scene_to_file("res://scene/game_scene.tscn")
