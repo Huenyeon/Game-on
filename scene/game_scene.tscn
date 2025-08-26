@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://wv2vg617ijxf" path="res://assets/images/paper_table-removebg-preview.png" id="5_vweb5"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="7_f3g3v"]
-[ext_resource type="Script" uid="uid://bdm1jxmjx5vdq" path="res://scene/clipboard_ui.gd" id="8_c8mr4"]
+[ext_resource type="Script" path="res://scene/clipboard_ui.gd" id="8_c8mr4"]
 [ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="9_w3nls"]
 [ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="10_desktop"]
 
