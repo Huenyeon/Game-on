@@ -3,6 +3,8 @@ extends Node2D
 @onready var paper = $paper
 @onready var student_paper = $"student paper"
 @onready var paper_text: RichTextLabel = $paper/MarginContainer/Text
+@onready var stamp: Sprite2D = $stamp
+@onready var stamp_options: Node2D = $stamp/StampOptions
 
 # =======================
 # Variables
@@ -42,6 +44,7 @@ func _ready() -> void:
 	paper.visible = false
 	student_paper.visible = true
 	paper_open = false 
+	stamp_options.visible = false
 
 
 # =======================
@@ -56,6 +59,11 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 		#show text 
 		var idx := rng.randi_range(0, articles.size() - 1)
 		paper_text.text = articles[idx]
+
+
+func _on_stamp_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		stamp_options.visible = not stamp_options.visible
 		
 		
 func _unhandled_input(event: InputEvent) -> void:
@@ -70,4 +78,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			paper_open = false
 			paper.visible = false
 			student_paper.visible = true
+
+	# Hide stamp options when clicking elsewhere
+	if event is InputEventMouseButton and event.pressed:
+		if stamp_options.visible:
+			var mouse_pos2 = get_viewport().get_mouse_position()
+			var options_top_left := stamp.global_position + Vector2(40, -20)
+			var options_rect := Rect2(options_top_left, Vector2(96, 48))
+			if not options_rect.has_point(mouse_pos2):
+				stamp_options.visible = false
 		

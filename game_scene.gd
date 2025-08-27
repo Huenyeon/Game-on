@@ -8,6 +8,7 @@ extends Node2D
 @onready var checklist_icon: Sprite2D = $checklist_icon
 @onready var checklist_ui: Node2D = $ChecklistUI
 @onready var clipboard_sprite: Sprite2D = $ChecklistUI/Clipboard
+ 
 
 
 var paper_open = false
@@ -170,3 +171,6 @@ func _on_player_reached_middle():
 func _on_student_paper_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		paper.visible = true
+
+
+ 
