@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://du2sua2nvleui"]
 
-[ext_resource type="Script" uid="uid://uaav66l77r7n" path="res://scripts/green_pen.gd" id="1_nd0h0"]
+[ext_resource type="Script" uid="uid://bjk3iqrm3tq5c" path="res://scripts/green_pen.gd" id="1_nd0h0"]
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="2_nd0h0"]
-[ext_resource type="Script" uid="uid://c64fd4oemuvid" path="res://scripts/red.gd" id="3_nd0h0"]
+[ext_resource type="Script" uid="uid://vy30n7ppj78x" path="res://scripts/red.gd" id="3_nd0h0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4657r"]
 atlas = ExtResource("2_nd0h0")
@@ -35,8 +35,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nd0h0"]
-radius = 3.0
-height = 20.3783
+radius = 3.6
+height = 24.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yre3x"]
 atlas = ExtResource("2_nd0h0")
@@ -54,24 +54,21 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_luksr"]
-radius = 4.0
-height = 20.0
+radius = 1.28
+height = 10.56
 
 [node name="Pens" type="Node2D"]
 
 [node name="pen_holder" type="AnimatedSprite2D" parent="."]
 show_behind_parent = true
 top_level = true
-position = Vector2(31, 57)
+position = Vector2(-98, 64)
 sprite_frames = SubResource("SpriteFrames_yre3x")
 animation = &"red"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(37, 55)
-zoom = Vector2(6, 6)
-
 [node name="Green" type="Area2D" parent="."]
 position = Vector2(24, 37)
+scale = Vector2(2.5, 2.5)
 script = ExtResource("1_nd0h0")
 
 [node name="green" type="AnimatedSprite2D" parent="Green"]
@@ -79,26 +76,30 @@ position = Vector2(8, 10)
 sprite_frames = SubResource("SpriteFrames_luksr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Green"]
-position = Vector2(-5, 2)
+position = Vector2(-2, -1.90735e-06)
 shape = SubResource("CapsuleShape2D_nd0h0")
 
 [node name="Marker2D" type="Marker2D" parent="Green"]
 position = Vector2(-4, 32)
+scale = Vector2(2.5, 2.5)
 
 [node name="Red" type="Area2D" parent="."]
 position = Vector2(34, 37)
+scale = Vector2(2.5, 2.5)
 script = ExtResource("3_nd0h0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Red"]
-position = Vector2(11, 12)
+position = Vector2(22.8, 12)
 sprite_frames = SubResource("SpriteFrames_b2kyu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Red"]
-position = Vector2(4, 3)
+position = Vector2(15.6, -7.15256e-07)
+scale = Vector2(2.5, 2.5)
 shape = SubResource("CapsuleShape2D_luksr")
 
 [node name="Marker2D" type="Marker2D" parent="Red"]
-position = Vector2(1, 32)
+position = Vector2(13.6, 32)
+scale = Vector2(2.5, 2.5)
 
 [connection signal="input_event" from="Green" to="Green" method="_on_input_event"]
 [connection signal="input_event" from="Red" to="Red" method="_on_input_event"]
