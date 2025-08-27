@@ -7,6 +7,7 @@ extends Node2D
 
 @onready var checklist_icon: Sprite2D = $checklist_icon
 @onready var checklist_ui: Node2D = $ChecklistUI
+@onready var clipboard_sprite: Sprite2D = $ChecklistUI/Clipboard
 
 
 var paper_open = false
@@ -146,13 +147,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		# Handle checklist closing when clicking outside
 		if checklist_ui.visible:
-			# Get the checklist UI bounds (approximate)
-			var checklist_pos = checklist_ui.global_position
-			var checklist_size = Vector2(800, 600)  # Approximate size of checklist
-			var checklist_rect = Rect2(checklist_pos - checklist_size * 0.5, checklist_size)
-			
-			# If click is outside the checklist area, close it
-			if not checklist_rect.has_point(mouse_pos):
+			# Use the actual clipboard sprite rect if available
+			var should_close := true
+			if clipboard_sprite and clipboard_sprite.texture:
+				var clip_size := clipboard_sprite.texture.get_size() * clipboard_sprite.scale
+				var clip_top_left := clipboard_sprite.global_position - (clip_size * 0.5)
+				var clipboard_rect := Rect2(clip_top_left, clip_size)
+				should_close = not clipboard_rect.has_point(mouse_pos)
+			if should_close:
 				checklist_ui.visible = false
 
 # When the checklist icon is clicked

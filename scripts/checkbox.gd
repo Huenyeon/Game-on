@@ -13,6 +13,7 @@ func _ready() -> void:
 func _on_area_input_event(viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		toggle()
+		get_viewport().set_input_as_handled()
 
 func toggle() -> void:
 	checked = !checked
