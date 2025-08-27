@@ -1,16 +1,17 @@
-[gd_scene load_steps=15 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=16 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://lejy6igsihyt" path="res://assets/images/background.png" id="2_x4c55"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
-[ext_resource type="PackedScene" uid="uid://dyatst8ufsccn" path="res://scene/player.tscn" id="6_28rmr"]
+[ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
-[ext_resource type="Script" uid="uid://bdm1jxmjx5vdq" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
+[ext_resource type="Script" uid="uid://d0pyeaca5j5xs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
 [ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
 [ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
+[ext_resource type="Texture2D" uid="uid://dfj11c522t51p" path="res://assets/Stamp.png" id="12_stamp"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -45,26 +46,6 @@ position = Vector2(545, 367)
 scale = Vector2(1.22656, 0.549154)
 texture = ExtResource("3_foe2p")
 
-[node name="paper" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(523, 326)
-scale = Vector2(2.06383, 2)
-texture = ExtResource("4_vuqbi")
-
-[node name="MarginContainer" type="MarginContainer" parent="paper"]
-offset_left = -81.0
-offset_top = -115.0
-offset_right = 76.0
-offset_bottom = 113.0
-
-[node name="Text" type="RichTextLabel" parent="paper/MarginContainer"]
-layout_mode = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("5_y3ouy")
-theme_override_font_sizes/normal_font_size = 8
-scroll_active = false
-tab_size = 1
-
 [node name="student paper" type="Sprite2D" parent="."]
 position = Vector2(305, 560)
 rotation = -0.00409461
@@ -79,8 +60,8 @@ position = Vector2(-23.0503, -17.6372)
 shape = SubResource("RectangleShape2D_famsg")
 
 [node name="checklist_icon" type="Sprite2D" parent="."]
-position = Vector2(750, 486)
-scale = Vector2(1.35, 1.45)
+position = Vector2(543, 489)
+scale = Vector2(1.35, 1.455)
 texture = ExtResource("8_f3g3v")
 
 [node name="Area2D" type="Area2D" parent="checklist_icon"]
@@ -89,15 +70,14 @@ texture = ExtResource("8_f3g3v")
 position = Vector2(-1.85181, 6.20679)
 shape = SubResource("RectangleShape2D_juocg")
 
-[node name="CloseButton" type="Button" parent="."]
-visible = false
-offset_left = 1116.0
-offset_top = 3.0
-offset_right = 1150.0
-offset_bottom = 34.0
-text = "X"
+[node name="Desktop" parent="." instance=ExtResource("11_desktop")]
+offset_left = 609.0
+offset_top = 223.0
+offset_right = 1000.0
+offset_bottom = 636.0
 
 [node name="ChecklistUI" type="Node2D" parent="."]
+position = Vector2(0, -1)
 script = ExtResource("9_c8mr4")
 
 [node name="Clipboard" type="Sprite2D" parent="ChecklistUI"]
@@ -120,10 +100,29 @@ position = Vector2(138, 245)
 [node name="Checkbox4" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
 position = Vector2(139, 295)
 
-[node name="Desktop" parent="." instance=ExtResource("11_desktop")]
-offset_left = 826.0
-offset_top = 318.0
-offset_right = 1041.0
-offset_bottom = 539.0
+[node name="paper" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(523, 326)
+scale = Vector2(2.06383, 2)
+texture = ExtResource("4_vuqbi")
+
+[node name="MarginContainer" type="MarginContainer" parent="paper"]
+offset_left = -81.0
+offset_top = -115.0
+offset_right = 76.0
+offset_bottom = 113.0
+
+[node name="Text" type="RichTextLabel" parent="paper/MarginContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_y3ouy")
+theme_override_font_sizes/normal_font_size = 8
+scroll_active = false
+tab_size = 1
+
+[node name="stamp" type="Sprite2D" parent="."]
+position = Vector2(1046, 527)
+scale = Vector2(0.075, 0.0876953)
+texture = ExtResource("12_stamp")
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]

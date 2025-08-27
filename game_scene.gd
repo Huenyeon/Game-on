@@ -7,7 +7,7 @@ extends Node2D
 
 @onready var checklist_icon: Sprite2D = $checklist_icon
 @onready var checklist_ui: Node2D = $ChecklistUI
-@onready var close_button: Button = $CloseButton
+
 
 var paper_open = false
 var rng := RandomNumberGenerator.new()
@@ -87,13 +87,12 @@ func _ready() -> void:
 	paper_open = false 
 	
 	checklist_ui.visible = false
-	close_button.visible = false
 	
 	$checklist_icon/Area2D.input_event.connect(_on_checklist_icon_input_event)
-	close_button.pressed.connect(_on_close_button_pressed)
 	
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))
+		player.set_checklist_ui(checklist_ui)
 
 func get_random_reports(count: int) -> Array:
 	var chosen = []
@@ -102,6 +101,8 @@ func get_random_reports(count: int) -> Array:
 		if candidate not in chosen:
 			chosen.append(candidate)
 	return chosen
+
+
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -128,29 +129,38 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		paper_text.text = text_to_show
 
 func _unhandled_input(event: InputEvent) -> void:
-	if paper_open and event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.pressed:
 		var mouse_pos = get_viewport().get_mouse_position()
 		
-		var tex_size = paper.texture.get_size()*paper.scale
-		var top_left = paper.global_position - (tex_size * 0.5)
-		var paper_rect = Rect2(top_left, tex_size)
+		# Handle paper closing
+		if paper_open:
+			var tex_size = paper.texture.get_size()*paper.scale
+			var top_left = paper.global_position - (tex_size * 0.5)
+			var paper_rect = Rect2(top_left, tex_size)
+			
+			if not paper_rect.has_point(mouse_pos):
+				# Don't play cursor effect here - this was causing it to play everywhere
+				paper_open = false
+				paper.visible = false
+				student_paper.visible = true
 		
-		if not paper_rect.has_point(mouse_pos):
-			# Don't play cursor effect here - this was causing it to play everywhere
-			paper_open = false
-			paper.visible = false
-			student_paper.visible = true
+		# Handle checklist closing when clicking outside
+		if checklist_ui.visible:
+			# Get the checklist UI bounds (approximate)
+			var checklist_pos = checklist_ui.global_position
+			var checklist_size = Vector2(800, 600)  # Approximate size of checklist
+			var checklist_rect = Rect2(checklist_pos - checklist_size * 0.5, checklist_size)
+			
+			# If click is outside the checklist area, close it
+			if not checklist_rect.has_point(mouse_pos):
+				checklist_ui.visible = false
 
 # When the checklist icon is clicked
 func _on_checklist_icon_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		checklist_ui.visible = true
-		close_button.visible = true
  
-# Close button
-func _on_close_button_pressed() -> void:
-	checklist_ui.visible = false
-	close_button.visible = false
+
 
 func _on_player_reached_middle():
 	student_paper.visible = true

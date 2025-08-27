@@ -3,6 +3,7 @@ extends CharacterBody2D
 const SPEED = 150.0
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var checklist_ui: Node2D
 
 # States
 enum State { ENTERING, STOPPED }
@@ -16,6 +17,17 @@ signal reached_middle
 
 func _ready() -> void:
 	state = State.ENTERING
+	# Connect input event to handle clicks
+	input_event.connect(_on_input_event)
+
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		# Close checklist if it's open
+		if checklist_ui and checklist_ui.visible:
+			checklist_ui.visible = false
+
+func set_checklist_ui(ui: Node2D) -> void:
+	checklist_ui = ui
 
 func _physics_process(delta: float) -> void:
 	if state == State.ENTERING:
