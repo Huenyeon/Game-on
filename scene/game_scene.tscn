@@ -8,9 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://dyatst8ufsccn" path="res://scene/player.tscn" id="6_28rmr"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
-[ext_resource type="Script" uid="uid://bdm1jxmjx5vdq" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
-[ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
-[ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
+[ext_resource type="Script" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
+[ext_resource type="PackedScene" path="res://scene/Checkbox.tscn" id="10_w3nls"]
+[ext_resource type="PackedScene" path="res://scene/desktop.tscn" id="11_desktop"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -61,7 +61,7 @@ offset_bottom = 113.0
 layout_mode = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("5_y3ouy")
-theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/normal_font_size = 9
 scroll_active = false
 tab_size = 1
 
