@@ -59,7 +59,7 @@ func _on_start_pressed() -> void:
 		
 	# Cursor effect will play automatically via global input
 	# Change scene immediately
-	get_tree().change_scene_to_file("res://scene/game_scene.tscn")
+	get_tree().change_scene_to_file("res://scene/node_2d.tscn")
 	
 
 func _on_quit_pressed() -> void:
