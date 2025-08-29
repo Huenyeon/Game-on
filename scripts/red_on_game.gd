@@ -1,29 +1,22 @@
 extends Node2D
 @onready var marker = $Marker2D  # tip of the pen
-@onready var sprite =  $green# assuming you have a sprite for the pen
+@onready var sprite =  $red# assuming you have a sprite for the pen
 var sticking := false
 var start_pos: Vector2
 var drag_offset := Vector2.ZERO
 
 var drawing := false
 var current_line: Line2D
-@export var pen_color: Color = Color.GREEN
+@export var pen_color: Color = Color.RED
 @export var pen_width: float = 3.0
-@onready var canvas_board = get_tree().get_current_scene()
+@onready var drawing_area =$"../../paper"
 
+signal pen_clicked
 
 func _ready():
 	start_pos = global_position
 	set_process(false)
-	# Try different ways to find the paper node
-	canvas_board = get_tree().get_current_scene().find_child("paper", true, false)
 	
-
-	if canvas_board == null:
-		print("Error: 'paper' node not found!")
-		canvas_board = get_tree().get_current_scene()  # fallback to main scene
-	else:
-		print("Found paper node: ", canvas_board.name)
 	# AnimatedSprite2D doesn't have input_event signal by default
 	# We'll use global input detection with sprite bounds checking
 	if sprite == null:
@@ -49,19 +42,16 @@ func _on_sprite_input_event(viewport, event, shape_idx):
 			sticking = true
 			drag_offset = global_position - mouse_pos
 			set_process(true)
+			emit_signal("pen_clicked", self)  # Notify parent
 		else:
 			# Click while dragging - return the pen
-			sticking = false
-			set_process(false)
-			return_to_start()
+			release()
 
 func _input(event):
 	# Add escape key handling
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
 		if sticking:
-			sticking = false
-			set_process(false)
-			return_to_start()
+			release()
 		return
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -89,6 +79,7 @@ func _input(event):
 						sticking = true
 						drag_offset = global_position - mouse_pos
 						set_process(true)
+						emit_signal("pen_clicked", self)  # Notify parent
 						return
 						
 	# --- Handle right click for drawing ---
@@ -98,14 +89,23 @@ func _input(event):
 		else:
 			stop_drawing()
 						
+func is_inside_drawing_area(point: Vector2) -> bool:
+	if drawing_area == null:
+		return false
+	var sprite_size = drawing_area.texture.get_size() * drawing_area.scale
+	var rect = Rect2(
+	drawing_area.global_position - sprite_size / 2,
+	sprite_size
+	)
+	return rect.has_point(point)
 
 func _process(delta):
 	if sticking:
-		# Keep the tip exactly on the cursor while dragging
 		global_position = get_global_mouse_position() + drag_offset
-	# If drawing, add new point following pen tip
 	if drawing and current_line:
-		current_line.add_point(marker.global_position)
+		var local_point = drawing_area.to_local(marker.global_position)
+		if is_inside_drawing_area(marker.global_position):
+			current_line.add_point(local_point)
 
 func return_to_start():
 	# Create a simple animation without tween
@@ -124,32 +124,24 @@ func return_to_start():
 	
 	global_position = start_pos
 	print("Pen returned to start position")
+
+# New function to release the pen
+func release():
+	if sticking:
+		sticking = false
+		set_process(false)
+		return_to_start()
 	
 func start_drawing():
 	if drawing:
 		return
-	
-	if canvas_board == null:
-		print("Error: canvas_board is null!")
-		return
-	
 	current_line = Line2D.new()
 	current_line.width = pen_width
 	current_line.default_color = pen_color
-	current_line.z_index = 1000  # Very high z-index to appear above paper texture
-	canvas_board.add_child(current_line)
-	
-	# Convert the marker's global position to the canvas board's local space
-	var local_pos = canvas_board.to_local(marker.global_position)
-	current_line.add_point(local_pos)
+	drawing_area.add_child(current_line) # ensures line stays inside drawing area
+	current_line.add_point(drawing_area.to_local(marker.global_position))
 	drawing = true
-	print("Line created above paper texture")
-	
-	
 
 func stop_drawing():
 	drawing = false
 	current_line = null
-	
-	
-	
