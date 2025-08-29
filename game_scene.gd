@@ -13,6 +13,8 @@ extends Node2D
 @onready var x_option_sprite: Sprite2D = $stamp/StampOptions/XOption
  
 
+@onready var game_timer: Timer = $TimerBackground/TimerLabel/GameTimer
+@onready var timer_label: Label = $TimerBackground/TimerLabel
 
 var paper_open = false
 var rng := RandomNumberGenerator.new()
@@ -45,6 +47,15 @@ func _ready() -> void:
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))
 		player.set_checklist_ui(checklist_ui)
+		
+	# Setup timer
+	game_timer.one_shot = true
+	game_timer.start()
+	game_timer.timeout.connect(_on_game_timer_timeout)
+	
+	# Initialize label
+	_update_timer_label()
+
 
 	# Ensure stamp options start hidden
 	if stamp_options:
@@ -95,12 +106,12 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 			var all_reports = Global.correct_student_report + Global.incorrect_student_report
 			
 			if all_reports.size() > 0:
-				var random_index = randi() % all_reports.size()
+				var random_index = rng.randi() % all_reports.size()
 				var report = all_reports[random_index]
 				current_student_report_text = "%s\n\n%s\n\n%s" % [
-				report["headline"],
-				report["body"],
-				report["additional_info"]
+					report["headline"],
+					report["body"],
+					report["additional_info"]
 				]
 		
 		# Always show the stored report text
@@ -138,7 +149,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		# Handle checklist closing when clicking outside
 		if checklist_ui.visible:
-			# Use the actual clipboard sprite rect if available
 			var should_close := true
 			if clipboard_sprite and clipboard_sprite.texture:
 				var clip_size := clipboard_sprite.texture.get_size() * clipboard_sprite.scale
@@ -169,14 +179,15 @@ func _process(_delta: float) -> void:
 		var delta_x := get_viewport().get_mouse_position() - drag_start_mouse
 		var snapped_x := Vector2(round(delta_x.x / grid_size) * grid_size, round(delta_x.y / grid_size) * grid_size)
 		x_option_sprite.global_position = x_start_pos + snapped_x
+	
+	# Update timer label
+	if game_timer.time_left > 0:
+		_update_timer_label()
 
-# When the checklist icon is clicked
 func _on_checklist_icon_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		checklist_ui.visible = true
  
-
-
 func _on_player_reached_middle():
 	student_paper.visible = true
 	Global.get_random_reports(3)
@@ -187,12 +198,12 @@ func _on_player_reached_middle():
 		var all_reports = Global.correct_student_report + Global.incorrect_student_report
 		
 		if all_reports.size() > 0:
-			var random_index = randi() % all_reports.size()
+			var random_index = rng.randi() % all_reports.size()
 			var report = all_reports[random_index]
 			current_student_report_text = "%s\n\n%s\n\n%s" % [
-			report["headline"],
-			report["body"],
-			report["additional_info"]
+				report["headline"],
+				report["body"],
+				report["additional_info"]
 			]
 			print("Initial student report generated: ", report["headline"])
 
@@ -219,12 +230,12 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 					var all_reports = Global.correct_student_report + Global.incorrect_student_report
 					
 					if all_reports.size() > 0:
-						var random_index = randi() % all_reports.size()
+						var random_index = rng.randi() % all_reports.size()
 						var report = all_reports[random_index]
 						current_student_report_text = "%s\n\n%s\n\n%s" % [
-						report["headline"],
-						report["body"],
-						report["additional_info"]
+							report["headline"],
+							report["body"],
+							report["additional_info"]
 						]
 				
 				# Always show the same stored report text
@@ -303,3 +314,24 @@ func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: in
 		# Arm for next tap to place
 		dragging_x = false
 		x_armed = true
+
+		
+func _on_game_timer_timeout():
+	timer_label.text = "0:00"
+	# Action when time runs out
+	print("Time’s up! Game over.")
+	# Example: hide everything or end scene
+	paper.visible = false
+	student_paper.visible = false
+	checklist_ui.visible = false
+
+func _update_timer_label() -> void:
+	var time_left = int(game_timer.time_left)
+	var minutes = time_left / 60
+	var seconds = time_left % 60
+	timer_label.text = str(minutes) + ":" + ("%02d" % seconds)
+
+	if time_left <= 10:
+		timer_label.add_theme_color_override("font_color", Color.RED)
+	else:
+		timer_label.add_theme_color_override("font_color", Color.GREEN)

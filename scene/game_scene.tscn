@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=34 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://lejy6igsihyt" path="res://assets/images/background.png" id="2_x4c55"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
 [ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
+[ext_resource type="Texture2D" uid="uid://dblkj16gwiu5h" path="res://assets/checklist/checklist_icon.png" id="6_81ico"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
 [ext_resource type="Script" uid="uid://d0pyeaca5j5xs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
@@ -26,7 +27,7 @@ distance = -265.0
 size = Vector2(167.177, 103.165)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_juocg"]
-size = Vector2(69.6297, 92.7836)
+size = Vector2(620.549, 536.295)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_stamp_click"]
 size = Vector2(120, 120)
@@ -36,21 +37,6 @@ size = Vector2(1758.37, 2064.47)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x_option"]
 size = Vector2(1808.3, 2112.71)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vynom"]
-atlas = ExtResource("17_vynom")
-region = Rect2(132, 0, 66, 50)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_pxt5h"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vynom")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5laeg"]
 atlas = ExtResource("17_vynom")
@@ -88,6 +74,21 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ao44p"]
 height = 56.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vynom"]
+atlas = ExtResource("17_vynom")
+region = Rect2(132, 0, 66, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pxt5h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vynom")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Game Scene" type="Node2D"]
 script = ExtResource("1_3ad2y")
@@ -148,14 +149,15 @@ position = Vector2(-23.0503, -17.6372)
 shape = SubResource("RectangleShape2D_famsg")
 
 [node name="checklist_icon" type="Sprite2D" parent="."]
-position = Vector2(543, 489)
-scale = Vector2(1.35, 1.455)
-texture = ExtResource("8_f3g3v")
+position = Vector2(589, 537)
+scale = Vector2(0.181156, 0.179006)
+texture = ExtResource("6_81ico")
 
 [node name="Area2D" type="Area2D" parent="checklist_icon"]
+position = Vector2(-297.207, 59.2539)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="checklist_icon/Area2D"]
-position = Vector2(-1.48148, 3.0928)
+position = Vector2(273.978, -81.5996)
 shape = SubResource("RectangleShape2D_juocg")
 
 [node name="Desktop" parent="." instance=ExtResource("11_desktop")]
@@ -171,12 +173,12 @@ position = Vector2(0, -1)
 script = ExtResource("9_c8mr4")
 
 [node name="Clipboard" type="Sprite2D" parent="ChecklistUI"]
-position = Vector2(591, 260.875)
+position = Vector2(557, 250)
 scale = Vector2(4.1, 4.5775)
 texture = ExtResource("8_f3g3v")
 
 [node name="CheckboxContainer" type="Node2D" parent="ChecklistUI"]
-position = Vector2(333, 62)
+position = Vector2(302, 55)
 
 [node name="Checkbox" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
 position = Vector2(138, 145)
@@ -238,11 +240,6 @@ offset_right = -524.0
 offset_bottom = 243.0
 text = "Looks like I can only write on a paper"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(167, 524)
-scale = Vector2(3.44697, 3.21)
-sprite_frames = SubResource("SpriteFrames_pxt5h")
-
 [node name="Pens" type="Node2D" parent="."]
 z_index = 250
 script = ExtResource("16_vynom")
@@ -280,6 +277,35 @@ shape = SubResource("CapsuleShape2D_ao44p")
 
 [node name="Marker2D" type="Marker2D" parent="Pens/Green"]
 position = Vector2(-3, 66)
+
+[node name="TimerBackground" type="ColorRect" parent="."]
+offset_left = 949.0
+offset_top = 13.0
+offset_right = 1108.0
+offset_bottom = 68.0
+color = Color(0, 0, 0, 1)
+
+[node name="TimerLabel" type="Label" parent="TimerBackground"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 7.0
+offset_right = 158.0
+offset_bottom = 49.0
+theme_override_colors/font_color = Color(0, 0.596078, 0, 1)
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameTimer" type="Timer" parent="TimerBackground/TimerLabel"]
+wait_time = 90.0
+one_shot = true
+autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+top_level = true
+position = Vector2(167, 524)
+scale = Vector2(3.44697, 3.21)
+sprite_frames = SubResource("SpriteFrames_pxt5h")
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="input_event" from="checklist_icon/Area2D" to="." method="_on_checklist_icon_input_event"]
