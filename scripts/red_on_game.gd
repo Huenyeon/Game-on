@@ -34,6 +34,13 @@ func _ready():
 func _on_sprite_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if not sticking:
+			# Check if this pen can be used
+			var game_scene = get_tree().current_scene
+			if game_scene and game_scene.has_method("can_use_pen"):
+				if not game_scene.can_use_pen(self):
+					print("Cannot use this pen - another pen is active")
+					return
+			
 			# Get the mouse position and snap the pen tip to it
 			var mouse_pos = get_global_mouse_position()
 			
@@ -48,6 +55,10 @@ func _on_sprite_input_event(viewport, event, shape_idx):
 			sticking = true
 			drag_offset = global_position - mouse_pos
 			set_process(true)
+			
+			# Notify game scene that pen interaction is active
+			if game_scene and game_scene.has_method("set_pen_interaction"):
+				game_scene.set_pen_interaction(true, self)
 		else:
 			# Click while dragging - return the pen
 			sticking = false
@@ -65,6 +76,13 @@ func _input(event):
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if not sticking:
+			# Check if this pen can be used
+			var game_scene = get_tree().current_scene
+			if game_scene and game_scene.has_method("can_use_pen"):
+				if not game_scene.can_use_pen(self):
+					print("Cannot use this pen - another pen is active")
+					return
+			
 			# Check if click is on the AnimatedSprite2D
 			var mouse_pos = get_global_mouse_position()
 			
@@ -88,6 +106,11 @@ func _input(event):
 						sticking = true
 						drag_offset = global_position - mouse_pos
 						set_process(true)
+						
+						# Notify game scene that pen interaction is active
+						if game_scene and game_scene.has_method("set_pen_interaction"):
+							game_scene.set_pen_interaction(true, self)
+						
 						return
 						
 	# --- Handle right click for drawing ---
@@ -136,6 +159,12 @@ func return_to_start():
 		await get_tree().process_frame
 	
 	global_position = start_pos
+	
+	# Ensure pen interaction flag is reset
+	var game_scene = get_tree().current_scene
+	if game_scene and game_scene.has_method("set_pen_interaction"):
+		game_scene.set_pen_interaction(false, self)
+	
 	print("Pen returned to start position")
 	
 func start_drawing():

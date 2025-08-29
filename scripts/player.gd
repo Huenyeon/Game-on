@@ -16,9 +16,15 @@ var stop_distance = 5  # Distance threshold before stopping
 signal reached_middle
 
 func _ready() -> void:
-	state = State.ENTERING
-	# Connect input event to handle clicks
-	input_event.connect(_on_input_event)
+	# Check if player has already reached middle in a previous session
+	if Global.player_has_reached_middle:
+		state = State.STOPPED
+		position.x = target_x  # Set position directly to middle
+		emit_signal("reached_middle") # Emit signal to notify other nodes
+	else:
+		state = State.ENTERING
+		# Connect input event to handle clicks
+		input_event.connect(_on_input_event)
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -48,4 +54,5 @@ func _auto_move_to_middle() -> void:
 	else:
 		velocity.x = 0
 		state = State.STOPPED
+		Global.player_has_reached_middle = true  # Set the global flag
 		emit_signal("reached_middle") # Notify main scene
