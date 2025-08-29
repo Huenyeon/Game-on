@@ -290,11 +290,23 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				paper.visible = true
 				student_paper.visible = false
 				
-				# Use the same stored report text as the student paper
-				if current_student_report_text == "":
-					# Generate the report text if it doesn't exist yet
+				# Prefer an already-selected Global.current_student_report.
+				# If that's not present, prefer the local cached current_student_report_text.
+				# Only generate a new random report as a last resort.
+				if Global.current_student_report:
+					# Use the selected global student report so opening stamps won't change it
+					var report_text = "%s\n\n%s\n\n%s" % [
+						Global.current_student_report["headline"],
+						Global.current_student_report["body"],
+						Global.current_student_report["additional_info"]
+					]
+					paper_text.text = report_text
+				elif current_student_report_text != "":
+					# Use cached text (won't overwrite an already-generated report)
+					paper_text.text = current_student_report_text
+				else:
+					# Last resort: generate a local random report without modifying globals
 					var all_reports = Global.correct_student_report + Global.incorrect_student_report
-					
 					if all_reports.size() > 0:
 						var random_index = rng.randi() % all_reports.size()
 						var report = all_reports[random_index]
@@ -303,9 +315,7 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 							report["body"],
 							report["additional_info"]
 						]
-				
-				# Always show the same stored report text
-				paper_text.text = current_student_report_text
+						paper_text.text = current_student_report_text
 			else:
 				# Hide both stamp options and student paper content
 				paper_open = false

@@ -9,13 +9,13 @@ size = Vector2(61, 81)
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_x4w22")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -15.5)
 shape = SubResource("RectangleShape2D_7f277")
 
 [node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="AreaCollision" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_7f277")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
