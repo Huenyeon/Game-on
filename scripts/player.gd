@@ -77,10 +77,16 @@ func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var mp = get_viewport().get_mouse_position()
 		
+		# Require the stamp Area2D was clicked (stamp UI opened) before allowing stamp selection.
+		var stamp_area_clicked := false
+		if "stamp_ui_opened" in Global:
+			stamp_area_clicked = Global.stamp_ui_opened
+		
 		# If no stamp is currently selected, check if we're clicking on a stamp
 		if _selected_stamp == null:
 			# Do not allow selecting any stamp if the player has already stamped
-			if not _has_stamped:
+			# and also require the stamp Area2D to have been clicked first.
+			if not _has_stamped and stamp_area_clicked:
 				for stamp in get_tree().get_nodes_in_group("stamp"):
 					if stamp is Sprite2D and _is_point_in_sprite(stamp, mp):
 						_select_stamp(stamp)
@@ -96,6 +102,9 @@ func _input(event):
 					if applied:
 						# mark player as having stamped so they can't pick another stamp
 						_has_stamped = true
+						# Clear global stamp UI flag after stamping (prevent re-select)
+						if "stamp_ui_opened" in Global:
+							Global.stamp_ui_opened = false
 						break
 					
 			# Deselect the stamp only if it was applied or if click was not on any paper

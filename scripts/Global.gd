@@ -12,6 +12,9 @@ var player_has_reached_middle = false
 var current_student_report = null  # Store the selected student report
 var used_reports = []  # Track which reports have already been used
 
+# New: whether the stamp area was clicked and the stamp UI is open
+var stamp_ui_opened: bool = false
+
 
 # Publishers & Dates are always randomized separately
 var publishers = [
@@ -150,4 +153,4 @@ func get_random_student_reports(correct_count: int) -> void:
 func reset_report_tracking():
 	current_student_report = null
 	used_reports = []
-	
+

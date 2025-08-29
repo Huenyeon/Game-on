@@ -282,6 +282,8 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 		if stamp_options:
 			var will_show := not stamp_options.visible
 			stamp_options.visible = will_show
+			# Track that the stamp Area2D was clicked (stamp UI opened)
+			Global.stamp_ui_opened = will_show
 			
 			# Also show/hide the student paper content when stamp options are toggled
 			if will_show:
@@ -325,6 +327,9 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				dragging_x = false
 				check_armed = false
 				x_armed = false
+				
+				# Stamp UI closed -> clear global flag
+				Global.stamp_ui_opened = false
 			
 			# Reset positions to original on reopen
 			if will_show:
@@ -356,6 +361,8 @@ func _on_check_option_input_event(_viewport: Node, event: InputEvent, _shape_idx
 			# reset option positions for next open
 			x_option_sprite.global_position = x_option_original_global
 			check_option_sprite.global_position = check_option_original_global
+			# stamping done -> clear stamp UI opened flag
+			Global.stamp_ui_opened = false
 			return
 		dragging_check = true
 		drag_start_mouse = get_viewport().get_mouse_position()
@@ -380,6 +387,8 @@ func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: in
 			# reset option positions for next open
 			x_option_sprite.global_position = x_option_original_global
 			check_option_sprite.global_position = check_option_original_global
+			# stamping done -> clear stamp UI opened flag
+			Global.stamp_ui_opened = false
 			return
 		dragging_x = true
 		drag_start_mouse = get_viewport().get_mouse_position()
