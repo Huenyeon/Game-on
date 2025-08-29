@@ -1,18 +1,21 @@
-[gd_scene load_steps=16 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=28 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
-[ext_resource type="PackedScene" uid="uid://du2sua2nvleui" path="res://scene/pens.tscn" id="2_lonp8"]
 [ext_resource type="Texture2D" uid="uid://lejy6igsihyt" path="res://assets/images/background.png" id="2_x4c55"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
-[ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
+[ext_resource type="PackedScene" path="res://scene/player.tscn" id="6_28rmr"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
-[ext_resource type="Script" uid="uid://d0pyeaca5j5xs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
+[ext_resource type="Script" uid="uid://jnyxl67mtccs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
 [ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
 [ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
 [ext_resource type="Texture2D" uid="uid://dfj11c522t51p" path="res://assets/Stamp.png" id="12_stamp"]
+[ext_resource type="Script" uid="uid://b1mjgctjgc72g" path="res://scripts/red_on_game.gd" id="13_nf1ce"]
+[ext_resource type="Script" uid="uid://bm2ytj15eafqj" path="res://scripts/all_pens.gd" id="13_vynom"]
+[ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="14_vynom"]
+[ext_resource type="Script" uid="uid://uh251rcetris" path="res://scripts/green_on_game.gd" id="15_pxt5h"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -22,6 +25,58 @@ size = Vector2(167.177, 103.165)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_juocg"]
 size = Vector2(65.926, 82.7587)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5laeg"]
+atlas = ExtResource("14_vynom")
+region = Rect2(0, 0, 40, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yyfvs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5laeg")
+}],
+"loop": true,
+"name": &"red",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6chj6"]
+radius = 12.0
+height = 54.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8q4eb"]
+atlas = ExtResource("14_vynom")
+region = Rect2(40, 0, 40, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sw306"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8q4eb")
+}],
+"loop": true,
+"name": &"green",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ao44p"]
+height = 56.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vynom"]
+atlas = ExtResource("14_vynom")
+region = Rect2(132, 0, 66, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pxt5h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vynom")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Game Scene" type="Node2D"]
 script = ExtResource("1_3ad2y")
@@ -127,13 +182,54 @@ scale = Vector2(0.075, 0.0876953)
 texture = ExtResource("12_stamp")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = -698.0
-offset_top = 29.0
-offset_right = -216.0
-offset_bottom = 208.0
+offset_left = -1006.0
+offset_top = 64.0
+offset_right = -524.0
+offset_bottom = 243.0
 text = "Looks like I can only write on a paper"
 
-[node name="Pens" parent="." instance=ExtResource("2_lonp8")]
-position = Vector2(126, 458)
+[node name="Pens" type="Node2D" parent="."]
+script = ExtResource("13_vynom")
+
+[node name="Red" type="Area2D" parent="Pens"]
+position = Vector2(129, 476)
+script = ExtResource("13_nf1ce")
+
+[node name="red" type="AnimatedSprite2D" parent="Pens/Red"]
+position = Vector2(9, 20.0001)
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_yyfvs")
+animation = &"red"
+
+[node name="Marker2D" type="Marker2D" parent="Pens/Red"]
+position = Vector2(-1, 70)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pens/Red"]
+position = Vector2(4, -14)
+shape = SubResource("CapsuleShape2D_6chj6")
+
+[node name="Green" type="Area2D" parent="Pens"]
+position = Vector2(187, 480)
+script = ExtResource("15_pxt5h")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pens/Green"]
+position = Vector2(-10, 11)
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_sw306")
+animation = &"green"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pens/Green"]
+position = Vector2(2, -17)
+shape = SubResource("CapsuleShape2D_ao44p")
+
+[node name="Marker2D" type="Marker2D" parent="Pens/Green"]
+position = Vector2(-3, 66)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(167, 524)
+scale = Vector2(3.44697, 3.21)
+sprite_frames = SubResource("SpriteFrames_pxt5h")
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="input_event" from="Pens/Red" to="Pens/Red" method="_on_sprite_input_event"]
+[connection signal="input_event" from="Pens/Green" to="Pens/Green" method="_on_sprite_input_event"]
