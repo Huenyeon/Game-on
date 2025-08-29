@@ -8,133 +8,171 @@ extends Node2D
 @onready var checklist_icon: Sprite2D = $checklist_icon
 @onready var checklist_ui: Node2D = $ChecklistUI
 @onready var clipboard_sprite: Sprite2D = $ChecklistUI/Clipboard
+@onready var stamp_options: Node2D = $stamp/StampOptions
+@onready var check_option_sprite: Sprite2D = $stamp/StampOptions/CheckOption
+@onready var x_option_sprite: Sprite2D = $stamp/StampOptions/XOption
+ 
 
+@onready var game_timer: Timer = $TimerBackground/TimerLabel/GameTimer
+@onready var timer_label: Label = $TimerBackground/TimerLabel
 
 var paper_open = false
 var rng := RandomNumberGenerator.new()
+var dragging_check := false
+var dragging_x := false
+var grid_size := 16.0
+var drag_start_mouse := Vector2.ZERO
+var check_start_pos := Vector2.ZERO
+var x_start_pos := Vector2.ZERO
+var check_option_original_global := Vector2.ZERO
+var x_option_original_global := Vector2.ZERO
+var approve_stamp_tex: Texture2D = preload("res://assets/stamp_approved.png")
+var denied_stamp_tex: Texture2D = preload("res://assets/stamp_denied.png")
+var stamps_layer: Node2D
+var check_armed := false
+var x_armed := false
+var placed_stamp_target_scale := 3.0
+var current_student_report_text: String = ""  # Store the current report text
+var pen_interaction_active := false  # Flag to track when a pen is being interacted with
+var active_pen_node: Node = null # Track the currently active pen node
 
-var reports = [
-	{
-		"publisher": "BrightFuture Daily",
-		"headline": "New Solar Panel Paint Can Charge Phones in Sunlight ☀️📱",
-		"body": 'On August 21, 2025, BrightFuture Daily reported that scientists at SunTech Academy developed a paint that can act like a solar panel. The article claimed that "any wall covered in the paint can charge a phone directly."',
-		"five_ws": {
-			"Who": "Scientists at SunTech Academy",
-			"What": "Solar panel paint that charges phones",
-			"When": "August 21, 2025",
-			"Where": "Reported by BrightFuture Daily",
-			"Why": "Claimed as renewable energy breakthrough"
-		},
-		"date": "August 21, 2025"
-	},
-	{
-		"publisher": "NextWave Newsroom",
-		"headline": "Students in Riverdale Town Can Graduate Early by Planting 100 Trees 🌳🎓",
-		"body": "On August 19, 2025, NextWave Newsroom reported that Riverdale High would allow students to graduate one year earlier if they planted 100 trees. The article included student testimonials but no official school statement.",
-		"five_ws": {
-			"Who": "Riverdale High students",
-			"What": "Claim about early graduation by planting trees",
-			"When": "August 19, 2025",
-			"Where": "Riverdale Town",
-			"Why": "To promote environmental responsibility"
-		},
-		"date": "July 15, 2024"
-	},
-	{
-		"publisher": "Knowledge Spark Gazette",
-		"headline": "Homework-Free Fridays Become Law in Greenfield City 📝🎉",
-		"body": "On August 17, 2025, Knowledge Spark Gazette published that the city council of Greenfield passed a law banning homework on Fridays for all students.",
-		"five_ws": {
-			"Who": "Greenfield City Council",
-			"What": "Law banning homework on Fridays",
-			"When": "August 17, 2025",
-			"Where": "Greenfield City",
-			"Why": "To reduce student stress"
-		},
-		"date": "May 2, 2023"
-	},
-	{
-		"publisher": "Future Horizons Weekly",
-		"headline": "AI Tutors Now Mandatory in Metro Schools 🤖📚",
-		"body": "On August 20, 2025, Future Horizons Weekly claimed that Metro schools passed a rule requiring AI-powered tutors in all classrooms, raising debates among teachers and parents.",
-		"five_ws": {
-			"Who": "Metro Schools",
-			"What": "Rule requiring AI tutors",
-			"When": "August 20, 2025",
-			"Where": "Metro City",
-			"Why": "To enhance student learning"
-		},
-		"date": "August 20, 2025"
-	},
-	{
-		"publisher": "Global Voice Tribune",
-		"headline": "City Library Offers Free VR Headsets for Readers 📖🕶️",
-		"body": "On August 18, 2025, Global Voice Tribune reported that Greenhill City Library introduced a program where members can borrow VR headsets to experience interactive storytelling.",
-		"five_ws": {
-			"Who": "Greenhill City Library",
-			"What": "Free VR headset program",
-			"When": "August 18, 2025",
-			"Where": "Greenhill City",
-			"Why": "To promote reading through technology"
-		},
-		"date": "August 18, 2025"
-	}
-]
 
 func _ready() -> void:
-	rng.randomize()
 	paper.visible = false
 	student_paper.visible = false
-	paper_open = false 
 	
 	checklist_ui.visible = false
 	
-	$checklist_icon/Area2D.input_event.connect(_on_checklist_icon_input_event)
+	# Signal connection handled in scene file
+	
 	
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))
 		player.set_checklist_ui(checklist_ui)
+		
+		# Check if player is already in the middle when scene loads
+		if Global.player_has_reached_middle:
+			show_student_paper()
+		
+	# Setup timer
+	game_timer.one_shot = true
+	game_timer.start()
+	game_timer.timeout.connect(_on_game_timer_timeout)
+	
+	# Initialize label
+	_update_timer_label()
+
+
+	# Ensure stamp options start hidden
+	if stamp_options:
+		stamp_options.visible = false
+
+	# Assign textures for stamp options (scene doesn't set them)
+	if check_option_sprite and check_option_sprite.texture == null:
+		check_option_sprite.texture = load("res://assets/Stamp checkbox.png")
+	if x_option_sprite and x_option_sprite.texture == null:
+		x_option_sprite.texture = load("res://assets/Stamp x.png")
+
+	# Cache original global positions so we can reset on reopen
+	if check_option_sprite:
+		check_option_original_global = check_option_sprite.global_position
+	if x_option_sprite:
+		x_option_original_global = x_option_sprite.global_position
+
+	# Create a layer to hold placed stamps
+	stamps_layer = Node2D.new()
+	add_child(stamps_layer)
 
 func get_random_reports(count: int) -> Array:
 	var chosen = []
-	while chosen.size() < count:
-		var candidate = reports[rng.randi() % reports.size()]
+	var available_reports = Global.active_reports
+	if available_reports.size() == 0:
+		# If no active reports, generate some first
+		Global.get_random_reports(3)
+		available_reports = Global.active_reports
+	
+	while chosen.size() < count and available_reports.size() > 0:
+		var candidate = available_reports[rng.randi() % available_reports.size()]
 		if candidate not in chosen:
 			chosen.append(candidate)
 	return chosen
 
-
-
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		# Cursor effect will play automatically via global input
 		paper_open = true
 		paper.visible = true
 		student_paper.visible = false
 		
-		# Pick one random report
-		var random_report = get_random_reports(1)[0]
-		var w5 = random_report["five_ws"]
-
-		# Build plain text without BBCode
-		var text_to_show = random_report.publisher + "\n\n" + \
-			"\"" + random_report.headline + "\"\n\n" + \
-			random_report.body + "\n\n" + \
-			"Who: " + w5["Who"] + "\n" + \
-			"What: " + w5["What"] + "\n" + \
-			"When: " + w5["When"] + "\n" + \
-			"Where: " + w5["Where"] + "\n" + \
-			"Why: " + w5["Why"] + "\n\n" + \
-			random_report.date
+		# Paper is now visible for drawing
+		# Refresh paper reference for all pens
+		refresh_pens_paper_reference()
+		
+		# If we haven't selected a student report yet, choose one that hasn't been used
+		if Global.current_student_report == null:
+			var all_reports = Global.correct_student_report + Global.incorrect_student_report
+			var available_reports = []
 			
-		paper_text.text = text_to_show
+			# Filter out reports that have already been used
+			for report in all_reports:
+				if not Global.used_reports.has(report):
+					available_reports.append(report)
+			
+			# If there are no available reports, reset the used reports list
+			if available_reports.size() == 0:
+				Global.used_reports = []
+				available_reports = all_reports
+			
+			# Select a random report from available ones
+			if available_reports.size() > 0:
+				var random_index = randi() % available_reports.size()
+				Global.current_student_report = available_reports[random_index]
+				Global.used_reports.append(Global.current_student_report)
+		
+		# Display the selected student report
+		if Global.current_student_report:
+			var report_text = "%s\n\n%s\n\n%s" % [
+				Global.current_student_report["headline"],
+				Global.current_student_report["body"],
+				Global.current_student_report["additional_info"]
+			]
+			paper_text.text = report_text
+		else:
+			# Only generate new report text if we don't have one yet
+			if current_student_report_text == "":
+				var all_reports = Global.correct_student_report + Global.incorrect_student_report
+				
+				if all_reports.size() > 0:
+					var random_index = rng.randi() % all_reports.size()
+					var report = all_reports[random_index]
+					current_student_report_text = "%s\n\n%s\n\n%s" % [
+						report["headline"],
+						report["body"],
+						report["additional_info"]
+					]
+			
+			# Always show the stored report text
+			paper_text.text = current_student_report_text
+
+func refresh_pens_paper_reference():
+	# Find all pens and refresh their paper reference
+	var pens = get_node_or_null("Pens")
+	if pens:
+		for pen in pens.get_children():
+			if pen.has_method("refresh_paper_reference"):
+				pen.refresh_paper_reference()
+				print("Refreshed paper reference for pen: ", pen.name)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		var mouse_pos = get_viewport().get_mouse_position()
 		
-		# Handle paper closing
-		if paper_open:
+		# NEVER close the paper if stamp options are visible
+		if paper_open and stamp_options and stamp_options.visible:
+			# Paper stays open when stamp options are visible - do nothing
+			pass
+		# Only close paper if stamp options are NOT visible, not dragging, and no pen interaction
+		elif paper_open and not dragging_check and not dragging_x and not pen_interaction_active:
 			var tex_size = paper.texture.get_size()*paper.scale
 			var top_left = paper.global_position - (tex_size * 0.5)
 			var paper_rect = Rect2(top_left, tex_size)
@@ -144,10 +182,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				paper_open = false
 				paper.visible = false
 				student_paper.visible = true
+				
+				# Reset pen interaction flag when paper is closed
+				pen_interaction_active = false
+				active_pen_node = null
 		
 		# Handle checklist closing when clicking outside
 		if checklist_ui.visible:
-			# Use the actual clipboard sprite rect if available
 			var should_close := true
 			if clipboard_sprite and clipboard_sprite.texture:
 				var clip_size := clipboard_sprite.texture.get_size() * clipboard_sprite.scale
@@ -156,17 +197,207 @@ func _unhandled_input(event: InputEvent) -> void:
 				should_close = not clipboard_rect.has_point(mouse_pos)
 			if should_close:
 				checklist_ui.visible = false
+	
+	# Stop dragging on mouse release
+	if event is InputEventMouseButton and not event.pressed:
+		dragging_check = false
+		dragging_x = false
+	
+func _input(event: InputEvent) -> void:
+	# Also stop dragging on any mouse release, even if another node handled it
+	if event is InputEventMouseButton and not event.pressed:
+		dragging_check = false
+		dragging_x = false
 
-# When the checklist icon is clicked
+func _process(_delta: float) -> void:
+	# Update drag every frame so we don't depend on motion events propagation
+	if dragging_check and check_option_sprite:
+		var delta := get_viewport().get_mouse_position() - drag_start_mouse
+		var snapped := Vector2(round(delta.x / grid_size) * grid_size, round(delta.y / grid_size) * grid_size)
+		check_option_sprite.global_position = check_start_pos + snapped
+	elif dragging_x and x_option_sprite:
+		var delta_x := get_viewport().get_mouse_position() - drag_start_mouse
+		var snapped_x := Vector2(round(delta_x.x / grid_size) * grid_size, round(delta_x.y / grid_size) * grid_size)
+		x_option_sprite.global_position = x_start_pos + snapped_x
+	
+	# Update timer label
+	if game_timer.time_left > 0:
+		_update_timer_label()
+
 func _on_checklist_icon_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		checklist_ui.visible = true
  
-
-
 func _on_player_reached_middle():
+	show_student_paper()
+
+# New function to handle showing student paper
+func show_student_paper():
 	student_paper.visible = true
+	Global.get_random_reports(3)
+	Global.get_random_student_reports(1)
+	
+	# Generate the initial student report text
+	if current_student_report_text == "":
+		var all_reports = Global.correct_student_report + Global.incorrect_student_report
+		
+		if all_reports.size() > 0:
+			var random_index = rng.randi() % all_reports.size()
+			var report = all_reports[random_index]
+			current_student_report_text = "%s\n\n%s\n\n%s" % [
+				report["headline"],
+				report["body"],
+				report["additional_info"]
+			]
+			print("Initial student report generated: ", report["headline"])
 
 func _on_student_paper_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		paper.visible = true
+
+func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if stamp_options:
+			var will_show := not stamp_options.visible
+			stamp_options.visible = will_show
+			
+			# Also show/hide the student paper content when stamp options are toggled
+			if will_show:
+				# Show both stamp options and student paper content
+				paper_open = true
+				paper.visible = true
+				student_paper.visible = false
+				
+				# Use the same stored report text as the student paper
+				if current_student_report_text == "":
+					# Generate the report text if it doesn't exist yet
+					var all_reports = Global.correct_student_report + Global.incorrect_student_report
+					
+					if all_reports.size() > 0:
+						var random_index = rng.randi() % all_reports.size()
+						var report = all_reports[random_index]
+						current_student_report_text = "%s\n\n%s\n\n%s" % [
+							report["headline"],
+							report["body"],
+							report["additional_info"]
+						]
+				
+				# Always show the same stored report text
+				paper_text.text = current_student_report_text
+			else:
+				# Hide both stamp options and student paper content
+				paper_open = false
+				paper.visible = false
+				student_paper.visible = true
+				dragging_check = false
+				dragging_x = false
+				check_armed = false
+				x_armed = false
+			
+			# Reset positions to original on reopen
+			if will_show:
+				if check_option_sprite:
+					check_option_sprite.global_position = check_option_original_global
+				if x_option_sprite:
+					x_option_sprite.global_position = x_option_original_global
+
+func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
+	if tex == null:
+		return
+	var s := Sprite2D.new()
+	s.texture = tex
+	s.global_position = global_pos
+	s.scale = Vector2.ONE * placed_stamp_target_scale
+	s.z_index = 100
+	stamps_layer.add_child(s)
+
+func _on_check_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if check_armed:
+			_place_stamp(approve_stamp_tex, check_option_sprite.global_position, check_option_sprite.scale)
+			check_armed = false
+			stamp_options.visible = false
+			# Keep the paper visible when stamp is placed
+			paper_open = true
+			paper.visible = true
+			student_paper.visible = false
+			# reset option positions for next open
+			x_option_sprite.global_position = x_option_original_global
+			check_option_sprite.global_position = check_option_original_global
+			return
+		dragging_check = true
+		drag_start_mouse = get_viewport().get_mouse_position()
+		check_start_pos = check_option_sprite.global_position
+		if not stamp_options.visible:
+			stamp_options.visible = true
+	elif event is InputEventMouseButton and not event.pressed:
+		# Arm for next tap to place
+		dragging_check = false
+		check_armed = true
+
+func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if x_armed:
+			_place_stamp(denied_stamp_tex, x_option_sprite.global_position, x_option_sprite.scale)
+			x_armed = false
+			stamp_options.visible = false
+			# Keep the paper visible when stamp is placed
+			paper_open = true
+			paper.visible = true
+			student_paper.visible = false
+			# reset option positions for next open
+			x_option_sprite.global_position = x_option_original_global
+			check_option_sprite.global_position = check_option_original_global
+			return
+		dragging_x = true
+		drag_start_mouse = get_viewport().get_mouse_position()
+		x_start_pos = x_option_sprite.global_position
+		if not stamp_options.visible:
+			stamp_options.visible = true
+	elif event is InputEventMouseButton and not event.pressed:
+		# Arm for next tap to place
+		dragging_x = false
+		x_armed = true
+
+		
+func _on_game_timer_timeout():
+	timer_label.text = "0:00"
+	# Action when time runs out
+	print("Time’s up! Game over.")
+	# Example: hide everything or end scene
+	paper.visible = false
+	student_paper.visible = false
+	checklist_ui.visible = false
+
+func _update_timer_label() -> void:
+	var time_left = int(game_timer.time_left)
+	var minutes = time_left / 60
+	var seconds = time_left % 60
+	timer_label.text = str(minutes) + ":" + ("%02d" % seconds)
+
+	if time_left <= 10:
+		timer_label.add_theme_color_override("font_color", Color.RED)
+	else:
+		timer_label.add_theme_color_override("font_color", Color.GREEN)
+
+# Function for pens to call when they start/stop interaction
+func set_pen_interaction(active: bool, pen_node: Node = null):
+	if active and pen_node:
+		# If another pen is already active, don't allow this one
+		if pen_interaction_active and pen_node != active_pen_node:
+			print("Another pen is already active, cannot use this pen")
+			return false
+		
+		pen_interaction_active = true
+		active_pen_node = pen_node
+		print("Pen interaction started with: ", pen_node.name)
+		return true
+	else:
+		pen_interaction_active = false
+		active_pen_node = null
+		print("Pen interaction ended")
+		return true
+
+# Function to check if a specific pen can be used
+func can_use_pen(pen_node: Node) -> bool:
+	return not pen_interaction_active or active_pen_node == pen_node

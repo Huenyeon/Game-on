@@ -4,6 +4,14 @@ extends Node
 
 
 var active_reports: Array = []
+var correct_student_report: Array = []
+var incorrect_student_report: Array =[]
+
+var player_has_reached_middle = false
+
+var current_student_report = null  # Store the selected student report
+var used_reports = []  # Track which reports have already been used
+
 
 # Publishers & Dates are always randomized separately
 var publishers = [
@@ -34,7 +42,7 @@ var additional_info  = [
 var report_templates = [
 	{
 		"headline": "New Solar Panel Paint Can Charge Phones in Sunlight",
-		"who": "scientists at SunTech Academy",
+		"who": "Scientists at SunTech Academy",
 		"what": "developed a paint that acts like a solar panel",
 		"where": "in Horizon Valley",
 		"when": "August 21, 2025",
@@ -42,7 +50,7 @@ var report_templates = [
 	},
 	{
 		"headline": "Students Can Graduate Early by Planting Trees",
-		"who": "students of Riverdale High",
+		"who": "Students of Riverdale High",
 		"what": "started planting 100 trees to graduate early",
 		"where": "in Riverdale Town",
 		"when": "August 19, 2025",
@@ -50,7 +58,7 @@ var report_templates = [
 	},
 	{
 		"headline": "Homework-Free Fridays Become Law",
-		"who": "city council of Greenfield",
+		"who": "Sity council of Greenfield",
 		"what": "passed a law banning homework on Fridays",
 		"where": "in Greenfield City",
 		"when": "August 17, 2025",
@@ -66,7 +74,7 @@ var report_templates = [
 	},
 	{
 		"headline": "Underground Library Found in Metro City",
-		"who": "a group of teachers",
+		"who": "A group of teachers",
 		"what": "opened a hidden library to the public",
 		"where": "in Metro City",
 		"when": "June 15, 2025",
@@ -101,3 +109,45 @@ func get_random_reports(count: int) -> void:
 			report["why"]
 		]
 		active_reports.append(report)
+		
+func get_random_student_reports(correct_count: int) -> void:
+	correct_student_report.clear()
+	incorrect_student_report.clear()
+	
+	correct_count = clamp(correct_count, 0,3)
+	var incorrect_count = 3 - correct_count
+	
+	for i in range(min(correct_count, active_reports.size())):
+		var correct_copy = active_reports[i].duplicate()
+		correct_student_report.append(correct_copy)
+		
+	for i in range(incorrect_count):
+		var template = report_templates[i % report_templates.size()]
+		var report = {
+			"publisher": publishers[i % publishers.size()],
+			"date": dates[i % dates.size()],
+			"additional_info": additional_info[i % additional_info.size()],
+			"headline": template["headline"], # keep headline
+			"who": template["who"],
+			"what": template["what"],
+			"where": template["where"],
+			"when": template["when"],
+			"why": template["why"]
+		}
+		report["body"] = "%s %s %s on %s %s." % [
+			report["who"],
+			report["what"],
+			report["where"],
+			report["when"],
+			report["why"]
+		]
+		incorrect_student_report.append(report)
+		
+		print("correct reports:", correct_student_report.size())
+		print("Incorrect reports:", incorrect_student_report.size())
+		
+	
+func reset_report_tracking():
+	current_student_report = null
+	used_reports = []
+	

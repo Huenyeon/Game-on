@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bymbirs7ujrpj"
-path="res://.godot/imported/Stamp.png-24ab8b50f362e09de88a4d5405acce38.ctex"
+uid="uid://cq36rgo5wm7ua"
+path="res://.godot/imported/clock frame.png-679c238ba13d7097d9d431529e61caca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Stamp.png"
-dest_files=["res://.godot/imported/Stamp.png-24ab8b50f362e09de88a4d5405acce38.ctex"]
+source_file="res://assets/clock frame.png"
+dest_files=["res://.godot/imported/clock frame.png-679c238ba13d7097d9d431529e61caca.ctex"]
 
 [params]
 

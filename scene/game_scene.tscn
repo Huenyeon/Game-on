@@ -1,14 +1,16 @@
-[gd_scene load_steps=28 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=34 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://lejy6igsihyt" path="res://assets/images/background.png" id="2_x4c55"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
-[ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
+[ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
+[ext_resource type="Texture2D" uid="uid://dblkj16gwiu5h" path="res://assets/checklist/checklist_icon.png" id="6_81ico"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
 [ext_resource type="Script" uid="uid://bdm1jxmjx5vdq" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
+[ext_resource type="Script" uid="uid://d0pyeaca5j5xs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
 [ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
 [ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
 [ext_resource type="Texture2D" uid="uid://dfj11c522t51p" path="res://assets/Stamp.png" id="12_stamp"]
@@ -16,6 +18,13 @@
 [ext_resource type="Script" uid="uid://bwto5q05h3ane" path="res://scripts/all_pens.gd" id="13_vynom"]
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="14_vynom"]
 [ext_resource type="Script" uid="uid://b3gkaf4h0xl6g" path="res://scripts/green_on_game.gd" id="15_pxt5h"]
+[ext_resource type="Texture2D" uid="uid://bymbirs7ujrpj" path="res://assets/Stamp.png" id="12_stamp"]
+[ext_resource type="Texture2D" uid="uid://df1dgi1cosbfu" path="res://assets/Stamp checkbox.png" id="13_silwv"]
+[ext_resource type="Texture2D" uid="uid://cp1bjprkw0ia3" path="res://assets/Stamp x.png" id="14_stamp_x"]
+[ext_resource type="Script" uid="uid://cdjvm6licjc33" path="res://scripts/red_on_game.gd" id="15_nf1ce"]
+[ext_resource type="Script" uid="uid://i0nds5o20v6c" path="res://scripts/all_pens.gd" id="16_vynom"]
+[ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="17_vynom"]
+[ext_resource type="Script" uid="uid://cihv1hrxt4fhu" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -24,10 +33,19 @@ distance = -265.0
 size = Vector2(167.177, 103.165)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_juocg"]
-size = Vector2(65.926, 82.7587)
+size = Vector2(620.549, 536.295)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stamp_click"]
+size = Vector2(120, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_check_option"]
+size = Vector2(1758.37, 2064.47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x_option"]
+size = Vector2(1808.3, 2112.71)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5laeg"]
-atlas = ExtResource("14_vynom")
+atlas = ExtResource("17_vynom")
 region = Rect2(0, 0, 40, 50)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yyfvs"]
@@ -46,7 +64,7 @@ radius = 12.0
 height = 54.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8q4eb"]
-atlas = ExtResource("14_vynom")
+atlas = ExtResource("17_vynom")
 region = Rect2(40, 0, 40, 50)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sw306"]
@@ -64,7 +82,7 @@ animations = [{
 height = 56.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vynom"]
-atlas = ExtResource("14_vynom")
+atlas = ExtResource("17_vynom")
 region = Rect2(132, 0, 66, 50)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pxt5h"]
@@ -102,62 +120,9 @@ position = Vector2(545, 367)
 scale = Vector2(1.22656, 0.549154)
 texture = ExtResource("3_foe2p")
 
-[node name="student paper" type="Sprite2D" parent="."]
-position = Vector2(305, 560)
-rotation = -0.00409461
-scale = Vector2(0.346952, 0.589293)
-texture = ExtResource("7_54f4s")
-
-[node name="Area2D" type="Area2D" parent="student paper"]
-position = Vector2(0.04399, -8.99287)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="student paper/Area2D"]
-position = Vector2(-23.0503, -17.6372)
-shape = SubResource("RectangleShape2D_famsg")
-
-[node name="checklist_icon" type="Sprite2D" parent="."]
-position = Vector2(543, 489)
-scale = Vector2(1.35, 1.455)
-texture = ExtResource("8_f3g3v")
-
-[node name="Area2D" type="Area2D" parent="checklist_icon"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="checklist_icon/Area2D"]
-position = Vector2(-1.85181, 6.20679)
-shape = SubResource("RectangleShape2D_juocg")
-
-[node name="Desktop" parent="." instance=ExtResource("11_desktop")]
-offset_left = 609.0
-offset_top = 223.0
-offset_right = 1000.0
-offset_bottom = 636.0
-
-[node name="ChecklistUI" type="Node2D" parent="."]
-position = Vector2(0, -1)
-script = ExtResource("9_c8mr4")
-
-[node name="Clipboard" type="Sprite2D" parent="ChecklistUI"]
-position = Vector2(591, 260.875)
-scale = Vector2(4.1, 4.5775)
-texture = ExtResource("8_f3g3v")
-
-[node name="CheckboxContainer" type="Node2D" parent="ChecklistUI"]
-position = Vector2(333, 62)
-
-[node name="Checkbox" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
-position = Vector2(138, 145)
-
-[node name="Checkbox2" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
-position = Vector2(137, 196)
-
-[node name="Checkbox3" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
-position = Vector2(138, 245)
-
-[node name="Checkbox4" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
-position = Vector2(139, 295)
-
 [node name="paper" type="Sprite2D" parent="."]
 visible = false
+z_index = 100
 position = Vector2(523, 326)
 scale = Vector2(2.06383, 2)
 texture = ExtResource("4_vuqbi")
@@ -172,14 +137,107 @@ offset_bottom = 113.0
 layout_mode = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("5_y3ouy")
-theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/normal_font_size = 9
 scroll_active = false
 tab_size = 1
+
+[node name="student paper" type="Sprite2D" parent="."]
+position = Vector2(305, 560)
+rotation = -0.00409461
+scale = Vector2(0.346952, 0.589293)
+texture = ExtResource("7_54f4s")
+
+[node name="Area2D" type="Area2D" parent="student paper"]
+position = Vector2(0.04399, -8.99287)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="student paper/Area2D"]
+position = Vector2(-23.0503, -17.6372)
+shape = SubResource("RectangleShape2D_famsg")
+
+[node name="checklist_icon" type="Sprite2D" parent="."]
+position = Vector2(589, 537)
+scale = Vector2(0.181156, 0.179006)
+texture = ExtResource("6_81ico")
+
+[node name="Area2D" type="Area2D" parent="checklist_icon"]
+position = Vector2(-297.207, 59.2539)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checklist_icon/Area2D"]
+position = Vector2(273.978, -81.5996)
+shape = SubResource("RectangleShape2D_juocg")
+
+[node name="Desktop" parent="." instance=ExtResource("11_desktop")]
+offset_left = 609.0
+offset_top = 223.0
+offset_right = 1000.0
+offset_bottom = 636.0
+
+[node name="ChecklistUI" type="Node2D" parent="."]
+visible = false
+z_index = 150
+position = Vector2(0, -1)
+script = ExtResource("9_c8mr4")
+
+[node name="Clipboard" type="Sprite2D" parent="ChecklistUI"]
+position = Vector2(557, 250)
+scale = Vector2(4.1, 4.5775)
+texture = ExtResource("8_f3g3v")
+
+[node name="CheckboxContainer" type="Node2D" parent="ChecklistUI"]
+position = Vector2(302, 55)
+
+[node name="Checkbox" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
+position = Vector2(138, 145)
+
+[node name="Checkbox2" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
+position = Vector2(137, 196)
+
+[node name="Checkbox3" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
+position = Vector2(138, 245)
+
+[node name="Checkbox4" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
+position = Vector2(139, 295)
 
 [node name="stamp" type="Sprite2D" parent="."]
 position = Vector2(1046, 527)
 scale = Vector2(0.075, 0.0876953)
 texture = ExtResource("12_stamp")
+
+[node name="Area2D" type="Area2D" parent="stamp"]
+scale = Vector2(13.3333, 11.407)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/Area2D"]
+shape = SubResource("RectangleShape2D_stamp_click")
+
+[node name="StampOptions" type="Node2D" parent="stamp"]
+z_index = 200
+scale = Vector2(13.3333, 11.407)
+
+[node name="CheckOption" type="Sprite2D" parent="stamp/StampOptions"]
+z_index = 201
+position = Vector2(-2, -374.872)
+scale = Vector2(0.086444, 0.100718)
+texture = ExtResource("13_silwv")
+
+[node name="Area2D" type="Area2D" parent="stamp/StampOptions/CheckOption"]
+position = Vector2(-1.45895, -426.607)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/CheckOption/Area2D"]
+position = Vector2(-10.1094, 297.573)
+shape = SubResource("RectangleShape2D_check_option")
+
+[node name="XOption" type="Sprite2D" parent="stamp/StampOptions"]
+z_index = 201
+position = Vector2(0, -153.948)
+scale = Vector2(0.0829445, 0.0986359)
+texture = ExtResource("14_stamp_x")
+
+[node name="Area2D" type="Area2D" parent="stamp/StampOptions/XOption"]
+position = Vector2(-24.1126, -445.934)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/XOption/Area2D"]
+position = Vector2(24.1826, 357.056)
+shape = SubResource("RectangleShape2D_x_option")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_left = -1006.0
@@ -189,11 +247,12 @@ offset_bottom = 243.0
 text = "Looks like I can only write on a paper"
 
 [node name="Pens" type="Node2D" parent="."]
-script = ExtResource("13_vynom")
+z_index = 250
+script = ExtResource("16_vynom")
 
 [node name="Red" type="Area2D" parent="Pens"]
 position = Vector2(129, 476)
-script = ExtResource("13_nf1ce")
+script = ExtResource("15_nf1ce")
 
 [node name="red" type="AnimatedSprite2D" parent="Pens/Red"]
 position = Vector2(9, 20.0001)
@@ -210,7 +269,7 @@ shape = SubResource("CapsuleShape2D_6chj6")
 
 [node name="Green" type="Area2D" parent="Pens"]
 position = Vector2(187, 480)
-script = ExtResource("15_pxt5h")
+script = ExtResource("18_pxt5h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pens/Green"]
 position = Vector2(-10, 11)
@@ -225,11 +284,39 @@ shape = SubResource("CapsuleShape2D_ao44p")
 [node name="Marker2D" type="Marker2D" parent="Pens/Green"]
 position = Vector2(-3, 66)
 
+[node name="TimerBackground" type="ColorRect" parent="."]
+offset_left = 949.0
+offset_top = 13.0
+offset_right = 1108.0
+offset_bottom = 68.0
+color = Color(0, 0, 0, 1)
+
+[node name="TimerLabel" type="Label" parent="TimerBackground"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 7.0
+offset_right = 158.0
+offset_bottom = 49.0
+theme_override_colors/font_color = Color(0, 0.596078, 0, 1)
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameTimer" type="Timer" parent="TimerBackground/TimerLabel"]
+wait_time = 90.0
+one_shot = true
+autostart = true
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+top_level = true
 position = Vector2(167, 524)
 scale = Vector2(3.44697, 3.21)
 sprite_frames = SubResource("SpriteFrames_pxt5h")
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="input_event" from="checklist_icon/Area2D" to="." method="_on_checklist_icon_input_event"]
+[connection signal="input_event" from="stamp/Area2D" to="." method="_on_stamp_area_input_event"]
+[connection signal="input_event" from="stamp/StampOptions/CheckOption/Area2D" to="." method="_on_check_option_input_event"]
+[connection signal="input_event" from="stamp/StampOptions/XOption/Area2D" to="." method="_on_x_option_input_event"]
 [connection signal="input_event" from="Pens/Red" to="Pens/Red" method="_on_sprite_input_event"]
 [connection signal="input_event" from="Pens/Green" to="Pens/Green" method="_on_sprite_input_event"]
