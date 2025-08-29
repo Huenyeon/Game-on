@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4mcl320xstg7"
-path="res://.godot/imported/Stamp check.png-26bea71402d373801c9e858a7d8c96d0.ctex"
+uid="uid://df1dgi1cosbfu"
+path="res://.godot/imported/Stamp checkbox.png-3dcc4e175ab73c0ae3fa75e3cc41ec26.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Stamp check.png"
-dest_files=["res://.godot/imported/Stamp check.png-26bea71402d373801c9e858a7d8c96d0.ctex"]
+source_file="res://assets/Stamp checkbox.png"
+dest_files=["res://.godot/imported/Stamp checkbox.png-3dcc4e175ab73c0ae3fa75e3cc41ec26.ctex"]
 
 [params]
 

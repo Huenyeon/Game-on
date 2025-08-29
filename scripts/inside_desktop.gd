@@ -77,4 +77,5 @@ func _on_button_pressed() -> void:
 
 
 func on_pressed_back_to_scene_button() -> void:
-	get_tree().change_scene_to_file("res://scene/game_scene.tscn")
+	# Close the overlay without reloading the game scene
+	queue_free()
