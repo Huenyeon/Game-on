@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bymbirs7ujrpj"
-path="res://.godot/imported/Stamp.png-24ab8b50f362e09de88a4d5405acce38.ctex"
+uid="uid://fha4wlviv6ti"
+path="res://.godot/imported/UI_TravelBook_SpritesheetInfo01a.png-90eaca0beec8f25479fb3be72145b2e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Stamp.png"
-dest_files=["res://.godot/imported/Stamp.png-24ab8b50f362e09de88a4d5405acce38.ctex"]
+source_file="res://assets/UI_TravelBook_SpritesheetInfo01a.png"
+dest_files=["res://.godot/imported/UI_TravelBook_SpritesheetInfo01a.png-90eaca0beec8f25479fb3be72145b2e0.ctex"]
 
 [params]
 

@@ -9,8 +9,14 @@ func _on_desktop_clicked(event):
 		
 		# Only trigger if clicking within the desktop bounds
 		if desktop_rect.has_point(local_pos):
-			# Change scene immediately - cursor effect will play automatically via global input
-			get_tree().change_scene_to_file("res://scene/inside_desktop.tscn")
+			# Open inside_desktop as an overlay instead of changing the whole scene
+			var current_scene = get_tree().current_scene
+			if current_scene and not current_scene.has_node("InsideDesktop"):
+				var inside_desktop_scene: PackedScene = load("res://scene/inside_desktop.tscn")
+				var overlay = inside_desktop_scene.instantiate()
+				# Ensure the root node keeps its name for lookup when closing
+				overlay.name = "InsideDesktop"
+				current_scene.add_child(overlay)
 	# Ignore all other input events - don't trigger cursor effect
 
 

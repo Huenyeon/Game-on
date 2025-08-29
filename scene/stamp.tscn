@@ -1,12 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dh2augx0nabl"]
-
-[ext_resource type="Script" path="res://scripts/stamp.gd" id="1_stamp_script"]
+[gd_scene load_steps=2 format=3 uid="uid://cqqo1uqpsgl0t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_stamp"]
 size = Vector2(40, 40)
 
 [node name="Stamp" type="Node2D"]
-script = ExtResource("1_stamp_script")
 
 [node name="StampSprite" type="ColorRect" parent="."]
 offset_left = -20.0
