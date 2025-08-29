@@ -76,6 +76,7 @@ position = Vector2(8, 10)
 sprite_frames = SubResource("SpriteFrames_luksr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Green"]
+visible = false
 position = Vector2(-2, -1.90735e-06)
 shape = SubResource("CapsuleShape2D_nd0h0")
 
@@ -88,12 +89,12 @@ position = Vector2(34, 37)
 scale = Vector2(2.5, 2.5)
 script = ExtResource("3_nd0h0")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Red"]
+[node name="red" type="AnimatedSprite2D" parent="Red"]
 position = Vector2(22.8, 12)
 sprite_frames = SubResource("SpriteFrames_b2kyu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Red"]
-position = Vector2(15.6, -7.15256e-07)
+position = Vector2(15.6, 0.799999)
 scale = Vector2(2.5, 2.5)
 shape = SubResource("CapsuleShape2D_luksr")
 

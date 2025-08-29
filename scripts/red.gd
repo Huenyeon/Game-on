@@ -1,9 +1,17 @@
 extends Node2D
 @onready var marker = $Marker2D  # tip of the pen
-@onready var sprite = $AnimatedSprite2D # assuming you have a sprite for the pen
+@onready var sprite =  $red# assuming you have a sprite for the pen
 var sticking := false
 var start_pos: Vector2
 var drag_offset := Vector2.ZERO
+
+var drawing := false
+var current_line: Line2D
+@export var pen_color: Color = Color.RED
+@export var pen_width: float = 3.0
+
+
+
 
 func _ready():
 	start_pos = global_position
@@ -41,6 +49,14 @@ func _on_sprite_input_event(viewport, event, shape_idx):
 			return_to_start()
 
 func _input(event):
+	# Add escape key handling
+	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
+		if sticking:
+			sticking = false
+			set_process(false)
+			return_to_start()
+		return
+	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if not sticking:
 			# Check if click is on the AnimatedSprite2D
@@ -67,17 +83,22 @@ func _input(event):
 						drag_offset = global_position - mouse_pos
 						set_process(true)
 						return
-		
-		# If we're already sticking or clicked outside, stop dragging
-		if sticking:
-			sticking = false
-			set_process(false)
-			return_to_start()
+						
+	# --- Handle right click for drawing ---
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
+		if event.pressed:
+			start_drawing()
+		else:
+			stop_drawing()
+						
 
 func _process(delta):
 	if sticking:
 		# Keep the tip exactly on the cursor while dragging
 		global_position = get_global_mouse_position() + drag_offset
+	# If drawing, add new point following pen tip
+	if drawing and current_line:
+		current_line.add_point(marker.global_position)
 
 func return_to_start():
 	# Create a simple animation without tween
@@ -96,3 +117,20 @@ func return_to_start():
 	
 	global_position = start_pos
 	print("Pen returned to start position")
+	
+func start_drawing():
+	if drawing:
+		return
+	current_line = Line2D.new()
+	current_line.width = pen_width
+	current_line.default_color = pen_color
+	get_parent().add_child(current_line) # put line beside pen, under parent
+	current_line.add_point(marker.global_position)
+	drawing = true
+
+func stop_drawing():
+	drawing = false
+	current_line = null
+	
+	
+	
