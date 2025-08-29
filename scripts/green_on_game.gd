@@ -9,14 +9,20 @@ var drawing := false
 var current_line: Line2D
 @export var pen_color: Color = Color.GREEN
 @export var pen_width: float = 3.0
-@onready var drawing_area =$"../../paper"
-
-signal pen_clicked
+@onready var canvas_board = get_tree().get_current_scene()
 
 func _ready():
 	start_pos = global_position
 	set_process(false)
+	# Try different ways to find the paper node
+	canvas_board = get_tree().get_current_scene().find_child("paper", true, false)
 	
+
+	if canvas_board == null:
+		print("Error: 'paper' node not found!")
+		canvas_board = get_tree().get_current_scene()  # fallback to main scene
+	else:
+		print("Found paper node: ", canvas_board.name)
 	# AnimatedSprite2D doesn't have input_event signal by default
 	# We'll use global input detection with sprite bounds checking
 	if sprite == null:
@@ -28,6 +34,13 @@ func _ready():
 func _on_sprite_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if not sticking:
+			# Check if this pen can be used
+			var game_scene = get_tree().current_scene
+			if game_scene and game_scene.has_method("can_use_pen"):
+				if not game_scene.can_use_pen(self):
+					print("Cannot use this pen - another pen is active")
+					return
+			
 			# Get the mouse position and snap the pen tip to it
 			var mouse_pos = get_global_mouse_position()
 			
@@ -42,20 +55,34 @@ func _on_sprite_input_event(viewport, event, shape_idx):
 			sticking = true
 			drag_offset = global_position - mouse_pos
 			set_process(true)
-			emit_signal("pen_clicked", self)  # Notify parent
+			
+			# Notify game scene that pen interaction is active
+			if game_scene and game_scene.has_method("set_pen_interaction"):
+				game_scene.set_pen_interaction(true, self)
 		else:
 			# Click while dragging - return the pen
-			release()
+			sticking = false
+			set_process(false)
+			return_to_start()
 
 func _input(event):
 	# Add escape key handling
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
 		if sticking:
-			release()
+			sticking = false
+			set_process(false)
+			return_to_start()
 		return
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if not sticking:
+			# Check if this pen can be used
+			var game_scene = get_tree().current_scene
+			if game_scene and game_scene.has_method("can_use_pen"):
+				if not game_scene.can_use_pen(self):
+					print("Cannot use this pen - another pen is active")
+					return
+			
 			# Check if click is on the AnimatedSprite2D
 			var mouse_pos = get_global_mouse_position()
 			
@@ -79,33 +106,44 @@ func _input(event):
 						sticking = true
 						drag_offset = global_position - mouse_pos
 						set_process(true)
-						emit_signal("pen_clicked", self)  # Notify parent
+						
+						# Notify game scene that pen interaction is active
+						if game_scene and game_scene.has_method("set_pen_interaction"):
+							game_scene.set_pen_interaction(true, self)
+						
 						return
 						
 	# --- Handle right click for drawing ---
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
 		if event.pressed:
+			print("Right click detected - starting drawing")
 			start_drawing()
 		else:
+			print("Right click released - stopping drawing")
 			stop_drawing()
 						
-func is_inside_drawing_area(point: Vector2) -> bool:
-	if drawing_area == null:
-		return false
-	var sprite_size = drawing_area.texture.get_size() * drawing_area.scale
-	var rect = Rect2(
-	drawing_area.global_position - sprite_size / 2,
-	sprite_size
-	)
-	return rect.has_point(point)
 
 func _process(delta):
 	if sticking:
+		# Keep the tip exactly on the cursor while dragging
 		global_position = get_global_mouse_position() + drag_offset
+	# If drawing, add new point following pen tip
 	if drawing and current_line:
-		var local_point = drawing_area.to_local(marker.global_position)
-		if is_inside_drawing_area(marker.global_position):
-			current_line.add_point(local_point)
+		# Get the paper node to convert coordinates
+		var paper_node = current_line.get_parent()
+		if paper_node and paper_node.name == "paper":
+			# Check if pen tip is inside paper boundaries before drawing
+			if is_pen_inside_paper(marker.global_position, paper_node):
+				# Convert global position to paper's local space
+				var local_pos = paper_node.to_local(marker.global_position)
+				current_line.add_point(local_pos)
+				print("Added drawing point (GREEN) on paper at: ", local_pos)
+			else:
+				print("Pen outside paper boundaries - not drawing (GREEN)")
+		else:
+			# Fallback to global if paper reference is lost
+			current_line.add_point(marker.global_position)
+			print("Added global point (GREEN) at: ", marker.global_position)
 
 func return_to_start():
 	# Create a simple animation without tween
@@ -123,25 +161,66 @@ func return_to_start():
 		await get_tree().process_frame
 	
 	global_position = start_pos
+	
+	# Ensure pen interaction flag is reset
+	var game_scene = get_tree().current_scene
+	if game_scene and game_scene.has_method("set_pen_interaction"):
+		game_scene.set_pen_interaction(false, self)
+	
 	print("Pen returned to start position")
-
-# New function to release the pen
-func release():
-	if sticking:
-		sticking = false
-		set_process(false)
-		return_to_start()
 	
 func start_drawing():
 	if drawing:
 		return
+	
+	print("Starting drawing (GREEN)...")
+	
+	# Find the paper node to draw on it
+	var paper_node = get_tree().current_scene.find_child("paper", true, false)
+	if paper_node == null:
+		print("Error: Paper node not found!")
+		return
+	
+	# Check if paper is visible
+	if not paper_node.visible:
+		print("Paper is not visible, cannot draw!")
+		return
+	
+	print("Drawing on paper: ", paper_node.name)
+	
 	current_line = Line2D.new()
 	current_line.width = pen_width
 	current_line.default_color = pen_color
-	drawing_area.add_child(current_line) # ensures line stays inside drawing area
-	current_line.add_point(drawing_area.to_local(marker.global_position))
+	current_line.z_index = 1000  # High z-index to appear above paper
+	
+	# Add the line as a child of the paper node so it stays within paper boundaries
+	paper_node.add_child(current_line)
+	
+	# Convert global pen position to paper's local coordinates
+	var local_pos = paper_node.to_local(marker.global_position)
+	current_line.add_point(local_pos)
 	drawing = true
+	print("Drawing started (GREEN)! Line created on paper with z-index: ", current_line.z_index)
 
 func stop_drawing():
 	drawing = false
 	current_line = null
+
+func is_pen_inside_paper(pen_global_pos: Vector2, paper_node: Node) -> bool:
+	# Get paper texture size and position
+	var paper_texture = paper_node.texture
+	if paper_texture == null:
+		return false
+	
+	var paper_size = paper_texture.get_size() * paper_node.scale
+	var paper_center = paper_node.global_position
+	var paper_left = paper_center.x - (paper_size.x / 2)
+	var paper_right = paper_center.x + (paper_size.x / 2)
+	var paper_top = paper_center.y - (paper_size.y / 2)
+	var paper_bottom = paper_center.y + (paper_size.y / 2)
+	
+	# Check if pen tip is inside paper boundaries
+	return (pen_global_pos.x >= paper_left and 
+			pen_global_pos.x <= paper_right and 
+			pen_global_pos.y >= paper_top and 
+			pen_global_pos.y <= paper_bottom)
