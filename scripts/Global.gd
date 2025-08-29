@@ -7,6 +7,11 @@ var active_reports: Array = []
 var correct_student_report: Array = []
 var incorrect_student_report: Array =[]
 
+var player_has_reached_middle = false
+
+var current_student_report = null  # Store the selected student report
+var used_reports = []  # Track which reports have already been used
+
 
 # Publishers & Dates are always randomized separately
 var publishers = [
@@ -142,5 +147,7 @@ func get_random_student_reports(correct_count: int) -> void:
 		print("Incorrect reports:", incorrect_student_report.size())
 		
 	
-	
+func reset_report_tracking():
+	current_student_report = null
+	used_reports = []
 	

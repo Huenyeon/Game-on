@@ -12,6 +12,7 @@ extends Node2D
 var paper_open = false
 
 
+
 func _ready() -> void:
 	paper.visible = false
 	student_paper.visible = false
@@ -24,6 +25,10 @@ func _ready() -> void:
 	
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))
+		
+		# Check if player is already in the middle when scene loads
+		if Global.player_has_reached_middle:
+			show_student_paper()
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -31,15 +36,33 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		paper.visible = true
 		student_paper.visible = false
 		
-		var all_reports = Global.correct_student_report + Global.incorrect_student_report
+		# If we haven't selected a student report yet, choose one that hasn't been used
+		if Global.current_student_report == null:
+			var all_reports = Global.correct_student_report + Global.incorrect_student_report
+			var available_reports = []
+			
+			# Filter out reports that have already been used
+			for report in all_reports:
+				if not Global.used_reports.has(report):
+					available_reports.append(report)
+			
+			# If there are no available reports, reset the used reports list
+			if available_reports.size() == 0:
+				Global.used_reports = []
+				available_reports = all_reports
+			
+			# Select a random report from available ones
+			if available_reports.size() > 0:
+				var random_index = randi() % available_reports.size()
+				Global.current_student_report = available_reports[random_index]
+				Global.used_reports.append(Global.current_student_report)
 		
-		if all_reports.size() > 0:
-			var random_index = randi() % all_reports.size()
-			var report = all_reports[random_index]
+		# Display the selected student report
+		if Global.current_student_report:
 			var report_text = "%s\n\n%s\n\n%s" % [
-			report["headline"],
-			report["body"],
-			report["additional_info"]
+				Global.current_student_report["headline"],
+				Global.current_student_report["body"],
+				Global.current_student_report["additional_info"]
 			]
 			paper_text.text = report_text
 		
@@ -70,9 +93,15 @@ func _on_close_button_pressed() -> void:
 	close_button.visible = false
 
 func _on_player_reached_middle():
+	show_student_paper()
+
+# New function to handle showing student paper
+func show_student_paper():
 	student_paper.visible = true
 	Global.get_random_reports(3)
 	Global.get_random_student_reports(1)
+	
+	
 
 func _on_student_paper_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
