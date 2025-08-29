@@ -1,6 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
+[ext_resource type="PackedScene" uid="uid://du2sua2nvleui" path="res://scene/pens.tscn" id="2_lonp8"]
 [ext_resource type="Texture2D" uid="uid://lejy6igsihyt" path="res://assets/images/background.png" id="2_x4c55"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
@@ -124,5 +125,15 @@ tab_size = 1
 position = Vector2(1046, 527)
 scale = Vector2(0.075, 0.0876953)
 texture = ExtResource("12_stamp")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -698.0
+offset_top = 29.0
+offset_right = -216.0
+offset_bottom = 208.0
+text = "Looks like I can only write on a paper"
+
+[node name="Pens" parent="." instance=ExtResource("2_lonp8")]
+position = Vector2(126, 458)
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
