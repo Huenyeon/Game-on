@@ -5,10 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
-[ext_resource type="PackedScene" path="res://scene/player.tscn" id="6_28rmr"]
+[ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
-[ext_resource type="Script" uid="uid://jnyxl67mtccs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
+[ext_resource type="Script" uid="uid://ggqpl0gwc27k" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
 [ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
 [ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
 [ext_resource type="Texture2D" uid="uid://bymbirs7ujrpj" path="res://assets/Stamp.png" id="12_stamp"]
@@ -59,10 +59,10 @@ texture = ExtResource("3_foe2p")
 
 [node name="paper" type="Sprite2D" parent="."]
 visible = false
+z_index = 100
 position = Vector2(523, 326)
 scale = Vector2(2.06383, 2)
 texture = ExtResource("4_vuqbi")
-z_index = 100
 
 [node name="MarginContainer" type="MarginContainer" parent="paper"]
 offset_left = -81.0
@@ -77,6 +77,7 @@ theme_override_fonts/normal_font = ExtResource("5_y3ouy")
 theme_override_font_sizes/normal_font_size = 9
 scroll_active = false
 tab_size = 1
+
 [node name="student paper" type="Sprite2D" parent="."]
 position = Vector2(305, 560)
 rotation = -0.00409461
@@ -109,9 +110,9 @@ offset_bottom = 636.0
 
 [node name="ChecklistUI" type="Node2D" parent="."]
 visible = false
+z_index = 150
 position = Vector2(0, -1)
 script = ExtResource("9_c8mr4")
-z_index = 150
 
 [node name="Clipboard" type="Sprite2D" parent="ChecklistUI"]
 position = Vector2(591, 260.875)
@@ -133,8 +134,6 @@ position = Vector2(138, 245)
 [node name="Checkbox4" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
 position = Vector2(139, 295)
 
-
-
 [node name="stamp" type="Sprite2D" parent="."]
 position = Vector2(1046, 527)
 scale = Vector2(0.075, 0.0876953)
@@ -147,14 +146,14 @@ scale = Vector2(13.3333, 11.407)
 shape = SubResource("RectangleShape2D_stamp_click")
 
 [node name="StampOptions" type="Node2D" parent="stamp"]
-scale = Vector2(13.3333, 11.407)
 z_index = 200
+scale = Vector2(13.3333, 11.407)
 
 [node name="CheckOption" type="Sprite2D" parent="stamp/StampOptions"]
+z_index = 201
 position = Vector2(-2, -374.872)
 scale = Vector2(0.086444, 0.100718)
 texture = ExtResource("13_silwv")
-z_index = 201
 
 [node name="Area2D" type="Area2D" parent="stamp/StampOptions/CheckOption"]
 position = Vector2(-1.45895, -426.607)
@@ -164,10 +163,10 @@ position = Vector2(-10.1094, 297.573)
 shape = SubResource("RectangleShape2D_check_option")
 
 [node name="XOption" type="Sprite2D" parent="stamp/StampOptions"]
+z_index = 201
 position = Vector2(0, -153.948)
 scale = Vector2(0.0829445, 0.0986359)
 texture = ExtResource("14_stamp_x")
-z_index = 201
 
 [node name="Area2D" type="Area2D" parent="stamp/StampOptions/XOption"]
 position = Vector2(-24.1126, -445.934)
