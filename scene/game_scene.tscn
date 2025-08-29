@@ -229,7 +229,7 @@ texture = ExtResource("14_stamp_x")
 position = Vector2(-24.1126, -445.934)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/XOption/Area2D"]
-position = Vector2(24.1826, 357.056)
+position = Vector2(60.2816, 425.668)
 shape = SubResource("RectangleShape2D_x_option")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
