@@ -10,13 +10,14 @@ var cursor_textures = {
 }
 
 # Cursor settings for better visibility
-var cursor_scale = 2.0  # Make cursors 2x bigger
+var cursor_scale = 1.4  # Set to 1.4x for balanced size
+# You can change this to 1.2 or 1.0 if you want it even smaller
 var cursor_hotspot = Vector2(0, 0)  # Hotspot position (top-left corner)
 
 # Animation settings
-var animation_speed = 0.05  # Time between each cursor frame
+var animation_speed = 0.06  # Time between each cursor frame
 var is_playing_effect = false
-# Removed cooldown restrictions - effect will play on every click
+var animation_tween: Tween
 
 # Current cursor state
 var current_cursor = "cursor1"
@@ -24,40 +25,19 @@ var current_cursor = "cursor1"
 func _ready():
 	# Set initial cursor
 	set_cursor("cursor1")
-	# Enable global input handling to catch every click
+	# Enable global input handling to catch every click anywhere
 	set_process_input(true)
 	
 	# Print debug info to ensure cursor system is working
 	print("Cursor system initialized - Scale: ", cursor_scale, " Hotspot: ", cursor_hotspot)
 	print("Current cursor: ", current_cursor)
-	
-	# Test the cursor system after a short delay
-	await get_tree().create_timer(1.0).timeout
-	test_cursor_system()
 
 func _input(event):
 	# Catch EVERY mouse click anywhere on the screen
 	if event is InputEventMouseButton and event.pressed:
-		# Play cursor effect on every single click
-		play_press_effect()
-
-# Function to test cursor system
-func test_cursor_system():
-	print("Testing cursor system...")
-	print("Available cursors: ", cursor_textures.keys())
-	print("Current cursor: ", current_cursor)
-	print("Cursor scale: ", cursor_scale)
-	print("Cursor hotspot: ", cursor_hotspot)
-	
-	# Test setting each cursor
-	for cursor_name in cursor_textures.keys():
-		print("Setting cursor: ", cursor_name)
-		set_cursor(cursor_name)
-		await get_tree().create_timer(0.5).timeout
-	
-	# Return to cursor1
-	set_cursor("cursor1")
-	print("Cursor system test completed!")
+		# Play cursor effect on every single click, but only if not already playing
+		if not is_playing_effect:
+			play_press_effect()
 
 # Function to set cursor with proper scaling and hotspot
 func set_cursor(cursor_name: String):
@@ -74,8 +54,11 @@ func set_cursor(cursor_name: String):
 			image.resize(new_size.x, new_size.y, Image.INTERPOLATE_LANCZOS)
 			scaled_texture = ImageTexture.create_from_image(image)
 			
-			# Adjust hotspot for larger cursor (center it)
-			cursor_hotspot = new_size / 2
+			# Better hotspot calculation - offset from top-left for more natural feel
+			cursor_hotspot = Vector2(new_size.x * 0.12, new_size.y * 0.12)
+		else:
+			# For original size, use a small offset
+			cursor_hotspot = Vector2(8, 8)
 		
 		# Set the cursor with proper hotspot
 		Input.set_custom_mouse_cursor(scaled_texture, Input.CURSOR_ARROW, cursor_hotspot)
@@ -89,6 +72,16 @@ func set_cursor_size(scale: float):
 	# Reapply current cursor with new size
 	set_cursor(current_cursor)
 
+# Function to make cursor smaller (quick adjustment)
+func make_cursor_smaller():
+	cursor_scale = max(1.0, cursor_scale - 0.2)  # Reduce by 0.2 but don't go below 1.0
+	set_cursor(current_cursor)
+
+# Function to make cursor bigger (quick adjustment)
+func make_cursor_bigger():
+	cursor_scale = min(2.0, cursor_scale + 0.2)  # Increase by 0.2 but don't go above 2.0
+	set_cursor(current_cursor)
+
 # Function to get current cursor size
 func get_cursor_size() -> float:
 	return cursor_scale
@@ -100,31 +93,27 @@ func play_press_effect():
 		
 	is_playing_effect = true
 	
-	# Play the sequence: Cursor2 -> Cursor3 -> Cursor4 -> back to Cursor1
-	await get_tree().create_timer(animation_speed).timeout
-	set_cursor("cursor2")
+	# Use Tween for smoother animations that work properly in Godot
+	if animation_tween:
+		animation_tween.kill()
 	
-	await get_tree().create_timer(animation_speed).timeout
-	set_cursor("cursor3")
+	animation_tween = create_tween()
+	animation_tween.set_parallel(false)
 	
-	await get_tree().create_timer(animation_speed).timeout
-	set_cursor("cursor4")
-	
-	await get_tree().create_timer(animation_speed).timeout
-	set_cursor("cursor1")
-	
-	is_playing_effect = false
-
-# Function to play the press effect animation only when explicitly requested
-func play_press_effect_on_interaction():
-	# Only play if not already playing and if this is a meaningful interaction
-	if not is_playing_effect:
-		play_press_effect()
+	# Smooth sequence: Cursor2 -> Cursor3 -> Cursor4 -> back to Cursor1
+	animation_tween.tween_callback(set_cursor.bind("cursor2")).set_delay(0.0)
+	animation_tween.tween_interval(animation_speed)
+	animation_tween.tween_callback(set_cursor.bind("cursor3"))
+	animation_tween.tween_interval(animation_speed)
+	animation_tween.tween_callback(set_cursor.bind("cursor4"))
+	animation_tween.tween_interval(animation_speed)
+	animation_tween.tween_callback(set_cursor.bind("cursor1"))
+	animation_tween.tween_callback(func(): is_playing_effect = false)
 
 # Function to check if effect is currently playing
 func is_effect_playing() -> bool:
 	return is_playing_effect
 
-# Function to check if it's okay to play the effect (not on cooldown)
+# Function to check if it's okay to play the effect
 func can_play_effect() -> bool:
 	return not is_playing_effect

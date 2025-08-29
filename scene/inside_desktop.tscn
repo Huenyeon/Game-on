@@ -293,3 +293,12 @@ offset_top = 28.0
 offset_right = 1112.0
 offset_bottom = 59.0
 text = "BACK"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 996.0
+offset_top = 28.0
+offset_right = 1127.0
+offset_bottom = 59.0
+text = "back to desktop"
+
+[connection signal="pressed" from="Button" to="." method="on_pressed_back_to_scene_button"]
