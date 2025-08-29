@@ -5,26 +5,20 @@
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
 [ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
-[ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
+[ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
 [ext_resource type="Texture2D" uid="uid://dblkj16gwiu5h" path="res://assets/checklist/checklist_icon.png" id="6_81ico"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
 [ext_resource type="Script" uid="uid://bdm1jxmjx5vdq" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
-[ext_resource type="Script" uid="uid://d0pyeaca5j5xs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
 [ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
 [ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
-[ext_resource type="Texture2D" uid="uid://dfj11c522t51p" path="res://assets/Stamp.png" id="12_stamp"]
-[ext_resource type="Script" uid="uid://dlpkmqdior70" path="res://scripts/red_on_game.gd" id="13_nf1ce"]
-[ext_resource type="Script" uid="uid://bwto5q05h3ane" path="res://scripts/all_pens.gd" id="13_vynom"]
-[ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="14_vynom"]
-[ext_resource type="Script" uid="uid://b3gkaf4h0xl6g" path="res://scripts/green_on_game.gd" id="15_pxt5h"]
 [ext_resource type="Texture2D" uid="uid://bymbirs7ujrpj" path="res://assets/Stamp.png" id="12_stamp"]
 [ext_resource type="Texture2D" uid="uid://df1dgi1cosbfu" path="res://assets/Stamp checkbox.png" id="13_silwv"]
 [ext_resource type="Texture2D" uid="uid://cp1bjprkw0ia3" path="res://assets/Stamp x.png" id="14_stamp_x"]
-[ext_resource type="Script" uid="uid://cdjvm6licjc33" path="res://scripts/red_on_game.gd" id="15_nf1ce"]
-[ext_resource type="Script" uid="uid://i0nds5o20v6c" path="res://scripts/all_pens.gd" id="16_vynom"]
+[ext_resource type="Script" uid="uid://dlpkmqdior70" path="res://scripts/red_on_game.gd" id="15_nf1ce"]
+[ext_resource type="Script" uid="uid://bwto5q05h3ane" path="res://scripts/all_pens.gd" id="16_vynom"]
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="17_vynom"]
-[ext_resource type="Script" uid="uid://cihv1hrxt4fhu" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
+[ext_resource type="Script" uid="uid://b3gkaf4h0xl6g" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -44,6 +38,24 @@ size = Vector2(1758.37, 2064.47)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x_option"]
 size = Vector2(1808.3, 2112.71)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8q4eb"]
+atlas = ExtResource("17_vynom")
+region = Rect2(40, 0, 40, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sw306"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8q4eb")
+}],
+"loop": true,
+"name": &"green",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ao44p"]
+height = 56.0
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_5laeg"]
 atlas = ExtResource("17_vynom")
 region = Rect2(0, 0, 40, 50)
@@ -62,24 +74,6 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6chj6"]
 radius = 12.0
 height = 54.0
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8q4eb"]
-atlas = ExtResource("17_vynom")
-region = Rect2(40, 0, 40, 50)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_sw306"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8q4eb")
-}],
-"loop": true,
-"name": &"green",
-"speed": 5.0
-}]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ao44p"]
-height = 56.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vynom"]
 atlas = ExtResource("17_vynom")
@@ -247,8 +241,26 @@ offset_bottom = 243.0
 text = "Looks like I can only write on a paper"
 
 [node name="Pens" type="Node2D" parent="."]
-z_index = 250
+z_index = 100
+z_as_relative = false
 script = ExtResource("16_vynom")
+
+[node name="Green" type="Area2D" parent="Pens"]
+position = Vector2(187, 480)
+script = ExtResource("18_pxt5h")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pens/Green"]
+position = Vector2(-10, 11)
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_sw306")
+animation = &"green"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pens/Green"]
+position = Vector2(2, -17)
+shape = SubResource("CapsuleShape2D_ao44p")
+
+[node name="Marker2D" type="Marker2D" parent="Pens/Green"]
+position = Vector2(-3, 66)
 
 [node name="Red" type="Area2D" parent="Pens"]
 position = Vector2(129, 476)
@@ -267,22 +279,10 @@ position = Vector2(-1, 70)
 position = Vector2(4, -14)
 shape = SubResource("CapsuleShape2D_6chj6")
 
-[node name="Green" type="Area2D" parent="Pens"]
-position = Vector2(187, 480)
-script = ExtResource("18_pxt5h")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pens/Green"]
-position = Vector2(-10, 11)
-scale = Vector2(2.5, 2.5)
-sprite_frames = SubResource("SpriteFrames_sw306")
-animation = &"green"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pens/Green"]
-position = Vector2(2, -17)
-shape = SubResource("CapsuleShape2D_ao44p")
-
-[node name="Marker2D" type="Marker2D" parent="Pens/Green"]
-position = Vector2(-3, 66)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pens"]
+position = Vector2(167, 524)
+scale = Vector2(3.44697, 3.21)
+sprite_frames = SubResource("SpriteFrames_pxt5h")
 
 [node name="TimerBackground" type="ColorRect" parent="."]
 offset_left = 949.0
@@ -307,16 +307,10 @@ wait_time = 90.0
 one_shot = true
 autostart = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-top_level = true
-position = Vector2(167, 524)
-scale = Vector2(3.44697, 3.21)
-sprite_frames = SubResource("SpriteFrames_pxt5h")
-
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="input_event" from="checklist_icon/Area2D" to="." method="_on_checklist_icon_input_event"]
 [connection signal="input_event" from="stamp/Area2D" to="." method="_on_stamp_area_input_event"]
 [connection signal="input_event" from="stamp/StampOptions/CheckOption/Area2D" to="." method="_on_check_option_input_event"]
 [connection signal="input_event" from="stamp/StampOptions/XOption/Area2D" to="." method="_on_x_option_input_event"]
-[connection signal="input_event" from="Pens/Red" to="Pens/Red" method="_on_sprite_input_event"]
 [connection signal="input_event" from="Pens/Green" to="Pens/Green" method="_on_sprite_input_event"]
+[connection signal="input_event" from="Pens/Red" to="Pens/Red" method="_on_sprite_input_event"]

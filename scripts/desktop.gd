@@ -35,6 +35,10 @@ func _ready():
 	
 	$".".mouse_filter = Control.MOUSE_FILTER_STOP
 	$".".gui_input.connect(_on_desktop_clicked)
+		# Force all children to inherit scale
+	for child in get_children():
+		if child is CanvasItem:
+			child.scale = scale
 
 
 func _on_news_button_pressed():

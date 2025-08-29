@@ -189,7 +189,7 @@ func start_drawing():
 	current_line = Line2D.new()
 	current_line.width = pen_width
 	current_line.default_color = pen_color
-	current_line.z_index = 1000  # High z-index to appear above paper
+	current_line.z_index = 100  # High z-index to appear above paper
 	
 	# Add the line as a child of the paper node so it stays within paper boundaries
 	paper_node.add_child(current_line)
