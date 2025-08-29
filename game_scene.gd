@@ -83,6 +83,28 @@ func _ready() -> void:
 	stamps_layer = Node2D.new()
 	add_child(stamps_layer)
 
+	# --- Added: make paper detectable by player.gd and make stamp options part of "stamp" group ---
+	if paper:
+		# allow player.gd to find paper via group "paper"
+		if not paper.is_in_group("paper"):
+			paper.add_to_group("paper")
+	if student_paper:
+		# optional: allow detection if needed
+		if not student_paper.is_in_group("paper"):
+			student_paper.add_to_group("paper")
+
+	# Rename and group stamp option sprites so player.gd recognizes them when clicked
+	if check_option_sprite:
+		# include 'approve' in the name so player.gd infers approved stamp
+		check_option_sprite.name = "Approve_StampOption"
+		if not check_option_sprite.is_in_group("stamp"):
+			check_option_sprite.add_to_group("stamp")
+	if x_option_sprite:
+		# include 'deny' or 'denied' in the name so player.gd infers denied stamp
+		x_option_sprite.name = "Denied_StampOption"
+		if not x_option_sprite.is_in_group("stamp"):
+			x_option_sprite.add_to_group("stamp")
+	
 func get_random_reports(count: int) -> Array:
 	var chosen = []
 	var available_reports = Global.active_reports
