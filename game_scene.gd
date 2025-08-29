@@ -30,6 +30,7 @@ var stamps_layer: Node2D
 var check_armed := false
 var x_armed := false
 var placed_stamp_target_scale := 3.0
+var current_student_report_text: String = ""  # Store the current report text
 
 
 func _ready() -> void:
@@ -38,7 +39,7 @@ func _ready() -> void:
 	
 	checklist_ui.visible = false
 	
-	$checklist_icon/Area2D.input_event.connect(_on_checklist_icon_input_event)
+	# Signal connection handled in scene file
 	
 	
 	if player:
@@ -85,18 +86,35 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		paper.visible = true
 		student_paper.visible = false
 		
-		var all_reports = Global.correct_student_report + Global.incorrect_student_report
+		# Paper is now visible for drawing
+		# Refresh paper reference for all pens
+		refresh_pens_paper_reference()
 		
-		if all_reports.size() > 0:
-			var random_index = randi() % all_reports.size()
-			var report = all_reports[random_index]
-			var report_text = "%s\n\n%s\n\n%s" % [
-			report["headline"],
-			report["body"],
-			report["additional_info"]
-			]
-			paper_text.text = report_text
+		# Only generate new report text if we don't have one yet
+		if current_student_report_text == "":
+			var all_reports = Global.correct_student_report + Global.incorrect_student_report
+			
+			if all_reports.size() > 0:
+				var random_index = randi() % all_reports.size()
+				var report = all_reports[random_index]
+				current_student_report_text = "%s\n\n%s\n\n%s" % [
+				report["headline"],
+				report["body"],
+				report["additional_info"]
+				]
 		
+		# Always show the stored report text
+		paper_text.text = current_student_report_text
+
+func refresh_pens_paper_reference():
+	# Find all pens and refresh their paper reference
+	var pens = get_node_or_null("Pens")
+	if pens:
+		for pen in pens.get_children():
+			if pen.has_method("refresh_paper_reference"):
+				pen.refresh_paper_reference()
+				print("Refreshed paper reference for pen: ", pen.name)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -163,6 +181,20 @@ func _on_player_reached_middle():
 	student_paper.visible = true
 	Global.get_random_reports(3)
 	Global.get_random_student_reports(1)
+	
+	# Generate the initial student report text
+	if current_student_report_text == "":
+		var all_reports = Global.correct_student_report + Global.incorrect_student_report
+		
+		if all_reports.size() > 0:
+			var random_index = randi() % all_reports.size()
+			var report = all_reports[random_index]
+			current_student_report_text = "%s\n\n%s\n\n%s" % [
+			report["headline"],
+			report["body"],
+			report["additional_info"]
+			]
+			print("Initial student report generated: ", report["headline"])
 
 func _on_student_paper_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -181,21 +213,22 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				paper.visible = true
 				student_paper.visible = false
 				
-				# Pick one random report to display
-				var random_report = get_random_reports(1)[0]
-
-				# Build plain text without BBCode
-				var text_to_show = random_report.publisher + "\n\n" + \
-					"\"" + random_report.headline + "\"\n\n" + \
-					random_report.body + "\n\n" + \
-					"Who: " + random_report.who + "\n" + \
-					"What: " + random_report.what + "\n" + \
-					"When: " + random_report.when + "\n" + \
-					"Where: " + random_report.where + "\n" + \
-					"Why: " + random_report.why + "\n\n" + \
-					random_report.date
+				# Use the same stored report text as the student paper
+				if current_student_report_text == "":
+					# Generate the report text if it doesn't exist yet
+					var all_reports = Global.correct_student_report + Global.incorrect_student_report
 					
-				paper_text.text = text_to_show
+					if all_reports.size() > 0:
+						var random_index = randi() % all_reports.size()
+						var report = all_reports[random_index]
+						current_student_report_text = "%s\n\n%s\n\n%s" % [
+						report["headline"],
+						report["body"],
+						report["additional_info"]
+						]
+				
+				# Always show the same stored report text
+				paper_text.text = current_student_report_text
 			else:
 				# Hide both stamp options and student paper content
 				paper_open = false
