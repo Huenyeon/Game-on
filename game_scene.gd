@@ -9,6 +9,8 @@ extends Node2D
 @onready var checklist_ui: Node2D = $ChecklistUI
 @onready var clipboard_sprite: Sprite2D = $ChecklistUI/Clipboard
 
+@onready var game_timer: Timer = $TimerBackground/TimerLabel/GameTimer
+@onready var timer_label: Label = $TimerBackground/TimerLabel
 
 var paper_open = false
 var rng := RandomNumberGenerator.new()
@@ -94,6 +96,15 @@ func _ready() -> void:
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))
 		player.set_checklist_ui(checklist_ui)
+		
+	# Setup timer
+	game_timer.one_shot = true
+	game_timer.start()
+	game_timer.timeout.connect(_on_game_timer_timeout)
+	
+	# Initialize label
+	_update_timer_label()
+
 
 func get_random_reports(count: int) -> Array:
 	var chosen = []
@@ -102,8 +113,6 @@ func get_random_reports(count: int) -> Array:
 		if candidate not in chosen:
 			chosen.append(candidate)
 	return chosen
-
-
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -147,7 +156,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		# Handle checklist closing when clicking outside
 		if checklist_ui.visible:
-			# Use the actual clipboard sprite rect if available
 			var should_close := true
 			if clipboard_sprite and clipboard_sprite.texture:
 				var clip_size := clipboard_sprite.texture.get_size() * clipboard_sprite.scale
@@ -157,16 +165,37 @@ func _unhandled_input(event: InputEvent) -> void:
 			if should_close:
 				checklist_ui.visible = false
 
-# When the checklist icon is clicked
 func _on_checklist_icon_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		checklist_ui.visible = true
  
-
-
 func _on_player_reached_middle():
 	student_paper.visible = true
 
 func _on_student_paper_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		paper.visible = true
+		
+func _on_game_timer_timeout():
+	timer_label.text = "0:00"
+	# Action when time runs out
+	print("Time’s up! Game over.")
+	# Example: hide everything or end scene
+	paper.visible = false
+	student_paper.visible = false
+	checklist_ui.visible = false
+
+func _process(delta: float) -> void:
+	if game_timer.time_left > 0:
+		_update_timer_label()
+
+func _update_timer_label() -> void:
+	var time_left = int(game_timer.time_left)
+	var minutes = time_left / 60
+	var seconds = time_left % 60
+	timer_label.text = str(minutes) + ":" + ("%02d" % seconds)
+
+	if time_left <= 10:
+		timer_label.add_theme_color_override("font_color", Color.RED)
+	else:
+		timer_label.add_theme_color_override("font_color", Color.GREEN)
