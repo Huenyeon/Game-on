@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=21 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://lejy6igsihyt" path="res://assets/images/background.png" id="2_x4c55"]
@@ -11,7 +11,9 @@
 [ext_resource type="Script" uid="uid://d0pyeaca5j5xs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
 [ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
 [ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
-[ext_resource type="Texture2D" uid="uid://dfj11c522t51p" path="res://assets/Stamp.png" id="12_stamp"]
+[ext_resource type="Texture2D" uid="uid://bymbirs7ujrpj" path="res://assets/Stamp.png" id="12_stamp"]
+[ext_resource type="Texture2D" uid="uid://df1dgi1cosbfu" path="res://assets/Stamp checkbox.png" id="13_silwv"]
+[ext_resource type="Texture2D" uid="uid://cp1bjprkw0ia3" path="res://assets/Stamp x.png" id="14_stamp_x"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -20,7 +22,16 @@ distance = -265.0
 size = Vector2(167.177, 103.165)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_juocg"]
-size = Vector2(65.926, 82.7587)
+size = Vector2(69.6297, 92.7836)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stamp_click"]
+size = Vector2(120, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_check_option"]
+size = Vector2(1758.37, 2064.47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x_option"]
+size = Vector2(1808.3, 2112.71)
 
 [node name="Game Scene" type="Node2D"]
 script = ExtResource("1_3ad2y")
@@ -67,7 +78,7 @@ texture = ExtResource("8_f3g3v")
 [node name="Area2D" type="Area2D" parent="checklist_icon"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="checklist_icon/Area2D"]
-position = Vector2(-1.85181, 6.20679)
+position = Vector2(-1.48148, 3.0928)
 shape = SubResource("RectangleShape2D_juocg")
 
 [node name="Desktop" parent="." instance=ExtResource("11_desktop")]
@@ -77,6 +88,7 @@ offset_right = 1000.0
 offset_bottom = 636.0
 
 [node name="ChecklistUI" type="Node2D" parent="."]
+visible = false
 position = Vector2(0, -1)
 script = ExtResource("9_c8mr4")
 
@@ -125,4 +137,40 @@ position = Vector2(1046, 527)
 scale = Vector2(0.075, 0.0876953)
 texture = ExtResource("12_stamp")
 
+[node name="Area2D" type="Area2D" parent="stamp"]
+scale = Vector2(13.3333, 11.407)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/Area2D"]
+shape = SubResource("RectangleShape2D_stamp_click")
+
+[node name="StampOptions" type="Node2D" parent="stamp"]
+scale = Vector2(13.3333, 11.407)
+
+[node name="CheckOption" type="Sprite2D" parent="stamp/StampOptions"]
+position = Vector2(-2, -374.872)
+scale = Vector2(0.086444, 0.100718)
+texture = ExtResource("13_silwv")
+
+[node name="Area2D" type="Area2D" parent="stamp/StampOptions/CheckOption"]
+position = Vector2(-1.45895, -426.607)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/CheckOption/Area2D"]
+position = Vector2(-10.1094, 297.573)
+shape = SubResource("RectangleShape2D_check_option")
+
+[node name="XOption" type="Sprite2D" parent="stamp/StampOptions"]
+position = Vector2(0, -153.948)
+scale = Vector2(0.0829445, 0.0986359)
+texture = ExtResource("14_stamp_x")
+
+[node name="Area2D" type="Area2D" parent="stamp/StampOptions/XOption"]
+position = Vector2(-24.1126, -445.934)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/XOption/Area2D"]
+position = Vector2(24.1826, 357.056)
+shape = SubResource("RectangleShape2D_x_option")
+
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="input_event" from="stamp/Area2D" to="." method="_on_stamp_area_input_event"]
+[connection signal="input_event" from="stamp/StampOptions/CheckOption/Area2D" to="." method="_on_check_option_input_event"]
+[connection signal="input_event" from="stamp/StampOptions/XOption/Area2D" to="." method="_on_x_option_input_event"]

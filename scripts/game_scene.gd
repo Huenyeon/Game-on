@@ -5,6 +5,8 @@ extends Node2D
 @onready var paper_text: RichTextLabel = $paper/MarginContainer/Text
 @onready var stamp: Sprite2D = $stamp
 @onready var stamp_options: Node2D = $stamp/StampOptions
+@onready var stamp_check_option: Sprite2D = $stamp/StampOptions/CheckOption
+@onready var stamp_x_option: Sprite2D = $stamp/StampOptions/XOption
 
 # =======================
 # Variables
@@ -46,6 +48,14 @@ func _ready() -> void:
 	paper_open = false 
 	stamp_options.visible = false
 
+	# Assign textures for stamp options
+	var check_tex: Texture2D = load("res://assets/Stamp checkbox.png")
+	var x_tex: Texture2D = load("res://assets/Stamp x.png")
+	if check_tex:
+		stamp_check_option.texture = check_tex
+	if x_tex:
+		stamp_x_option.texture = x_tex
+
 
 # =======================
 # When the player clicks on the student paper
@@ -63,7 +73,28 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 
 func _on_stamp_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
+		# Center options and ensure spacing
+		var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+		var center: Vector2 = viewport_size * 0.5
+		stamp_options.global_position = center
+		stamp_check_option.position = Vector2(-60, 0)
+		stamp_x_option.position = Vector2(60, 0)
 		stamp_options.visible = not stamp_options.visible
+		get_tree().set_input_as_handled()
+
+
+func _on_check_option_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		stamp_options.visible = false
+		# TODO: implement check stamping behavior
+		get_tree().set_input_as_handled()
+
+
+func _on_x_option_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		stamp_options.visible = false
+		# TODO: implement X stamping behavior
+		get_tree().set_input_as_handled()
 		
 		
 func _unhandled_input(event: InputEvent) -> void:
@@ -83,8 +114,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if stamp_options.visible:
 			var mouse_pos2 = get_viewport().get_mouse_position()
-			var options_top_left := stamp.global_position + Vector2(40, -20)
-			var options_rect := Rect2(options_top_left, Vector2(96, 48))
-			if not options_rect.has_point(mouse_pos2):
+			var check_size := (stamp_check_option.texture != null) ? stamp_check_option.texture.get_size() * stamp_check_option.global_scale : Vector2.ZERO
+			var x_size := (stamp_x_option.texture != null) ? stamp_x_option.texture.get_size() * stamp_x_option.global_scale : Vector2.ZERO
+			var check_top_left := stamp_check_option.global_position - (check_size * 0.5)
+			var x_top_left := stamp_x_option.global_position - (x_size * 0.5)
+			var check_rect := Rect2(check_top_left, check_size)
+			var x_rect := Rect2(x_top_left, x_size)
+			if not (check_rect.has_point(mouse_pos2) or x_rect.has_point(mouse_pos2)):
 				stamp_options.visible = false
 		
