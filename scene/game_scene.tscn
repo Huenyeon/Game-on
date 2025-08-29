@@ -57,6 +57,26 @@ position = Vector2(545, 367)
 scale = Vector2(1.22656, 0.549154)
 texture = ExtResource("3_foe2p")
 
+[node name="paper" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(523, 326)
+scale = Vector2(2.06383, 2)
+texture = ExtResource("4_vuqbi")
+z_index = 100
+
+[node name="MarginContainer" type="MarginContainer" parent="paper"]
+offset_left = -81.0
+offset_top = -115.0
+offset_right = 76.0
+offset_bottom = 113.0
+
+[node name="Text" type="RichTextLabel" parent="paper/MarginContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_y3ouy")
+theme_override_font_sizes/normal_font_size = 9
+scroll_active = false
+tab_size = 1
 [node name="student paper" type="Sprite2D" parent="."]
 position = Vector2(305, 560)
 rotation = -0.00409461
@@ -91,6 +111,7 @@ offset_bottom = 636.0
 visible = false
 position = Vector2(0, -1)
 script = ExtResource("9_c8mr4")
+z_index = 150
 
 [node name="Clipboard" type="Sprite2D" parent="ChecklistUI"]
 position = Vector2(591, 260.875)
@@ -112,25 +133,7 @@ position = Vector2(138, 245)
 [node name="Checkbox4" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
 position = Vector2(139, 295)
 
-[node name="paper" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(523, 326)
-scale = Vector2(2.06383, 2)
-texture = ExtResource("4_vuqbi")
 
-[node name="MarginContainer" type="MarginContainer" parent="paper"]
-offset_left = -81.0
-offset_top = -115.0
-offset_right = 76.0
-offset_bottom = 113.0
-
-[node name="Text" type="RichTextLabel" parent="paper/MarginContainer"]
-layout_mode = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("5_y3ouy")
-theme_override_font_sizes/normal_font_size = 8
-scroll_active = false
-tab_size = 1
 
 [node name="stamp" type="Sprite2D" parent="."]
 position = Vector2(1046, 527)
@@ -145,11 +148,13 @@ shape = SubResource("RectangleShape2D_stamp_click")
 
 [node name="StampOptions" type="Node2D" parent="stamp"]
 scale = Vector2(13.3333, 11.407)
+z_index = 200
 
 [node name="CheckOption" type="Sprite2D" parent="stamp/StampOptions"]
 position = Vector2(-2, -374.872)
 scale = Vector2(0.086444, 0.100718)
 texture = ExtResource("13_silwv")
+z_index = 201
 
 [node name="Area2D" type="Area2D" parent="stamp/StampOptions/CheckOption"]
 position = Vector2(-1.45895, -426.607)
@@ -162,6 +167,7 @@ shape = SubResource("RectangleShape2D_check_option")
 position = Vector2(0, -153.948)
 scale = Vector2(0.0829445, 0.0986359)
 texture = ExtResource("14_stamp_x")
+z_index = 201
 
 [node name="Area2D" type="Area2D" parent="stamp/StampOptions/XOption"]
 position = Vector2(-24.1126, -445.934)
