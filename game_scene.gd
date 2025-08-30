@@ -83,6 +83,53 @@ func _ready() -> void:
 	stamps_layer = Node2D.new()
 	add_child(stamps_layer)
 
+	# --- Added: make paper detectable by player.gd and make stamp options part of "stamp" group ---
+	if paper:
+		# allow player.gd to find paper via group "paper"
+		if not paper.is_in_group("paper"):
+			paper.add_to_group("paper")
+	if student_paper:
+		# optional: allow detection if needed
+		if not student_paper.is_in_group("paper"):
+			student_paper.add_to_group("paper")
+
+	# Rename and group stamp option sprites so player.gd recognizes them when clicked
+	if check_option_sprite:
+		# include 'approve' in the name so player.gd infers approved stamp
+		check_option_sprite.name = "Approve_StampOption"
+		if not check_option_sprite.is_in_group("stamp"):
+			check_option_sprite.add_to_group("stamp")
+	if x_option_sprite:
+		# include 'deny' or 'denied' in the name so player.gd infers denied stamp
+		x_option_sprite.name = "Denied_StampOption"
+		if not x_option_sprite.is_in_group("stamp"):
+			x_option_sprite.add_to_group("stamp")
+	
+	if has_node("stamp"):
+		var stamp_root = get_node("stamp")
+		# add the root stamp Sprite2D
+		if stamp_root is CanvasItem and not stamp_root.is_in_group("stamp"):
+			stamp_root.add_to_group("stamp")
+		# add top-level Area2D (the click zone) if present
+		if stamp_root.has_node("Area2D"):
+			var sa = stamp_root.get_node("Area2D")
+			if not sa.is_in_group("stamp"):
+				sa.add_to_group("stamp")
+		# add StampOptions and any Area2D children under it
+		if stamp_root.has_node("StampOptions"):
+			var so = stamp_root.get_node("StampOptions")
+			if not so.is_in_group("stamp"):
+				so.add_to_group("stamp")
+			# Add nested Area2D nodes (CheckOption/Area2D, XOption/Area2D)
+			if so.has_node("CheckOption/Area2D"):
+				var ca = so.get_node("CheckOption/Area2D")
+				if not ca.is_in_group("stamp"):
+					ca.add_to_group("stamp")
+			if so.has_node("XOption/Area2D"):
+				var xa = so.get_node("XOption/Area2D")
+				if not xa.is_in_group("stamp"):
+					xa.add_to_group("stamp")
+
 func get_random_reports(count: int) -> Array:
 	var chosen = []
 	var available_reports = Global.active_reports
@@ -127,6 +174,10 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 				var random_index = randi() % available_reports.size()
 				Global.current_student_report = available_reports[random_index]
 				Global.used_reports.append(Global.current_student_report)
+				
+				# Reset player's stamp state so they can stamp this newly-opened paper
+				if player and player.has_method("reset_stamp_state"):
+					player.reset_stamp_state()
 		
 		# Display the selected student report
 		if Global.current_student_report:
@@ -237,6 +288,10 @@ func show_student_paper():
 	Global.get_random_reports(3)
 	Global.get_random_student_reports(1)
 	
+	# Reset player's stamp state when the student paper view opens
+	if player and player.has_method("reset_stamp_state"):
+		player.reset_stamp_state()
+	
 	# Generate the initial student report text
 	if current_student_report_text == "":
 		var all_reports = Global.correct_student_report + Global.incorrect_student_report
@@ -260,6 +315,8 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 		if stamp_options:
 			var will_show := not stamp_options.visible
 			stamp_options.visible = will_show
+			# Track that the stamp Area2D was clicked (stamp UI opened)
+			Global.stamp_ui_opened = will_show
 			
 			# Also show/hide the student paper content when stamp options are toggled
 			if will_show:
@@ -268,11 +325,23 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				paper.visible = true
 				student_paper.visible = false
 				
-				# Use the same stored report text as the student paper
-				if current_student_report_text == "":
-					# Generate the report text if it doesn't exist yet
+				# Prefer an already-selected Global.current_student_report.
+				# If that's not present, prefer the local cached current_student_report_text.
+				# Only generate a new random report as a last resort.
+				if Global.current_student_report:
+					# Use the selected global student report so opening stamps won't change it
+					var report_text = "%s\n\n%s\n\n%s" % [
+						Global.current_student_report["headline"],
+						Global.current_student_report["body"],
+						Global.current_student_report["additional_info"]
+					]
+					paper_text.text = report_text
+				elif current_student_report_text != "":
+					# Use cached text (won't overwrite an already-generated report)
+					paper_text.text = current_student_report_text
+				else:
+					# Last resort: generate a local random report without modifying globals
 					var all_reports = Global.correct_student_report + Global.incorrect_student_report
-					
 					if all_reports.size() > 0:
 						var random_index = rng.randi() % all_reports.size()
 						var report = all_reports[random_index]
@@ -281,9 +350,7 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 							report["body"],
 							report["additional_info"]
 						]
-				
-				# Always show the same stored report text
-				paper_text.text = current_student_report_text
+						paper_text.text = current_student_report_text
 			else:
 				# Hide both stamp options and student paper content
 				paper_open = false
@@ -293,6 +360,9 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				dragging_x = false
 				check_armed = false
 				x_armed = false
+				
+				# Stamp UI closed -> clear global flag
+				Global.stamp_ui_opened = false
 			
 			# Reset positions to original on reopen
 			if will_show:
@@ -311,6 +381,17 @@ func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
 	s.z_index = 100
 	stamps_layer.add_child(s)
 
+	# Prevent the player from selecting another stamp after placing one via the UI
+	# Close the stamp UI and mark the player's stamped state.
+	if stamp_options:
+		stamp_options.visible = false
+	# Clear the global stamp UI opened flag so player selection requires reopening
+	if "stamp_ui_opened" in Global:
+		Global.stamp_ui_opened = false
+	# If player exists, tell it that stamping occurred so it won't allow new selection
+	if player and player.has_method("set_has_stamped"):
+		player.set_has_stamped(true)
+
 func _on_check_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if check_armed:
@@ -324,6 +405,8 @@ func _on_check_option_input_event(_viewport: Node, event: InputEvent, _shape_idx
 			# reset option positions for next open
 			x_option_sprite.global_position = x_option_original_global
 			check_option_sprite.global_position = check_option_original_global
+			# stamping done -> clear stamp UI opened flag
+			Global.stamp_ui_opened = false
 			return
 		dragging_check = true
 		drag_start_mouse = get_viewport().get_mouse_position()
@@ -348,6 +431,8 @@ func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: in
 			# reset option positions for next open
 			x_option_sprite.global_position = x_option_original_global
 			check_option_sprite.global_position = check_option_original_global
+			# stamping done -> clear stamp UI opened flag
+			Global.stamp_ui_opened = false
 			return
 		dragging_x = true
 		drag_start_mouse = get_viewport().get_mouse_position()
@@ -397,7 +482,3 @@ func set_pen_interaction(active: bool, pen_node: Node = null):
 		active_pen_node = null
 		print("Pen interaction ended")
 		return true
-
-# Function to check if a specific pen can be used
-func can_use_pen(pen_node: Node) -> bool:
-	return not pen_interaction_active or active_pen_node == pen_node

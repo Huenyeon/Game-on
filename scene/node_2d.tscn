@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4liidftaj0en"]
+[gd_scene load_steps=3 format=3 uid="uid://dile7j7wlpfsy"]
 
-[ext_resource type="Script" uid="uid://b0n8updhwu81s" path="res://scripts/first_intro.gd" id="1_guiot"]
+[ext_resource type="Script" uid="uid://pg3f6w051ebf" path="res://scripts/first_intro.gd" id="1_guiot"]
 [ext_resource type="Texture2D" uid="uid://o105it3jxdn1" path="res://assets/images/background start.jpg" id="2_guiot"]
 
 [node name="Node2D" type="Node2D"]
