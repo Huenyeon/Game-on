@@ -159,12 +159,6 @@ position = Vector2(-297.207, 59.2539)
 position = Vector2(273.978, -81.5996)
 shape = SubResource("RectangleShape2D_juocg")
 
-[node name="Desktop" parent="." instance=ExtResource("11_desktop")]
-offset_left = 609.0
-offset_top = 223.0
-offset_right = 1000.0
-offset_bottom = 636.0
-
 [node name="ChecklistUI" type="Node2D" parent="."]
 visible = false
 z_index = 150
@@ -232,13 +226,6 @@ position = Vector2(-24.1126, -445.934)
 position = Vector2(60.2816, 425.668)
 shape = SubResource("RectangleShape2D_x_option")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = -1006.0
-offset_top = 64.0
-offset_right = -524.0
-offset_bottom = 243.0
-text = "Looks like I can only write on a paper"
-
 [node name="Pens" type="Node2D" parent="."]
 z_index = 100
 z_as_relative = false
@@ -305,6 +292,12 @@ vertical_alignment = 1
 wait_time = 90.0
 one_shot = true
 autostart = true
+
+[node name="Desktop" parent="." instance=ExtResource("11_desktop")]
+offset_left = 619.0
+offset_top = 227.0
+offset_right = 1010.0
+offset_bottom = 640.0
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="input_event" from="checklist_icon/Area2D" to="." method="_on_checklist_icon_input_event"]

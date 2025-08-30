@@ -8,8 +8,8 @@ position = Vector2(-51, 26)
 script = ExtResource("1_guiot")
 
 [node name="BgPlaceholder" type="Sprite2D" parent="."]
-position = Vector2(682, 256)
-scale = Vector2(1.41527, 1)
+position = Vector2(720.001, 256)
+scale = Vector2(1.50596, 1)
 texture = ExtResource("1_drhme")
 
 [node name="Camera2D" type="Camera2D" parent="."]
