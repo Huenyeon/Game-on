@@ -44,6 +44,8 @@ func _on_news_item_pressed(index: int):
 	$NewsDetails.visible = true
 	$PublishersButton.visible = false
 	$NewsButton.visible = false
+	$Button.visible= false
+	
 	# Hide all sets first
 	for child in $NewsDetails.get_children():
 		if child.name != "BackButton":
@@ -62,6 +64,7 @@ func _on_back_button_pressed():
 	$NewsContent.visible = true
 	$PublishersButton.visible = true
 	$NewsButton.visible = true
+	$Button.visible= true
 	
 
 
