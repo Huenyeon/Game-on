@@ -205,3 +205,37 @@ func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: in
 			return
 		# TODO: implement X stamping behavior
 		get_tree().set_input_as_handled()
+
+
+func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
+	if tex == null:
+		return
+	var s := Sprite2D.new()
+	s.texture = tex
+	s.global_position = global_pos
+	s.scale = Vector2.ONE * placed_stamp_target_scale
+	s.z_index = 100
+	stamps_layer.add_child(s)
+
+	# Prevent the player from selecting another stamp after placing one via the UI
+	# Close the stamp UI and mark the player's stamped state.
+	if stamp_options:
+		stamp_options.visible = false
+	# Clear the global stamp UI opened flag so player selection requires reopening
+	if "stamp_ui_opened" in Global:
+		Global.stamp_ui_opened = false
+	# If player exists, tell it that stamping occurred so it won't allow new selection
+	if player and player.has_method("set_has_stamped"):
+		player.set_has_stamped(true)
+
+	# --- NEW: save last stamp info and open end-result scene ---
+	var report_for_eval = Global.current_student_report if Global.current_student_report != null else null
+	Global.last_stamp = {
+		"type": ( "approved" if tex == approve_stamp_tex else "denied" ),
+		"report": report_for_eval
+	}
+	# default to normal logic; set Global.end_result_inverted elsewhere if needed
+	Global.end_result_inverted = false
+	# wait 1s so the placed stamp is visible, then show results
+	await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_file("res://scene/end_result.tscn")

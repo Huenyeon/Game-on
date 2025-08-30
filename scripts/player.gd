@@ -98,7 +98,7 @@ func _input(event):
 			for paper in get_tree().get_nodes_in_group("paper"):
 				if paper is Sprite2D and _is_point_in_sprite(paper, mp):
 					clicked_on_paper = true
-					applied = _apply_stamp_to_paper(paper, mp) # now returns bool
+					applied = await _apply_stamp_to_paper(paper, mp) # await coroutine
 					if applied:
 						# mark player as having stamped so they can't pick another stamp
 						_has_stamped = true
@@ -174,7 +174,7 @@ func _apply_stamp_to_paper(paper: Sprite2D, position: Vector2) -> bool:
 		if _selected_stamp and _selected_stamp.scale:
 			new_stamp.scale = _selected_stamp.scale * 20.0
 		else:
-			new_stamp.scale = Vector2.ONE * 40.0  # 20x the default scale (2.0)
+			new_stamp.scale = Vector2.ONE * 40.0
 		
 		# Ensure stamp appears above the paper
 		new_stamp.z_index = 100
@@ -192,6 +192,26 @@ func _apply_stamp_to_paper(paper: Sprite2D, position: Vector2) -> bool:
 		# Optional: Signal that the paper has been stamped
 		if paper.has_method("on_stamped"):
 			paper.call("on_stamped", _stamp_type)
+		
+		# Save decision so end scene can evaluate
+		Global.last_stamp = {
+			"type": _stamp_type,
+			"report": (Global.current_student_report if Global.current_student_report != null else null)
+		}
+		# default to normal logic
+		Global.end_result_inverted = false
+		
+		# mark player as having stamped so they can't pick another stamp
+		_has_stamped = true
+		
+		# Deselect the stamp and restore cursor immediately
+		_deselect_stamp()
+		
+		# Pause briefly so player sees the placed stamp before showing result
+		await get_tree().create_timer(1.0).timeout
+		
+		# Switch to end-result scene to display 1.png/2.png based on correctness
+		get_tree().change_scene_to_file("res://scene/end_result.tscn")
 		
 		return true
 
