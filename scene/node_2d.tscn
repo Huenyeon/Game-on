@@ -1,19 +1,19 @@
 [gd_scene load_steps=3 format=3 uid="uid://b4liidftaj0en"]
 
-[ext_resource type="Texture2D" uid="uid://b2mtfi2lamwl4" path="res://assets/bg_placeholder.png" id="1_drhme"]
 [ext_resource type="Script" uid="uid://b0n8updhwu81s" path="res://scripts/first_intro.gd" id="1_guiot"]
+[ext_resource type="Texture2D" uid="uid://o105it3jxdn1" path="res://assets/images/background start.jpg" id="2_guiot"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(-51, 26)
 script = ExtResource("1_guiot")
 
-[node name="BgPlaceholder" type="Sprite2D" parent="."]
-position = Vector2(720.001, 256)
-scale = Vector2(1.50596, 1)
-texture = ExtResource("1_drhme")
+[node name="BackgroundStart" type="Sprite2D" parent="."]
+position = Vector2(654.75, 279)
+scale = Vector2(1.0146, 1)
+texture = ExtResource("2_guiot")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(534, 321)
+position = Vector2(376, 370)
 zoom = Vector2(2, 2)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
