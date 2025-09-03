@@ -13,7 +13,7 @@ func _ready() -> void:
 	if "last_stamp" in Global:
 		info = Global.last_stamp
 	if info == null:
-		info_label.text = "No stamping data."
+		info_label.text = "Time's up! Let's go again."
 		result_sprite.texture = tex_bad
 		return
 
@@ -38,10 +38,10 @@ func _ready() -> void:
 	# Show result image and message
 	if correct_decision:
 		result_sprite.texture = tex_ok
-		info_label.text = "Paper approved."
+		info_label.text = "Great job scanning the paper!"
 	else:
 		result_sprite.texture = tex_bad
-		info_label.text = "Paper denied."
+		info_label.text = "It looks like the scan didn’t come out quite right."
 	# Ensure the TextureRect uses centered scaling (scene already uses CenterContainer + stretch mode)
 	continue_btn.pressed.connect(_on_continue_pressed)
 

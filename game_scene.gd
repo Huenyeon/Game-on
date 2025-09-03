@@ -454,6 +454,11 @@ func _on_game_timer_timeout():
 	student_paper.visible = false
 	checklist_ui.visible = false
 
+	# Show end_result scene with tex_bad (denied)
+	Global.last_stamp = null
+	Global.end_result_inverted = false
+	get_tree().change_scene_to_file("res://scene/end_result.tscn")
+
 func _update_timer_label() -> void:
 	var time_left = int(game_timer.time_left)
 	var minutes = time_left / 60
