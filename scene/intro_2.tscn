@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://chvhue6xh5yuy"]
+
+[ext_resource type="Script" uid="uid://bb21c0uivc0ni" path="res://scripts/intro_2.gd" id="1_nsbk6"]
+[ext_resource type="Texture2D" uid="uid://b2mtfi2lamwl4" path="res://assets/bg_placeholder.png" id="2_o3lo8"]
+
+[node name="Intro2" type="Node2D"]
+script = ExtResource("1_nsbk6")
+
+[node name="BgPlaceholder" type="Sprite2D" parent="."]
+position = Vector2(588, 398)
+scale = Vector2(1.50477, 1.53232)
+texture = ExtResource("2_o3lo8")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(420, 532)
+zoom = Vector2(2, 2)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+
+[node name="Panel" type="Panel" parent="Camera2D/CanvasLayer"]
+offset_left = 244.0
+offset_top = 491.0
+offset_right = 934.0
+offset_bottom = 613.0
+
+[node name="Label" type="Label" parent="Camera2D/CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = -20.0
+offset_right = 713.0
+offset_bottom = 114.0
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 161

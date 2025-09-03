@@ -4,9 +4,9 @@ extends Node2D
 @onready var dialogue_label: Label = $Camera2D/CanvasLayer/Panel/Label 
 
 var dialogues= [
-	"As the bell rang, students hurried to their seats, notebooks and pens \n at the ready. The classroom buzzed with chatter as their \n teacher stood at the front, clearing \n her throat to begin.",
-	"She spoke about a troubling matter spreading quickly—fake news \n that was fooling even the most careful readers.",
-	"To prepare, she announced a new assignment: \n each student must learn to spot the truth \n hidden among lies."]
+	"Your role as a teacher is to check your students' papers if \n their assignments are  based on fake news or not",
+	"Use the given resources to you as a guide for checking.\n Stamp their paper with red if it's based on fake news \n and green if it's not",
+	"Goodluck checking their assignments. Make sure not to miss \n any paper that lies!"]
 
 var dialogue_index := 0
 var typing_speed := 0.03
@@ -89,4 +89,4 @@ func _on_camera_pan_finished():
 
 func change_scene():
 	print("Changing scene...")
-	get_tree().change_scene_to_file("res://scene/intro_2.tscn")
+	get_tree().change_scene_to_file("res://scene/game_scene.tscn")
