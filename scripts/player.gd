@@ -23,9 +23,8 @@ func _ready() -> void:
 		emit_signal("reached_middle") # Emit signal to notify other nodes
 	else:
 		state = State.ENTERING
-
-	# Connect input event to handle clicks
-	input_event.connect(_on_input_event)
+		# Connect input event to handle clicks
+		input_event.connect(_on_input_event)
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:

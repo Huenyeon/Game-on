@@ -1,0 +1,106 @@
+[gd_scene load_steps=12 format=3 uid="uid://du2sua2nvleui"]
+
+[ext_resource type="Script" uid="uid://bjk3iqrm3tq5c" path="res://scripts/green_pen.gd" id="1_nd0h0"]
+[ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="2_nd0h0"]
+[ext_resource type="Script" uid="uid://vy30n7ppj78x" path="res://scripts/red.gd" id="3_nd0h0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4657r"]
+atlas = ExtResource("2_nd0h0")
+region = Rect2(132, 0, 66, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yre3x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4657r")
+}],
+"loop": true,
+"name": &"red",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2kyu"]
+atlas = ExtResource("2_nd0h0")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_luksr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2kyu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nd0h0"]
+radius = 3.6
+height = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yre3x"]
+atlas = ExtResource("2_nd0h0")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b2kyu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yre3x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_luksr"]
+radius = 1.28
+height = 10.56
+
+[node name="Pens" type="Node2D"]
+
+[node name="pen_holder" type="AnimatedSprite2D" parent="."]
+show_behind_parent = true
+top_level = true
+position = Vector2(-98, 64)
+sprite_frames = SubResource("SpriteFrames_yre3x")
+animation = &"red"
+
+[node name="Green" type="Area2D" parent="."]
+position = Vector2(24, 37)
+scale = Vector2(2.5, 2.5)
+script = ExtResource("1_nd0h0")
+
+[node name="green" type="AnimatedSprite2D" parent="Green"]
+position = Vector2(8, 10)
+sprite_frames = SubResource("SpriteFrames_luksr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Green"]
+visible = false
+position = Vector2(-2, -1.90735e-06)
+shape = SubResource("CapsuleShape2D_nd0h0")
+
+[node name="Marker2D" type="Marker2D" parent="Green"]
+position = Vector2(-4, 32)
+scale = Vector2(2.5, 2.5)
+
+[node name="Red" type="Area2D" parent="."]
+position = Vector2(34, 37)
+scale = Vector2(2.5, 2.5)
+script = ExtResource("3_nd0h0")
+
+[node name="red" type="AnimatedSprite2D" parent="Red"]
+position = Vector2(22.8, 12)
+sprite_frames = SubResource("SpriteFrames_b2kyu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Red"]
+position = Vector2(15.6, 0.799999)
+scale = Vector2(2.5, 2.5)
+shape = SubResource("CapsuleShape2D_luksr")
+
+[node name="Marker2D" type="Marker2D" parent="Red"]
+position = Vector2(13.6, 32)
+scale = Vector2(2.5, 2.5)
+
+[connection signal="input_event" from="Green" to="Green" method="_on_input_event"]
+[connection signal="input_event" from="Red" to="Red" method="_on_input_event"]
