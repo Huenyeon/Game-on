@@ -1,12 +1,12 @@
-[gd_scene load_steps=34 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=35 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://lejy6igsihyt" path="res://assets/images/background.png" id="2_x4c55"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
-[ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
 [ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
 [ext_resource type="Texture2D" uid="uid://dblkj16gwiu5h" path="res://assets/checklist/checklist_icon.png" id="6_81ico"]
+[ext_resource type="FontFile" uid="uid://bgqsebsgxpqwu" path="res://font/Baby Doll.otf" id="6_yyfvs"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
 [ext_resource type="Script" uid="uid://ggqpl0gwc27k" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
@@ -23,8 +23,10 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
 
+[sub_resource type="Theme" id="Theme_yyfvs"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_famsg"]
-size = Vector2(167.177, 103.165)
+size = Vector2(74.6311, 103.165)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_juocg"]
 size = Vector2(620.549, 536.295)
@@ -115,40 +117,45 @@ scale = Vector2(1.22656, 0.549154)
 texture = ExtResource("3_foe2p")
 
 [node name="paper" type="Sprite2D" parent="."]
+visible = false
 z_index = 100
-position = Vector2(523, 326)
-scale = Vector2(2.06383, 2)
+position = Vector2(533.5, 333.5)
+scale = Vector2(3.83654, 3.85714)
 texture = ExtResource("4_vuqbi")
 
 [node name="MarginContainer" type="MarginContainer" parent="paper"]
-offset_left = -81.0
-offset_top = -115.0
-offset_right = 76.0
-offset_bottom = 113.0
+offset_left = -45.0
+offset_top = -63.0
+offset_right = 835.0
+offset_bottom = 1209.0
+scale = Vector2(0.1, 0.1)
+pivot_offset = Vector2(0.2, 0.2)
+theme = SubResource("Theme_yyfvs")
+theme_override_constants/margin_left = 0
 
 [node name="Text" type="RichTextLabel" parent="paper/MarginContainer"]
 layout_mode = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("5_y3ouy")
-theme_override_font_sizes/normal_font_size = 9
+theme_override_fonts/normal_font = ExtResource("6_yyfvs")
+theme_override_font_sizes/normal_font_size = 64
 scroll_active = false
 tab_size = 1
 
 [node name="student paper" type="Sprite2D" parent="."]
-position = Vector2(305, 560)
+position = Vector2(342.3, 540.047)
 rotation = -0.00409461
-scale = Vector2(0.346952, 0.589293)
+scale = Vector2(1.35885, 0.985289)
 texture = ExtResource("7_54f4s")
 
 [node name="Area2D" type="Area2D" parent="student paper"]
 position = Vector2(0.04399, -8.99287)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="student paper/Area2D"]
-position = Vector2(-23.0503, -17.6372)
+position = Vector2(1.22208, 3.87736)
 shape = SubResource("RectangleShape2D_famsg")
 
 [node name="checklist_icon" type="Sprite2D" parent="."]
-position = Vector2(589, 537)
+position = Vector2(517, 534)
 scale = Vector2(0.181156, 0.179006)
 texture = ExtResource("6_81ico")
 
@@ -156,7 +163,7 @@ texture = ExtResource("6_81ico")
 position = Vector2(-297.207, 59.2539)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="checklist_icon/Area2D"]
-position = Vector2(273.978, -81.5996)
+position = Vector2(313.767, -76.0135)
 shape = SubResource("RectangleShape2D_juocg")
 
 [node name="Desktop" parent="." instance=ExtResource("11_desktop")]
