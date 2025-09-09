@@ -81,4 +81,10 @@ func _on_button_pressed() -> void:
 
 func on_pressed_back_to_scene_button() -> void:
 	# Close the overlay without reloading the game scene
+	# Show the game controls again
+	var current_scene = get_tree().current_scene
+	if current_scene:
+		var controls := current_scene.get_node_or_null("CanvasLayer/UIRoot/GameControls")
+		if controls:
+			controls.visible = true
 	queue_free()
