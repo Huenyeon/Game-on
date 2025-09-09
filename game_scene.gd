@@ -134,11 +134,19 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		
 		# Display the selected student report
 		if Global.current_student_report:
-			var report_text = "%s\n\n%s\n\n%s" % [
-				Global.current_student_report["headline"],
-				Global.current_student_report["body"],
-				Global.current_student_report["additional_info"]
+			var report = Global.current_student_report
+			var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % report["headline"]
+
+			var highlighted_body = "%s %s %s on %s %s." % [
+			"[color=F25907][u]" + report["who"] + "[/u][/color]",
+			 report["what"],
+			 report["where"],
+			"[color=F25907][u]" + report["when"] + "[/u][/color]",
+			 report["why"]
 			]
+			report_text += highlighted_body + "\n\n" + report["additional_info"]
+			
+			paper_text.bbcode_enabled = true
 			paper_text.text = report_text
 		else:
 			# Only generate new report text if we don't have one yet

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cv1h4my5y6ttg"]
 
 [ext_resource type="Texture2D" uid="uid://b2mtfi2lamwl4" path="res://assets/bg_placeholder.png" id="1_wgwml"]
-[ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="2_ry1uq"]
+[ext_resource type="PackedScene" path="res://scene/desktop.tscn" id="2_ry1uq"]
 
 [node name="main-scene" type="Node2D"]
 
