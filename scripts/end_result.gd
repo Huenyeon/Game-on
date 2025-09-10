@@ -46,13 +46,12 @@ func _ready() -> void:
 	continue_btn.pressed.connect(_on_continue_pressed)
 
 func _on_continue_pressed() -> void:
-	# Clear last stamp so next round starts clean
+	# Clear last stamp
 	if "last_stamp" in Global:
 		Global.last_stamp = null
-	# Optionally clear current student report so next open gives new one
+
+	# Clear current student report
 	Global.current_student_report = null
-	# Return to game scene
-	get_tree().change_scene_to_file("res://scene/menu.tscn")
-	Global.current_student_report = null
-	# Return to game scene
+
+	# Return to menu scene
 	get_tree().change_scene_to_file("res://scene/menu.tscn")
