@@ -26,6 +26,13 @@ offset_bottom = 613.0
 
 [node name="Label" type="Label" parent="Camera2D/CanvasLayer/Panel"]
 layout_mode = 0
+offset_left = 54.0
+offset_top = -5.0
+offset_right = 653.0
+offset_bottom = 105.0
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
 
 [node name="UIRoot" type="Node2D" parent="Camera2D/CanvasLayer"]
 position = Vector2(16, 40)

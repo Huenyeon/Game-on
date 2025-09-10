@@ -4,10 +4,13 @@ extends Node2D
 @onready var info_label: Label = $Panel/VBox/InfoLabel
 @onready var continue_btn: Button = $Panel/VBox/ContinueButton
 
-var tex_ok: Texture2D = preload("res://assets/images/2.png")
-var tex_bad: Texture2D = preload("res://assets/images/1.png")
+@export var tex_ok: Texture2D = preload("res://assets/images/Win.png")
+@export var tex_bad: Texture2D = preload("res://assets/images/Lose.png")
+@export var result_scale: float = 0.25
 
 func _ready() -> void:
+	# Apply desired scale to the result image
+	result_sprite.scale = Vector2.ONE * result_scale
 	# Safe read of the last stamp info
 	var info = null
 	if "last_stamp" in Global:
@@ -46,13 +49,12 @@ func _ready() -> void:
 	continue_btn.pressed.connect(_on_continue_pressed)
 
 func _on_continue_pressed() -> void:
-	# Clear last stamp so next round starts clean
+	# Clear last stamp
 	if "last_stamp" in Global:
 		Global.last_stamp = null
-	# Optionally clear current student report so next open gives new one
+
+	# Clear current student report
 	Global.current_student_report = null
 	# Return to game scene
-	get_tree().change_scene_to_file("res://scene/game_scene.tscn")
-	Global.current_student_report = null
-	# Return to game scene
-	get_tree().change_scene_to_file("res://scene/game_scene.tscn")
+	get_tree().change_scene_to_file("res://scene/menu.tscn")
+	

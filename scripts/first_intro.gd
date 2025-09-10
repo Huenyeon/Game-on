@@ -4,9 +4,9 @@ extends Node2D
 @onready var dialogue_label: Label = $Camera2D/CanvasLayer/Panel/Label 
 
 var dialogues= [
-	"As the bell rang, students hurried to their seats, notebooks and pens \n at the ready. The classroom buzzed with chatter as their \n teacher stood at the front, clearing \n her throat to begin.",
+	"As the bell rang, students hurried to their seats, notebooks and pens \n at the ready. The classroom buzzed with chatter as their \n teacher stood at the front, clearing her throat to begin.",
 	"She spoke about a troubling matter spreading quickly—fake news \n that was fooling even the most careful readers.",
-	"To prepare, she announced a new assignment: \n each student must learn to spot the truth \n hidden among lies."]
+	"To prepare, she announced a new assignment: each student must learn \n to spot  the truth hidden among lies."]
 
 var dialogue_index := 0
 var typing_speed := 0.03
