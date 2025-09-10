@@ -44,6 +44,14 @@ var chosen_report1 = null
 var chosen_report2 = null
 var chosen_report3 = null
 
+# Track stamping state for win/lose logic
+var stamped_papers_count := 0
+var correct_stamps_count := 0
+var stamped_papers := [] # To track which papers have been stamped
+
+# Helper to check if a report is correct
+func _is_report_correct(report: Dictionary) -> bool:
+	return Global.correct_student_report.has(report)
 
 func _ready() -> void:
 	paper.visible = false
@@ -333,7 +341,6 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			stamp_options.visible = will_show
 			# Track that the stamp Area2D was clicked (stamp UI opened)
 			Global.stamp_ui_opened = will_show
-			
 			# Also show/hide the student paper content when stamp options are toggled
 			if will_show:
 				# Show both stamp options and student paper content
@@ -352,10 +359,8 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				dragging_x = false
 				check_armed = false
 				x_armed = false
-				
 				# Stamp UI closed -> clear global flag
 				Global.stamp_ui_opened = false
-			
 			# Reset positions to original on reopen
 			if will_show:
 				if check_option_sprite:
@@ -373,16 +378,46 @@ func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
 	s.z_index = 100
 	stamps_layer.add_child(s)
 
+	# Determine which paper is being stamped
+	var stamped_report = null
+	if paper.visible and not student_paper.visible:
+		stamped_report = chosen_report1
+	elif paper.visible and not student_paper2.visible:
+		stamped_report = chosen_report2
+	elif paper.visible and not student_paper3.visible:
+		stamped_report = chosen_report3
+
+	if stamped_report != null and not stamped_papers.has(stamped_report):
+		stamped_papers.append(stamped_report)
+		stamped_papers_count += 1
+		# Check if the stamp is correct (approve for correct, deny for incorrect)
+		if tex == approve_stamp_tex and _is_report_correct(stamped_report):
+			correct_stamps_count += 1
+		elif tex == denied_stamp_tex and not _is_report_correct(stamped_report):
+			correct_stamps_count += 1
+
 	# Prevent the player from selecting another stamp after placing one via the UI
-	# Close the stamp UI and mark the player's stamped state.
 	if stamp_options:
 		stamp_options.visible = false
-	# Clear the global stamp UI opened flag so player selection requires reopening
 	if "stamp_ui_opened" in Global:
 		Global.stamp_ui_opened = false
-	# If player exists, tell it that stamping occurred so it won't allow new selection
 	if player and player.has_method("set_has_stamped"):
 		player.set_has_stamped(true)
+
+	# Only end game after 3 papers have been stamped
+	if stamped_papers_count >= 3:
+		# Hide all UI
+		paper.visible = false
+		student_paper.visible = false
+		student_paper2.visible = false
+		student_paper3.visible = false
+		checklist_ui.visible = false
+		# Set result and go to end scene
+		if correct_stamps_count >= 2:
+			Global.end_result_inverted = false # Win
+		else:
+			Global.end_result_inverted = true # Lose
+		get_tree().change_scene_to_file("res://scene/end_result.tscn")
 
 func _on_check_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
