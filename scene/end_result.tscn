@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c15ewfy55g2c8"]
+[gd_scene load_steps=3 format=3 uid="uid://c15ewfy55g2c8"]
 
-[ext_resource type="Script" uid="uid://20xjx3mebojs" path="res://scripts/end_result.gd" id="1"]
+[ext_resource type="Script" uid="uid://ukfk3kthvtg5" path="res://scripts/end_result.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://byd0sq4jsjdau" path="res://assets/desktop/websitekono.png" id="2_ope2w"]
 
 [node name="EndResult" type="Node2D"]
 script = ExtResource("1")
@@ -14,21 +15,30 @@ offset_top = 120.0
 offset_right = 160.0
 offset_bottom = 120.0
 
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 2
+offset_left = -432.0
+offset_top = -663.0
+offset_right = 1224.0
+offset_bottom = 994.0
+texture = ExtResource("2_ope2w")
+
 [node name="VBox" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 98.0
-offset_top = 267.0
-offset_right = 605.0
-offset_bottom = 370.0
+offset_left = 108.0
+offset_top = 206.0
+offset_right = 615.0
+offset_bottom = 309.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
 [node name="InfoLabel" type="Label" parent="Panel/VBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 horizontal_alignment = 1
 vertical_alignment = 1
 
