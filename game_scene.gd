@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var paper = $paper
 @onready var student_paper = $"student paper"
+@onready var student_paper2 = $"student paper2"
+@onready var student_paper3 = $"student paper3"
 @onready var paper_text: RichTextLabel = $paper/MarginContainer/Text
 @onready var player = $Player
 
@@ -36,10 +38,14 @@ var current_student_report_text: String = ""  # Store the current report text
 var pen_interaction_active := false  # Flag to track when a pen is being interacted with
 var active_pen_node: Node = null # Track the currently active pen node
 
+var all_reports = Global.correct_student_report + Global.incorrect_student_report
+
 
 func _ready() -> void:
 	paper.visible = false
 	student_paper.visible = false
+	student_paper2.visible = false
+	student_paper3.visible = false
 	
 	checklist_ui.visible = false
 	
@@ -48,6 +54,10 @@ func _ready() -> void:
 	
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))
+		
+		# Check if player is already in the middle when scene loads
+		if Global.player_has_reached_middle:
+			show_student_paper()
 		player.set_checklist_ui(checklist_ui)
 		
 		# Check if player is already in the middle when scene loads
@@ -156,7 +166,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		
 		# If we haven't selected a student report yet, choose one that hasn't been used
 		if Global.current_student_report == null:
-			var all_reports = Global.correct_student_report + Global.incorrect_student_report
+			
 			var available_reports = []
 			
 			# Filter out reports that have already been used
@@ -181,11 +191,19 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		
 		# Display the selected student report
 		if Global.current_student_report:
-			var report_text = "%s\n\n%s\n\n%s" % [
-				Global.current_student_report["headline"],
-				Global.current_student_report["body"],
-				Global.current_student_report["additional_info"]
+			var report = Global.current_student_report
+			var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % report["headline"]
+
+			var highlighted_body = "%s %s %s on %s %s." % [
+			"[color=F25907][u]" + report["who"] + "[/u][/color]",
+			 report["what"],
+			 report["where"],
+			"[color=F25907][u]" + report["when"] + "[/u][/color]",
+			 report["why"]
 			]
+			report_text += highlighted_body + "\n\n" + report["additional_info"]
+			
+			paper_text.bbcode_enabled = true
 			paper_text.text = report_text
 		else:
 			# Only generate new report text if we don't have one yet
@@ -233,6 +251,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				paper_open = false
 				paper.visible = false
 				student_paper.visible = true
+				student_paper2.visible = true
+				student_paper3.visible = true
+				
 				
 				# Reset pen interaction flag when paper is closed
 				pen_interaction_active = false
@@ -285,6 +306,8 @@ func _on_player_reached_middle():
 # New function to handle showing student paper
 func show_student_paper():
 	student_paper.visible = true
+	student_paper2.visible = true
+	student_paper3.visible = true
 	Global.get_random_reports(3)
 	Global.get_random_student_reports(1)
 	
@@ -309,6 +332,8 @@ func show_student_paper():
 func _on_student_paper_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		paper.visible = true
+		
+
 
 func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -487,3 +512,104 @@ func set_pen_interaction(active: bool, pen_node: Node = null):
 		active_pen_node = null
 		print("Pen interaction ended")
 		return true
+
+
+
+func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		paper_open = true
+		paper.visible = true
+		student_paper2.visible = false
+
+		# Paper is now visible for drawing
+		refresh_pens_paper_reference()
+
+		# Choose a different report than the one already shown in student_paper
+		var all_reports = Global.correct_student_report + Global.incorrect_student_report
+		var available_reports = []
+
+		# Filter out already used reports
+		for report in all_reports:
+			if not Global.used_reports.has(report):
+				available_reports.append(report)
+
+		# If there are no available reports, reset the used list
+		if available_reports.size() == 0:
+			Global.used_reports.clear()
+			available_reports = all_reports
+
+		# Select a random unused report
+		if available_reports.size() > 0:
+			var random_index = randi() % available_reports.size()
+			var chosen_report = available_reports[random_index]
+			Global.used_reports.append(chosen_report)
+
+			# Reset player's stamp state for this new paper
+			if player and player.has_method("reset_stamp_state"):
+				player.reset_stamp_state()
+
+			# Display the chosen report
+			var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report["headline"]
+
+			var highlighted_body = "%s %s %s on %s %s." % [
+				"[color=F25907][u]" + chosen_report["who"] + "[/u][/color]",
+				chosen_report["what"],
+				chosen_report["where"],
+				"[color=F25907][u]" + chosen_report["when"] + "[/u][/color]",
+				chosen_report["why"]
+			]
+			report_text += highlighted_body + "\n\n" + chosen_report["additional_info"]
+
+			paper_text.bbcode_enabled = true
+			paper_text.text = report_text
+
+
+
+
+func _on_area_2d_student_paper3_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		paper_open = true
+		paper.visible = true
+		student_paper3.visible = false
+
+		# Paper is now visible for drawing
+		refresh_pens_paper_reference()
+
+		# Choose a different report than the one already shown in student_paper
+		var all_reports = Global.correct_student_report + Global.incorrect_student_report
+		var available_reports = []
+
+		# Filter out already used reports
+		for report in all_reports:
+			if not Global.used_reports.has(report):
+				available_reports.append(report)
+
+		# If there are no available reports, reset the used list
+		if available_reports.size() == 0:
+			Global.used_reports.clear()
+			available_reports = all_reports
+
+		# Select a random unused report
+		if available_reports.size() > 0:
+			var random_index = randi() % available_reports.size()
+			var chosen_report = available_reports[random_index]
+			Global.used_reports.append(chosen_report)
+
+			# Reset player's stamp state for this new paper
+			if player and player.has_method("reset_stamp_state"):
+				player.reset_stamp_state()
+
+			# Display the chosen report
+			var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report["headline"]
+
+			var highlighted_body = "%s %s %s on %s %s." % [
+				"[color=F25907][u]" + chosen_report["who"] + "[/u][/color]",
+				chosen_report["what"],
+				chosen_report["where"],
+				"[color=F25907][u]" + chosen_report["when"] + "[/u][/color]",
+				chosen_report["why"]
+			]
+			report_text += highlighted_body + "\n\n" + chosen_report["additional_info"]
+
+			paper_text.bbcode_enabled = true
+			paper_text.text = report_text

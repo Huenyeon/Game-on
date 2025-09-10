@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=3 uid="uid://bhdg1ewgngify"]
+
+[ext_resource type="Script" uid="uid://c2vtgoeowfldw" path="res://scripts/game_controls.gd" id="1_controls"]
+[ext_resource type="Texture2D" uid="uid://cc1v5umryas3b" path="res://assets/Icons/Home.png" id="2_home"]
+[ext_resource type="Texture2D" uid="uid://d0ak3ce3e644d" path="res://assets/Icons/Pause.png" id="3_pause"]
+[ext_resource type="Texture2D" uid="uid://we1ucipjc7yi" path="res://assets/Icons/Instructions.png" id="4_help"]
+[ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="5_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_container_hover"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.63, 0.38, 0.12, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_container"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.78, 0.45, 0.1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="Theme" id="Theme_1"]
+default_font = ExtResource("5_font")
+default_font_size = 20
+
+[node name="GameControls" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 39.0
+offset_top = 10.0
+offset_right = 579.0
+offset_bottom = 190.0
+script = ExtResource("1_controls")
+
+[node name="ExitContainer" type="Button" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 9.0
+offset_right = 75.0
+offset_bottom = 69.0
+theme_override_styles/hover = SubResource("StyleBoxFlat_container_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_container")
+
+[node name="ExitButton" type="TextureButton" parent="ExitContainer"]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 0
+offset_left = 12.5
+offset_top = 12.5
+offset_right = 47.5
+offset_bottom = 47.5
+texture_normal = ExtResource("2_home")
+stretch_mode = 5
+
+[node name="PauseContainer" type="Button" parent="."]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 9.0
+offset_right = 147.0
+offset_bottom = 69.0
+theme_override_styles/hover = SubResource("StyleBoxFlat_container_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_container")
+
+[node name="PauseButton" type="TextureButton" parent="PauseContainer"]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 0
+offset_left = 12.5
+offset_top = 12.5
+offset_right = 47.5
+offset_bottom = 47.5
+texture_normal = ExtResource("3_pause")
+stretch_mode = 5
+
+[node name="HelpContainer" type="Button" parent="."]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 9.0
+offset_right = 220.0
+offset_bottom = 69.0
+theme_override_styles/hover = SubResource("StyleBoxFlat_container_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_container")
+
+[node name="HelpButton" type="TextureButton" parent="HelpContainer"]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 0
+offset_left = 12.5
+offset_top = 12.5
+offset_right = 47.5
+offset_bottom = 47.5
+texture_normal = ExtResource("4_help")
+stretch_mode = 5
+
+[node name="ExitConfirm" type="ConfirmationDialog" parent="."]
+title = "Confirm Exit"
+size = Vector2i(460, 200)
+min_size = Vector2i(460, 200)
+theme = SubResource("Theme_1")
+
+[node name="Content" type="MarginContainer" parent="ExitConfirm"]
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Text" type="RichTextLabel" parent="ExitConfirm/Content"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "[center]Exit to main menu?[/center]"
+scroll_active = false
+autowrap_mode = 2
+
+[node name="HelpDialog" type="AcceptDialog" parent="."]
+title = "How to Play"
+size = Vector2i(520, 320)
+min_size = Vector2i(520, 320)
+theme = SubResource("Theme_1")
+dialog_text = "Spot fake or non-legit papers using available tools:
+
+- Use the Desktop to research/check facts.
+- Use the pen and paper to annotate the student's paper.
+- Use the Checklist as your guide.
+- Stamp Approve or Deny based on your decision."
