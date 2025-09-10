@@ -9,16 +9,16 @@
 [ext_resource type="Texture2D" uid="uid://dblkj16gwiu5h" path="res://assets/checklist/checklist_icon.png" id="6_81ico"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
-[ext_resource type="Script" uid="uid://d0pyeaca5j5xs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
-[ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
-[ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
+[ext_resource type="Script" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
+[ext_resource type="PackedScene" path="res://scene/Checkbox.tscn" id="10_w3nls"]
+[ext_resource type="PackedScene" path="res://scene/desktop.tscn" id="11_desktop"]
 [ext_resource type="Texture2D" uid="uid://bymbirs7ujrpj" path="res://assets/Stamp.png" id="12_stamp"]
 [ext_resource type="Texture2D" uid="uid://df1dgi1cosbfu" path="res://assets/Stamp checkbox.png" id="13_silwv"]
 [ext_resource type="Texture2D" uid="uid://cp1bjprkw0ia3" path="res://assets/Stamp x.png" id="14_stamp_x"]
-[ext_resource type="Script" uid="uid://cdjvm6licjc33" path="res://scripts/red_on_game.gd" id="15_nf1ce"]
-[ext_resource type="Script" uid="uid://i0nds5o20v6c" path="res://scripts/all_pens.gd" id="16_vynom"]
+[ext_resource type="Script" uid="uid://bc02srg5noyx6" path="res://scripts/red_on_game.gd" id="15_nf1ce"]
+[ext_resource type="Script" uid="uid://4gjfinldupg4" path="res://scripts/all_pens.gd" id="16_vynom"]
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="17_vynom"]
-[ext_resource type="Script" uid="uid://cihv1hrxt4fhu" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
+[ext_resource type="Script" uid="uid://bjhjqtmpyp7p3" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
 [ext_resource type="PackedScene" uid="uid://bhdg1ewgngify" path="res://scene/game_controls.tscn" id="19_controls"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
@@ -31,10 +31,10 @@ size = Vector2(167.177, 103.165)
 size = Vector2(620.549, 536.295)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_stamp_click"]
-size = Vector2(120, 120)
+size = Vector2(54.1033, 73.1598)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_check_option"]
-size = Vector2(1758.37, 2064.47)
+size = Vector2(1796.58, 2247.45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x_option"]
 size = Vector2(1808.3, 2112.71)
@@ -193,14 +193,15 @@ position = Vector2(138, 245)
 position = Vector2(139, 295)
 
 [node name="stamp" type="Sprite2D" parent="."]
-position = Vector2(1046, 527)
-scale = Vector2(0.075, 0.0876953)
+position = Vector2(1048, 522)
+scale = Vector2(0.113672, 0.112207)
 texture = ExtResource("12_stamp")
 
 [node name="Area2D" type="Area2D" parent="stamp"]
 scale = Vector2(13.3333, 11.407)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/Area2D"]
+position = Vector2(0, 0.921631)
 shape = SubResource("RectangleShape2D_stamp_click")
 
 [node name="StampOptions" type="Node2D" parent="stamp"]
@@ -209,28 +210,28 @@ scale = Vector2(13.3333, 11.407)
 
 [node name="CheckOption" type="Sprite2D" parent="stamp/StampOptions"]
 z_index = 201
-position = Vector2(-2, -374.872)
-scale = Vector2(0.086444, 0.100718)
+position = Vector2(-2.96908, -285.559)
+scale = Vector2(0.0521972, 0.0682899)
 texture = ExtResource("13_silwv")
 
 [node name="Area2D" type="Area2D" parent="stamp/StampOptions/CheckOption"]
 position = Vector2(-1.45895, -426.607)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/CheckOption/Area2D"]
-position = Vector2(-10.1094, 297.573)
+position = Vector2(13.0195, 292.104)
 shape = SubResource("RectangleShape2D_check_option")
 
 [node name="XOption" type="Sprite2D" parent="stamp/StampOptions"]
 z_index = 201
-position = Vector2(0, -153.948)
-scale = Vector2(0.0829445, 0.0986359)
+position = Vector2(-0.352966, -120.318)
+scale = Vector2(0.0529928, 0.0722253)
 texture = ExtResource("14_stamp_x")
 
 [node name="Area2D" type="Area2D" parent="stamp/StampOptions/XOption"]
 position = Vector2(-24.1126, -445.934)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/XOption/Area2D"]
-position = Vector2(60.2816, 425.668)
+position = Vector2(30.7727, 445.935)
 shape = SubResource("RectangleShape2D_x_option")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]

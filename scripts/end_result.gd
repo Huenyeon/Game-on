@@ -52,7 +52,5 @@ func _on_continue_pressed() -> void:
 	# Optionally clear current student report so next open gives new one
 	Global.current_student_report = null
 	# Return to game scene
-	get_tree().change_scene_to_file("res://scene/game_scene.tscn")
-	Global.current_student_report = null
-	# Return to game scene
-	get_tree().change_scene_to_file("res://scene/game_scene.tscn")
+	get_tree().change_scene_to_file("res://scene/menu.tscn")
+	
