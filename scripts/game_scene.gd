@@ -71,32 +71,70 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 		paper_text.text = articles[idx]
 
 
-func _on_stamp_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		# Center options and ensure spacing
-		var viewport_size: Vector2 = get_viewport().get_visible_rect().size
-		var center: Vector2 = viewport_size * 0.5
-		stamp_options.global_position = center
-		stamp_check_option.position = Vector2(-60, 0)
-		stamp_x_option.position = Vector2(60, 0)
-		stamp_options.visible = not stamp_options.visible
-		get_tree().set_input_as_handled()
+		if stamp_options:
+			var will_show := not stamp_options.visible
+			stamp_options.visible = will_show
+			# Track that the stamp Area2D was clicked (stamp UI opened)
+			if "stamp_ui_opened" in Global:
+				Global.stamp_ui_opened = will_show
+			
+			# Also show/hide the student paper content when stamp options are toggled
+			if will_show:
+				# Show both stamp options and student paper content
+				paper_open = true
+				paper.visible = true
+				student_paper.visible = false
+				
+				# Prefer an already-selected Global.current_student_report.
+				# If that's not present, prefer the local cached current_student_report_text.
+				# Only generate a new random report as a last resort.
+				if Global.current_student_report:
+					# Use the selected global student report so opening stamps won't change it
+					var report_text = "%s\n\n%s\n\n%s" % [
+						Global.current_student_report["headline"],
+						Global.current_student_report["body"],
+						Global.current_student_report["additional_info"]
+					]
+					paper_text.text = report_text
+				elif current_student_report_text != "":
+					# Use cached text (won't overwrite an already-generated report)
+					paper_text.text = current_student_report_text
+				else:
+					# Last resort: generate a local random report without modifying globals
+					var all_reports = Global.correct_student_report + Global.incorrect_student_report
+					if all_reports.size() > 0:
+						var random_index = rng.randi() % all_reports.size()
+						var report = all_reports[random_index]
+						current_student_report_text = "%s\n\n%s\n\n%s" % [
+							report["headline"],
+							report["body"],
+							report["additional_info"]
+						]
+						paper_text.text = current_student_report_text
+			else:
+				# Hide both stamp options and student paper content
+				paper_open = false
+				paper.visible = false
+				student_paper.visible = true
+				dragging_check = false
+				dragging_x = false
+				check_armed = false
+				x_armed = false
+				
+				# Stamp UI closed -> clear global flag
+				if "stamp_ui_opened" in Global:
+					Global.stamp_ui_opened = false
+			
+			# Reset positions to original on reopen
+			if will_show:
+				if check_option_sprite:
+					check_option_sprite.global_position = check_option_original_global
+				if x_option_sprite:
+					x_option_sprite.global_position = x_option_original_global
 
 
-func _on_check_option_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		stamp_options.visible = false
-		# TODO: implement check stamping behavior
-		get_tree().set_input_as_handled()
-
-
-func _on_x_option_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		stamp_options.visible = false
-		# TODO: implement X stamping behavior
-		get_tree().set_input_as_handled()
-		
-		
 func _unhandled_input(event: InputEvent) -> void:
 	if paper_open and event is InputEventMouseButton and event.pressed:
 		var mouse_pos = get_viewport().get_mouse_position()
@@ -114,12 +152,90 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if stamp_options.visible:
 			var mouse_pos2 = get_viewport().get_mouse_position()
-			var check_size := (stamp_check_option.texture != null) ? stamp_check_option.texture.get_size() * stamp_check_option.global_scale : Vector2.ZERO
-			var x_size := (stamp_x_option.texture != null) ? stamp_x_option.texture.get_size() * stamp_x_option.global_scale : Vector2.ZERO
-			var check_top_left := stamp_check_option.global_position - (check_size * 0.5)
-			var x_top_left := stamp_x_option.global_position - (x_size * 0.5)
+			var check_size := (check_option_sprite.texture != null) ? check_option_sprite.texture.get_size() * check_option_sprite.global_scale : Vector2.ZERO
+			var x_size := (x_option_sprite.texture != null) ? x_option_sprite.texture.get_size() * x_option_sprite.global_scale : Vector2.ZERO
+			var check_top_left := check_option_sprite.global_position - (check_size * 0.5)
+			var x_top_left := x_option_sprite.global_position - (x_size * 0.5)
 			var check_rect := Rect2(check_top_left, check_size)
 			var x_rect := Rect2(x_top_left, x_size)
 			if not (check_rect.has_point(mouse_pos2) or x_rect.has_point(mouse_pos2)):
 				stamp_options.visible = false
-		
+				# Stamp UI closed -> clear global flag
+				if "stamp_ui_opened" in Global:
+					Global.stamp_ui_opened = false
+
+
+func _on_check_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if check_armed:
+			_place_stamp(approve_stamp_tex, check_option_sprite.global_position, check_option_sprite.scale)
+			check_armed = false
+			stamp_options.visible = false
+			# Keep the paper visible when stamp is placed
+			paper_open = true
+			paper.visible = true
+			student_paper.visible = false
+			# reset option positions for next open
+			x_option_sprite.global_position = x_option_original_global
+			check_option_sprite.global_position = check_option_original_global
+			# stamping done -> clear stamp UI opened flag
+			if "stamp_ui_opened" in Global:
+				Global.stamp_ui_opened = false
+			return
+		# TODO: implement check stamping behavior
+		get_tree().set_input_as_handled()
+
+
+func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if x_armed:
+			_place_stamp(denied_stamp_tex, x_option_sprite.global_position, x_option_sprite.scale)
+			x_armed = false
+			stamp_options.visible = false
+			# Keep the paper visible when stamp is placed
+			paper_open = true
+			paper.visible = true
+			student_paper.visible = false
+			# reset option positions for next open
+			x_option_sprite.global_position = x_option_original_global
+			check_option_sprite.global_position = check_option_original_global
+			# stamping done -> clear stamp UI opened flag
+			if "stamp_ui_opened" in Global:
+				Global.stamp_ui_opened = false
+			return
+		# TODO: implement X stamping behavior
+		get_tree().set_input_as_handled()
+
+
+func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
+	if tex == null:
+		return
+	var s := Sprite2D.new()
+	s.texture = tex
+	s.global_position = global_pos
+	s.scale = Vector2.ONE * placed_stamp_target_scale
+	s.z_index = 100
+	stamps_layer.add_child(s)
+
+	# Prevent the player from selecting another stamp after placing one via the UI
+	# Close the stamp UI and mark the player's stamped state.
+	if stamp_options:
+		stamp_options.visible = false
+	# Clear the global stamp UI opened flag so player selection requires reopening
+	if "stamp_ui_opened" in Global:
+		Global.stamp_ui_opened = false
+	# If player exists, tell it that stamping occurred so it won't allow new selection
+	if player and player.has_method("set_has_stamped"):
+		player.set_has_stamped(true)
+
+	# --- NEW: save last stamp info and open end-result scene ---
+	var report_for_eval = Global.current_student_report if Global.current_student_report != null else null
+	Global.last_stamp = {
+		"type": ( "approved" if tex == approve_stamp_tex else "denied" ),
+		"report": report_for_eval
+	}
+	# default to normal logic; set Global.end_result_inverted elsewhere if needed
+	Global.end_result_inverted = false
+	# wait 1s so the placed stamp is visible, then show results
+	await get_tree().create_timer(1.0).timeout
+	get_tree().change_scene_to_file("res://scene/end_result.tscn")
