@@ -155,14 +155,48 @@ func get_random_reports(count: int) -> Array:
 		if candidate not in chosen:
 			chosen.append(candidate)
 	return chosen
+	
+	
+func _set_paper_text_from_report(report: Dictionary) -> void:
+	if report == null or report.is_empty():
+		paper_text.text = "No report found."
+		return
+
+	var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % report["headline"]
+	var highlighted_body = "%s %s %s on %s %s." % [
+		"[color=F25907][u]" + report["who"] + "[/u][/color]",
+		report["what"],
+		report["where"],
+		"[color=F25907][u]" + report["when"] + "[/u][/color]",
+		report["why"]
+	]
+	report_text += highlighted_body + "\n\n" + report["additional_info"]
+
+	paper_text.bbcode_enabled = true
+	paper_text.bbcode_text = report_text
+	
+# Add this new function to your script
+func open_paper_with_report(report_data: Dictionary) -> void:
+	# Set the global variable
+	Global.current_student_report = report_data
+
+	# Hide the student papers and show the main paper
+	paper_open = true
+	paper.visible = true
+	student_paper.visible = false
+	student_paper2.visible = false
+	student_paper3.visible = false
+
+	# Refresh pen references (good practice)
+	refresh_pens_paper_reference()
+
+	# Use your helper function to display the content
+	_set_paper_text_from_report(Global.current_student_report)
+
+	print("Paper opened with report: ", report_data["headline"])
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		paper_open = true
-		paper.visible = true
-		student_paper.visible = false
-		refresh_pens_paper_reference()
-
 		# Only choose a report the first time
 		if chosen_report1 == null:
 			var all_reports = Global.correct_student_report + Global.incorrect_student_report
@@ -183,19 +217,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 			Global.used_reports.append(chosen_report1)
 
 		# Now always use chosen_report3
-		var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report1["headline"]
-
-		var highlighted_body = "%s %s %s on %s %s." % [
-			"[color=F25907][u]" + chosen_report1["who"] + "[/u][/color]",
-			chosen_report1["what"],
-			chosen_report1["where"],
-			"[color=F25907][u]" + chosen_report1["when"] + "[/u][/color]",
-			chosen_report1["why"]
-		]
-		report_text += highlighted_body + "\n\n" + chosen_report1["additional_info"]
-
-		paper_text.bbcode_enabled = true
-		paper_text.text = report_text
+		open_paper_with_report(chosen_report1)
 
 func refresh_pens_paper_reference():
 	# Find all pens and refresh their paper reference
@@ -327,54 +349,15 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				paper.visible = true
 				student_paper.visible = false
 				
-				# Prefer an already-selected Global.current_student_report.
-				# If that's not present, prefer the local cached current_student_report_text.
-				# Only generate a new random report as a last resort.
-				if Global.current_student_report:
-					var report = Global.current_student_report
-					var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % report["headline"]
-					var highlighted_body = "%s %s %s on %s %s." % [
-						"[color=F25907]" + report["who"] + "[/color]",
-						report["what"],
-						report["where"],
-						"[color=F25907]" + report["when"] + "[/color]",
-						report["why"]
-					]
-					report_text += highlighted_body + "\n\n" + report["additional_info"]
-					
-					paper_text.bbcode_enabled = true
-					paper_text.bbcode_text = report_text
-
-				elif current_student_report_text != "":
-					paper_text.bbcode_enabled = true
-					paper_text.bbcode_text = current_student_report_text
-
-				else:
-					# Last resort: generate a local random report without modifying globals
-					var all_reports = Global.correct_student_report + Global.incorrect_student_report
-					if all_reports.size() > 0:
-						var random_index = rng.randi() % all_reports.size()
-						var report = all_reports[random_index]
-						var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % report["headline"]
-						var highlighted_body = "%s %s %s on %s %s." % [
-							"[color=F25907]" + report["who"] + "[/color]",
-							report["what"],
-							report["where"],
-							"[color=F25907]" + report["when"] + "[/color]",
-							report["why"]
-						]
-						report_text += highlighted_body + "\n\n" + report["additional_info"]
-						
-						current_student_report_text = report_text
-						
-						paper_text.bbcode_enabled = true
-						paper_text.bbcode_text = current_student_report_text
+				_set_paper_text_from_report(Global.current_student_report)
 
 			else:
 				# Hide both stamp options and student paper content
 				paper_open = false
 				paper.visible = false
 				student_paper.visible = true
+				student_paper2.visible = true
+				student_paper3.visible = true
 				dragging_check = false
 				dragging_x = false
 				check_armed = false
@@ -511,11 +494,6 @@ func set_pen_interaction(active: bool, pen_node: Node = null):
 
 func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		paper_open = true
-		paper.visible = true
-		student_paper2.visible = false
-		refresh_pens_paper_reference()
-
 		# Only choose a report the first time
 		if chosen_report2 == null:
 			var all_reports = Global.correct_student_report + Global.incorrect_student_report
@@ -535,31 +513,10 @@ func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, s
 			chosen_report2 = available_reports[0]   # or pick index 2 if you want the 3rd slot
 			Global.used_reports.append(chosen_report2)
 
-		# Now always use chosen_report3
-		var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report2["headline"]
-
-		var highlighted_body = "%s %s %s on %s %s." % [
-			"[color=F25907][u]" + chosen_report2["who"] + "[/u][/color]",
-			chosen_report2["what"],
-			chosen_report2["where"],
-			"[color=F25907][u]" + chosen_report2["when"] + "[/u][/color]",
-			chosen_report2["why"]
-		]
-		report_text += highlighted_body + "\n\n" + chosen_report2["additional_info"]
-
-		paper_text.bbcode_enabled = true
-		paper_text.text = report_text
-
-
-
+		open_paper_with_report(chosen_report2)
 
 func _on_area_2d_student_paper3_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		paper_open = true
-		paper.visible = true
-		student_paper3.visible = false
-		refresh_pens_paper_reference()
-
 		# Only choose a report the first time
 		if chosen_report3 == null:
 			var all_reports = Global.correct_student_report + Global.incorrect_student_report
@@ -578,18 +535,5 @@ func _on_area_2d_student_paper3_input_event(viewport: Node, event: InputEvent, s
 			# Pick this paper’s report once
 			chosen_report3 = available_reports[0]   # or pick index 2 if you want the 3rd slot
 			Global.used_reports.append(chosen_report3)
-
-		# Now always use chosen_report3
-		var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report3["headline"]
-
-		var highlighted_body = "%s %s %s on %s %s." % [
-			"[color=F25907][u]" + chosen_report3["who"] + "[/u][/color]",
-			chosen_report3["what"],
-			chosen_report3["where"],
-			"[color=F25907][u]" + chosen_report3["when"] + "[/u][/color]",
-			chosen_report3["why"]
-		]
-		report_text += highlighted_body + "\n\n" + chosen_report3["additional_info"]
-
-		paper_text.bbcode_enabled = true
-		paper_text.text = report_text
+			
+		open_paper_with_report(chosen_report3)
