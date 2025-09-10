@@ -159,4 +159,3 @@ func get_random_student_reports(correct_count: int) -> void:
 func reset_report_tracking():
 	current_student_report = null
 	used_reports = []
-
