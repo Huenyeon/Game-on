@@ -29,7 +29,7 @@ distance = -265.0
 size = Vector2(74.6311, 103.165)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_juocg"]
-size = Vector2(620.549, 536.295)
+size = Vector2(80.6422, 111.742)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_stamp_click"]
 size = Vector2(120, 120)
@@ -142,9 +142,9 @@ scroll_active = false
 tab_size = 1
 
 [node name="student paper" type="Sprite2D" parent="."]
-position = Vector2(342.3, 540.047)
+position = Vector2(333.3, 547.784)
 rotation = -0.00409461
-scale = Vector2(1.35885, 0.985289)
+scale = Vector2(1.17822, 0.83129)
 texture = ExtResource("7_54f4s")
 
 [node name="Area2D" type="Area2D" parent="student paper"]
@@ -155,15 +155,16 @@ position = Vector2(1.22208, 3.87736)
 shape = SubResource("RectangleShape2D_famsg")
 
 [node name="checklist_icon" type="Sprite2D" parent="."]
-position = Vector2(517, 534)
-scale = Vector2(0.181156, 0.179006)
+position = Vector2(523.746, 542.318)
+scale = Vector2(1.38507, 0.746352)
 texture = ExtResource("6_81ico")
 
 [node name="Area2D" type="Area2D" parent="checklist_icon"]
 position = Vector2(-297.207, 59.2539)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="checklist_icon/Area2D"]
-position = Vector2(313.767, -76.0135)
+position = Vector2(298.586, -58.6238)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_juocg")
 
 [node name="Desktop" parent="." instance=ExtResource("11_desktop")]
