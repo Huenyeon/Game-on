@@ -20,8 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="17_vynom"]
 [ext_resource type="Script" uid="uid://bjhjqtmpyp7p3" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
 [ext_resource type="PackedScene" uid="uid://bhdg1ewgngify" path="res://scene/game_controls.tscn" id="19_controls"]
-[ext_resource type="Script" uid="uid://bsce1yhtd568d" path="res://scripts/timer_background.gd" id="20_8q4eb"]
-[ext_resource type="Script" uid="uid://b15aqysrb7gsb" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
+[ext_resource type="Script" uid="uid://bkbwipsrdeo30" path="res://scripts/timer_background.gd" id="20_8q4eb"]
+[ext_resource type="Script" uid="uid://ye0crcbx1baf" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
