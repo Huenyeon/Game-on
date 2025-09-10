@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://c7trr7x0cru6m"]
+[gd_scene load_steps=15 format=3 uid="uid://dotxbd76lgkyo"]
 
 [ext_resource type="Script" uid="uid://6axrely6bisx" path="res://scripts/inside_desktop.gd" id="1_obpd4"]
-[ext_resource type="Texture2D" uid="uid://clasan6etehjj" path="res://assets/desktop/desktop-container.png" id="2_ofnyq"]
+[ext_resource type="Texture2D" uid="uid://byd0sq4jsjdau" path="res://assets/desktop/websitekono.png" id="2_ofnyq"]
 [ext_resource type="ButtonGroup" uid="uid://bn5loh716mh40" path="res://assets/publishers-news.tres" id="3_ae7f0"]
 [ext_resource type="Texture2D" uid="uid://d381n4dn4rvvn" path="res://assets/desktop/publishers-unclicked.png" id="4_2flab"]
 [ext_resource type="Texture2D" uid="uid://chhhfieeu03u3" path="res://assets/desktop/publishers-clicked.png" id="5_ug3hc"]
@@ -20,10 +20,10 @@ z_index = 500
 script = ExtResource("1_obpd4")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_left = -229.0
-offset_top = -664.0
-offset_right = 1364.0
-offset_bottom = 877.0
+offset_left = -85.0
+offset_top = -193.0
+offset_right = 1234.0
+offset_bottom = 887.0
 texture = ExtResource("2_ofnyq")
 
 [node name="PublishersButton" type="TextureButton" parent="."]
@@ -137,6 +137,7 @@ offset_left = 77.0
 offset_top = 206.0
 offset_right = 1049.0
 offset_bottom = 316.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/paragraph_spacing = 0
 theme_override_constants/shadow_offset_x = 0
@@ -152,6 +153,7 @@ offset_left = 77.0
 offset_top = 357.0
 offset_right = 996.0
 offset_bottom = 510.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET 1"
 autowrap_mode = 3
@@ -161,6 +163,7 @@ offset_left = 77.0
 offset_top = 469.0
 offset_right = 996.0
 offset_bottom = 622.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET1"
 autowrap_mode = 3
@@ -170,6 +173,7 @@ offset_left = 641.0
 offset_top = 469.0
 offset_right = 1560.0
 offset_bottom = 622.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET 1"
 autowrap_mode = 3
@@ -179,6 +183,7 @@ offset_left = 77.0
 offset_top = 564.0
 offset_right = 996.0
 offset_bottom = 717.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET 1"
 autowrap_mode = 3
@@ -190,6 +195,7 @@ offset_left = 77.0
 offset_top = 206.0
 offset_right = 1049.0
 offset_bottom = 316.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/paragraph_spacing = 0
 theme_override_constants/shadow_offset_x = 0
@@ -205,6 +211,7 @@ offset_left = 77.0
 offset_top = 357.0
 offset_right = 996.0
 offset_bottom = 510.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET2"
 autowrap_mode = 3
@@ -214,6 +221,7 @@ offset_left = 77.0
 offset_top = 469.0
 offset_right = 996.0
 offset_bottom = 622.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET2"
 autowrap_mode = 3
@@ -223,6 +231,7 @@ offset_left = 641.0
 offset_top = 469.0
 offset_right = 1560.0
 offset_bottom = 622.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET2"
 autowrap_mode = 3
@@ -232,6 +241,7 @@ offset_left = 77.0
 offset_top = 564.0
 offset_right = 996.0
 offset_bottom = 717.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET 1"
 autowrap_mode = 3
@@ -243,6 +253,7 @@ offset_left = 77.0
 offset_top = 206.0
 offset_right = 1049.0
 offset_bottom = 316.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/paragraph_spacing = 0
 theme_override_constants/shadow_offset_x = 0
@@ -258,6 +269,7 @@ offset_left = 77.0
 offset_top = 357.0
 offset_right = 996.0
 offset_bottom = 510.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET3"
 autowrap_mode = 3
@@ -267,6 +279,7 @@ offset_left = 77.0
 offset_top = 469.0
 offset_right = 996.0
 offset_bottom = 622.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET3"
 autowrap_mode = 3
@@ -276,6 +289,7 @@ offset_left = 641.0
 offset_top = 469.0
 offset_right = 1560.0
 offset_bottom = 622.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET3"
 autowrap_mode = 3
@@ -285,6 +299,7 @@ offset_left = 77.0
 offset_top = 564.0
 offset_right = 996.0
 offset_bottom = 717.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "SET 1"
 autowrap_mode = 3
