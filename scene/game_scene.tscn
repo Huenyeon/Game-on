@@ -1,6 +1,6 @@
 [gd_scene load_steps=38 format=3 uid="uid://eg8aervxc26f"]
 
-[ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
+[ext_resource type="Script" uid="uid://bdwdklao0selj" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://le0yh5crl3un" path="res://assets/main scene bg 2.png" id="2_6chj6"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
@@ -9,19 +9,19 @@
 [ext_resource type="Texture2D" uid="uid://dblkj16gwiu5h" path="res://assets/checklist/checklist_icon.png" id="6_81ico"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
-[ext_resource type="Script" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
-[ext_resource type="PackedScene" path="res://scene/Checkbox.tscn" id="10_w3nls"]
-[ext_resource type="PackedScene" path="res://scene/desktop.tscn" id="11_desktop"]
+[ext_resource type="Script" uid="uid://jnyxl67mtccs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
+[ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
+[ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
 [ext_resource type="Texture2D" uid="uid://bymbirs7ujrpj" path="res://assets/Stamp.png" id="12_stamp"]
 [ext_resource type="Texture2D" uid="uid://df1dgi1cosbfu" path="res://assets/Stamp checkbox.png" id="13_silwv"]
 [ext_resource type="Texture2D" uid="uid://cp1bjprkw0ia3" path="res://assets/Stamp x.png" id="14_stamp_x"]
-[ext_resource type="Script" uid="uid://bc02srg5noyx6" path="res://scripts/red_on_game.gd" id="15_nf1ce"]
-[ext_resource type="Script" uid="uid://4gjfinldupg4" path="res://scripts/all_pens.gd" id="16_vynom"]
+[ext_resource type="Script" uid="uid://b1mjgctjgc72g" path="res://scripts/red_on_game.gd" id="15_nf1ce"]
+[ext_resource type="Script" uid="uid://bm2ytj15eafqj" path="res://scripts/all_pens.gd" id="16_vynom"]
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="17_vynom"]
-[ext_resource type="Script" uid="uid://bjhjqtmpyp7p3" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
+[ext_resource type="Script" uid="uid://uh251rcetris" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
 [ext_resource type="PackedScene" uid="uid://bhdg1ewgngify" path="res://scene/game_controls.tscn" id="19_controls"]
-[ext_resource type="Script" uid="uid://bkbwipsrdeo30" path="res://scripts/timer_background.gd" id="20_8q4eb"]
-[ext_resource type="Script" uid="uid://ye0crcbx1baf" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
+[ext_resource type="Script" uid="uid://bsce1yhtd568d" path="res://scripts/timer_background.gd" id="20_8q4eb"]
+[ext_resource type="Script" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -155,34 +155,6 @@ texture = ExtResource("7_54f4s")
 position = Vector2(0.04399, -8.99287)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="student paper/Area2D"]
-position = Vector2(-23.0503, -17.6372)
-shape = SubResource("RectangleShape2D_famsg")
-
-[node name="student paper2" type="Sprite2D" parent="."]
-position = Vector2(370.064, 559.13)
-rotation = -0.0110492
-scale = Vector2(0.329657, 0.599336)
-skew = 0.00454378
-texture = ExtResource("7_54f4s")
-
-[node name="Area2D" type="Area2D" parent="student paper2"]
-position = Vector2(0.04399, -8.99287)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="student paper2/Area2D"]
-position = Vector2(-23.0503, -17.6372)
-shape = SubResource("RectangleShape2D_famsg")
-
-[node name="student paper3" type="Sprite2D" parent="."]
-position = Vector2(306.135, 559.782)
-rotation = -0.0311333
-scale = Vector2(0.330401, 0.613581)
-skew = 0.0210496
-texture = ExtResource("7_54f4s")
-
-[node name="Area2D" type="Area2D" parent="student paper3"]
-position = Vector2(0.04399, -8.99287)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="student paper3/Area2D"]
 position = Vector2(-23.0503, -17.6372)
 shape = SubResource("RectangleShape2D_famsg")
 
@@ -367,8 +339,6 @@ offset_bottom = 127.0
 text = "Good morning, teacher. I have gathered my classmates' papers. I’ll just put them on your desk for you to check. Only three students have passed though."
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
-[connection signal="input_event" from="student paper2/Area2D" to="." method="_on_area_2d_student_paper2_input_event"]
-[connection signal="input_event" from="student paper3/Area2D" to="." method="_on_area_2d_student_paper3_input_event"]
 [connection signal="input_event" from="checklist_icon/Area2D" to="." method="_on_checklist_icon_input_event"]
 [connection signal="input_event" from="stamp/Area2D" to="." method="_on_stamp_area_input_event"]
 [connection signal="input_event" from="stamp/StampOptions/CheckOption/Area2D" to="." method="_on_check_option_input_event"]
