@@ -105,10 +105,6 @@ min_size = Vector2i(460, 200)
 theme = SubResource("Theme_1")
 
 [node name="Content" type="MarginContainer" parent="ExitConfirm"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 452.0
-offset_bottom = 156.0
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
@@ -118,49 +114,18 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
-text = "[center]
-
-Exit to main menu?[/center]"
+text = "[center]Exit to main menu?[/center]"
 scroll_active = false
 autowrap_mode = 2
 
 [node name="HelpDialog" type="AcceptDialog" parent="."]
-mode = 3
 title = "How to Play"
-size = Vector2i(900, 400)
+size = Vector2i(520, 320)
 min_size = Vector2i(520, 320)
 theme = SubResource("Theme_1")
-dialog_autowrap = true
+dialog_text = "Spot fake or non-legit papers using available tools:
 
-[node name="Content" type="MarginContainer" parent="HelpDialog"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 512.0
-offset_bottom = 276.0
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="Text" type="RichTextLabel" parent="HelpDialog/Content"]
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 16
-bbcode_enabled = true
-text = "[center]Welcome to Paper Lies—a game all about verifying and spotting fake news.
-Here, you play as a teacher who assigns students to create news reports. Your job is to carefully analyze each paper, ensuring that every claim is backed by reliable sources and accurate references.
-
-Your task is to review a student’s news report, which is handed to you on paper.
-
-First, use the pens provided to annotate and highlight important details. These notes will help you as you verify the information.
-
-Use the desktop to fact-check the report. Look up the news online, confirm if it exists, and pay close attention to the publisher and the publication date.
-
-To guide you through the process, a checklist is available. Follow it to ensure you don’t miss any key points.
-
-Once you have verified all the information, decide whether to stamp the report as Accepted or Denied.
-
-Remember, you only have 90 seconds to complete the game. Work quickly, but carefully.
-[/center]"
-scroll_active = false
-autowrap_mode = 2
-tab_size = 5
+- Use the Desktop to research/check facts.
+- Use the pen and paper to annotate the student's paper.
+- Use the Checklist as your guide.
+- Stamp Approve or Deny based on your decision."

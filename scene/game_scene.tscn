@@ -1,7 +1,7 @@
 [gd_scene load_steps=41 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
-[ext_resource type="Texture2D" uid="uid://le0yh5crl3un" path="res://assets/main scene bg 2.png" id="2_6chj6"]
+[ext_resource type="Texture2D" uid="uid://b2mtfi2lamwl4" path="res://assets/bg_placeholder.png" id="2_yyfvs"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
 [ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
@@ -36,10 +36,10 @@ size = Vector2(74.6311, 103.165)
 size = Vector2(80.6422, 111.742)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_stamp_click"]
-size = Vector2(54.1033, 73.1598)
+size = Vector2(120, 120)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_check_option"]
-size = Vector2(1796.58, 2247.45)
+size = Vector2(1758.37, 2064.47)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x_option"]
 size = Vector2(1808.3, 2112.71)
@@ -116,9 +116,9 @@ shadow_offset = Vector2(3, 3)
 script = ExtResource("1_3ad2y")
 
 [node name="background" type="Sprite2D" parent="."]
-position = Vector2(593.5, 337.402)
-scale = Vector2(1.1213, 1.27149)
-texture = ExtResource("2_6chj6")
+position = Vector2(576.5, 337.402)
+scale = Vector2(1.36874, 1.27149)
+texture = ExtResource("2_yyfvs")
 
 [node name="Player" parent="." instance=ExtResource("6_28rmr")]
 position = Vector2(157, 412)
@@ -247,15 +247,14 @@ position = Vector2(138, 245)
 position = Vector2(139, 295)
 
 [node name="stamp" type="Sprite2D" parent="."]
-position = Vector2(1048, 522)
-scale = Vector2(0.113672, 0.112207)
+position = Vector2(1046, 527)
+scale = Vector2(0.075, 0.0876953)
 texture = ExtResource("12_stamp")
 
 [node name="Area2D" type="Area2D" parent="stamp"]
 scale = Vector2(13.3333, 11.407)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/Area2D"]
-position = Vector2(0, 0.921631)
 shape = SubResource("RectangleShape2D_stamp_click")
 
 [node name="StampOptions" type="Node2D" parent="stamp"]
@@ -272,20 +271,20 @@ texture = ExtResource("13_silwv")
 position = Vector2(-1.45895, -426.607)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/CheckOption/Area2D"]
-position = Vector2(13.0195, 292.104)
+position = Vector2(-10.1094, 297.573)
 shape = SubResource("RectangleShape2D_check_option")
 
 [node name="XOption" type="Sprite2D" parent="stamp/StampOptions"]
 z_index = 201
-position = Vector2(-0.352966, -120.318)
-scale = Vector2(0.0529928, 0.0722253)
+position = Vector2(0, -153.948)
+scale = Vector2(0.0829445, 0.0986359)
 texture = ExtResource("14_stamp_x")
 
 [node name="Area2D" type="Area2D" parent="stamp/StampOptions/XOption"]
 position = Vector2(-24.1126, -445.934)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/XOption/Area2D"]
-position = Vector2(30.7727, 445.935)
+position = Vector2(60.2816, 425.668)
 shape = SubResource("RectangleShape2D_x_option")
 
 [node name="Pens" type="Node2D" parent="."]

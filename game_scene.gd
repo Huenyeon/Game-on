@@ -10,10 +10,10 @@ extends Node2D
 @onready var checklist_icon: Sprite2D = $checklist_icon
 @onready var checklist_ui: Node2D = $ChecklistUI
 @onready var clipboard_sprite: Sprite2D = $ChecklistUI/Clipboard
-
 @onready var stamp_options: Node2D = $stamp/StampOptions
 @onready var check_option_sprite: Sprite2D = $stamp/StampOptions/CheckOption
 @onready var x_option_sprite: Sprite2D = $stamp/StampOptions/XOption
+ 
 
 @onready var game_timer: Timer = $TimerBackground/TimerLabel/GameTimer
 @onready var timer_label: Label = $TimerBackground/TimerLabel
@@ -62,6 +62,8 @@ func _ready() -> void:
 	checklist_ui.visible = false
 	
 	# Signal connection handled in scene file
+	
+	
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))
 		
@@ -163,48 +165,14 @@ func get_random_reports(count: int) -> Array:
 		if candidate not in chosen:
 			chosen.append(candidate)
 	return chosen
-	
-	
-func _set_paper_text_from_report(report: Dictionary) -> void:
-	if report == null or report.is_empty():
-		paper_text.text = "No report found."
-		return
-
-	var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % report["headline"]
-	var highlighted_body = "%s %s %s on %s %s." % [
-		"[color=F25907][u]" + report["who"] + "[/u][/color]",
-		report["what"],
-		report["where"],
-		"[color=F25907][u]" + report["when"] + "[/u][/color]",
-		report["why"]
-	]
-	report_text += highlighted_body + "\n\n" + report["additional_info"]
-
-	paper_text.bbcode_enabled = true
-	paper_text.bbcode_text = report_text
-	
-# Add this new function to your script
-func open_paper_with_report(report_data: Dictionary) -> void:
-	# Set the global variable
-	Global.current_student_report = report_data
-
-	# Hide the student papers and show the main paper
-	paper_open = true
-	paper.visible = true
-	student_paper.visible = false
-	student_paper2.visible = false
-	student_paper3.visible = false
-
-	# Refresh pen references (good practice)
-	refresh_pens_paper_reference()
-
-	# Use your helper function to display the content
-	_set_paper_text_from_report(Global.current_student_report)
-
-	print("Paper opened with report: ", report_data["headline"])
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
+		paper_open = true
+		paper.visible = true
+		student_paper.visible = false
+		refresh_pens_paper_reference()
+
 		# Only choose a report the first time
 		if chosen_report1 == null:
 			var all_reports = Global.correct_student_report + Global.incorrect_student_report
@@ -322,7 +290,6 @@ func _on_player_reached_middle():
 
 # New function to handle showing student paper
 func show_student_paper():
-	print("Student paper opened!")
 	student_paper.visible = true
 	student_paper2.visible = true
 	student_paper3.visible = true
@@ -354,7 +321,6 @@ func _on_student_paper_gui_input(event):
 
 
 func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	
 	if event is InputEventMouseButton and event.pressed:
 		if stamp_options:
 			var will_show := not stamp_options.visible
@@ -408,8 +374,6 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				paper_open = false
 				paper.visible = false
 				student_paper.visible = true
-				student_paper2.visible = true
-				student_paper3.visible = true
 				dragging_check = false
 				dragging_x = false
 				check_armed = false
@@ -574,6 +538,11 @@ func set_pen_interaction(active: bool, pen_node: Node = null):
 
 func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
+		paper_open = true
+		paper.visible = true
+		student_paper2.visible = false
+		refresh_pens_paper_reference()
+
 		# Only choose a report the first time
 		if chosen_report2 == null:
 			var all_reports = Global.correct_student_report + Global.incorrect_student_report
@@ -590,7 +559,7 @@ func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, s
 				available_reports = all_reports
 
 			# Pick this paper’s report once
-			chosen_report2 = available_reports[1]   # or pick index 2 if you want the 3rd slot
+			chosen_report2 = available_reports[0]   # or pick index 2 if you want the 3rd slot
 			Global.used_reports.append(chosen_report2)
 
 		# Now always use chosen_report3
@@ -613,6 +582,11 @@ func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, s
 
 func _on_area_2d_student_paper3_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
+		paper_open = true
+		paper.visible = true
+		student_paper3.visible = false
+		refresh_pens_paper_reference()
+
 		# Only choose a report the first time
 		if chosen_report3 == null:
 			var all_reports = Global.correct_student_report + Global.incorrect_student_report
@@ -629,7 +603,7 @@ func _on_area_2d_student_paper3_input_event(viewport: Node, event: InputEvent, s
 				available_reports = all_reports
 
 			# Pick this paper’s report once
-			chosen_report3 = available_reports[2]   # or pick index 2 if you want the 3rd slot
+			chosen_report3 = available_reports[0]   # or pick index 2 if you want the 3rd slot
 			Global.used_reports.append(chosen_report3)
 
 		# Now always use chosen_report3
