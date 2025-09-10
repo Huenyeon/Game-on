@@ -170,12 +170,12 @@ func _set_paper_text_from_report(report: Dictionary) -> void:
 		paper_text.text = "No report found."
 		return
 
-	var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % report["headline"]
+	var report_text = "[b][font_size=65]%s[/font_size][/b]\n\n" % report["headline"]
 	var highlighted_body = "%s %s %s on %s %s." % [
-		"[color=F25907][u]" + report["who"] + "[/u][/color]",
+		"[color=F25907]" + report["who"] + "[/color]",
 		report["what"],
 		report["where"],
-		"[color=F25907][u]" + report["when"] + "[/u][/color]",
+		"[color=F25907]" + report["when"] + "[/color]",
 		report["why"]
 	]
 	report_text += highlighted_body + "\n\n" + report["additional_info"]
