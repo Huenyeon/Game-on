@@ -24,6 +24,7 @@ var current_cursor = "cursor1"
 
 func _ready():
 	# Set initial cursor
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_cursor("cursor1")
 	# Enable global input handling to catch every click anywhere
 	set_process_input(true)
@@ -98,6 +99,7 @@ func play_press_effect():
 		animation_tween.kill()
 	
 	animation_tween = create_tween()
+	animation_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	animation_tween.set_parallel(false)
 	
 	# Smooth sequence: Cursor2 -> Cursor3 -> Cursor4 -> back to Cursor1

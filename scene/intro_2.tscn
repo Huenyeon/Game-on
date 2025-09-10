@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://chvhue6xh5yuy"]
+[gd_scene load_steps=4 format=3 uid="uid://chvhue6xh5yuy"]
 
-[ext_resource type="Script" uid="uid://bb21c0uivc0ni" path="res://scripts/intro_2.gd" id="1_nsbk6"]
+[ext_resource type="Script" uid="uid://brivhkfs7n5gj" path="res://scripts/intro_2.gd" id="1_nsbk6"]
 [ext_resource type="Texture2D" uid="uid://b2mtfi2lamwl4" path="res://assets/bg_placeholder.png" id="2_o3lo8"]
+[ext_resource type="PackedScene" uid="uid://2cen5hkc4nah" path="res://scene/intro_controls.tscn" id="3_controls"]
 
 [node name="Intro2" type="Node2D"]
 script = ExtResource("1_nsbk6")
@@ -25,9 +26,12 @@ offset_bottom = 613.0
 
 [node name="Label" type="Label" parent="Camera2D/CanvasLayer/Panel"]
 layout_mode = 0
-offset_left = -20.0
-offset_right = 713.0
-offset_bottom = 114.0
-horizontal_alignment = 1
-vertical_alignment = 1
-justification_flags = 161
+
+[node name="UIRoot" type="Node2D" parent="Camera2D/CanvasLayer"]
+position = Vector2(16, 40)
+
+[node name="IntroControls" parent="Camera2D/CanvasLayer/UIRoot" instance=ExtResource("3_controls")]
+offset_left = 9.0
+offset_top = -17.0
+offset_right = 742.0
+offset_bottom = 97.0

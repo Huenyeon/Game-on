@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://c15ewfy55g2c8"]
+
+[ext_resource type="Script" uid="uid://dv4rgtp4qx5uo" path="res://scripts/end_result.gd" id="1"]
+
+[node name="EndResult" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(515, 190)
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 160.0
+offset_top = 120.0
+offset_right = 160.0
+offset_bottom = 120.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 98.0
+offset_top = 267.0
+offset_right = 605.0
+offset_bottom = 370.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="InfoLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Back to Main Menu"
+
+[node name="ResultSprite" type="Sprite2D" parent="Panel"]
+z_index = 100
+position = Vector2(350, 60)
+
+[connection signal="pressed" from="Panel/VBox/ContinueButton" to="." method="_on_back_to_menu_pressed"]
