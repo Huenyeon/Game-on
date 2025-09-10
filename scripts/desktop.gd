@@ -17,6 +17,10 @@ func _on_desktop_clicked(event):
 				# Ensure the root node keeps its name for lookup when closing
 				overlay.name = "InsideDesktop"
 				current_scene.add_child(overlay)
+				# Hide top-left controls while desktop is open
+				var controls := current_scene.get_node_or_null("CanvasLayer/UIRoot/GameControls")
+				if controls:
+					controls.visible = false
 	# Ignore all other input events - don't trigger cursor effect
 
 

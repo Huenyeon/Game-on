@@ -2,8 +2,6 @@ extends Node2D
 
 func _ready():
 	randomize()
-	# Connect the button's pressed signal to this script
-	$Control/start.pressed.connect(_on_start_pressed)
 	
 	
 func _on_start_pressed() -> void:
