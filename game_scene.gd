@@ -510,7 +510,7 @@ func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, s
 				available_reports = all_reports
 
 			# Pick this paper’s report once
-			chosen_report2 = available_reports[0]   # or pick index 2 if you want the 3rd slot
+			chosen_report2 = available_reports[1]   # or pick index 2 if you want the 3rd slot
 			Global.used_reports.append(chosen_report2)
 
 		open_paper_with_report(chosen_report2)
@@ -533,7 +533,7 @@ func _on_area_2d_student_paper3_input_event(viewport: Node, event: InputEvent, s
 				available_reports = all_reports
 
 			# Pick this paper’s report once
-			chosen_report3 = available_reports[0]   # or pick index 2 if you want the 3rd slot
+			chosen_report3 = available_reports[2]   # or pick index 2 if you want the 3rd slot
 			Global.used_reports.append(chosen_report3)
 			
 		open_paper_with_report(chosen_report3)

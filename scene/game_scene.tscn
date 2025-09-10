@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=38 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dsd1at6i4w2h4" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://le0yh5crl3un" path="res://assets/main scene bg 2.png" id="2_6chj6"]
@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="17_vynom"]
 [ext_resource type="Script" uid="uid://bjhjqtmpyp7p3" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
 [ext_resource type="PackedScene" uid="uid://bhdg1ewgngify" path="res://scene/game_controls.tscn" id="19_controls"]
+[ext_resource type="Script" uid="uid://bsce1yhtd568d" path="res://scripts/timer_background.gd" id="20_8q4eb"]
+[ext_resource type="Script" uid="uid://b15aqysrb7gsb" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -91,6 +93,13 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8q4eb"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="Game Scene" type="Node2D"]
 script = ExtResource("1_3ad2y")
 
@@ -116,6 +125,7 @@ scale = Vector2(1.22656, 0.549154)
 texture = ExtResource("3_foe2p")
 
 [node name="paper" type="Sprite2D" parent="."]
+visible = false
 z_index = 100
 position = Vector2(523, 326)
 scale = Vector2(2.06383, 2)
@@ -306,12 +316,13 @@ position = Vector2(123, 522)
 scale = Vector2(3.44697, 3.21)
 sprite_frames = SubResource("SpriteFrames_pxt5h")
 
-[node name="TimerBackground" type="ColorRect" parent="."]
+[node name="TimerBackground" type="Panel" parent="."]
 offset_left = 949.0
 offset_top = 13.0
 offset_right = 1108.0
 offset_bottom = 68.0
-color = Color(0, 0, 0, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_8q4eb")
+script = ExtResource("20_8q4eb")
 
 [node name="TimerLabel" type="Label" parent="TimerBackground"]
 layout_mode = 0
@@ -339,6 +350,21 @@ offset_left = 6.0
 offset_top = -30.0
 offset_right = 199.0
 offset_bottom = 150.0
+
+[node name="JinuDialogue" type="Panel" parent="."]
+offset_left = 335.0
+offset_top = 488.0
+offset_right = 829.0
+offset_bottom = 611.0
+script = ExtResource("22_sw306")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="JinuDialogue"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 23.0
+offset_right = 506.0
+offset_bottom = 127.0
+text = "Good morning, teacher. I have gathered my classmates' papers. I’ll just put them on your desk for you to check. Only three students have passed though."
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="input_event" from="student paper2/Area2D" to="." method="_on_area_2d_student_paper2_input_event"]

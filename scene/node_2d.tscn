@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dile7j7wlpfsy"]
 
-[ext_resource type="Script" uid="uid://7o2qi2d54pdc" path="res://scripts/first_intro.gd" id="1_guiot"]
+[ext_resource type="Script" uid="uid://prqucr8v6eg2" path="res://scripts/first_intro.gd" id="1_guiot"]
 [ext_resource type="Texture2D" uid="uid://o105it3jxdn1" path="res://assets/images/background start.jpg" id="2_guiot"]
 [ext_resource type="PackedScene" uid="uid://2cen5hkc4nah" path="res://scene/intro_controls.tscn" id="3_controls"]
 
@@ -20,14 +20,23 @@ zoom = Vector2(2, 2)
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
 
 [node name="Panel" type="Panel" parent="Camera2D/CanvasLayer"]
-offset_left = 252.0
+anchors_preset = -1
+anchor_right = 0.0147569
+anchor_bottom = 0.0339506
+offset_left = 276.0
 offset_top = 510.0
-offset_right = 856.0
+offset_right = 880.0
 offset_bottom = 623.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Camera2D/CanvasLayer/Panel"]
 layout_mode = 0
+offset_left = 35.0
+offset_top = 15.0
+offset_right = 368.0
+offset_bottom = 38.0
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="UIRoot" type="Node2D" parent="Camera2D/CanvasLayer"]
 position = Vector2(16, 40)
