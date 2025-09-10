@@ -40,6 +40,10 @@ var active_pen_node: Node = null # Track the currently active pen node
 
 var all_reports = Global.correct_student_report + Global.incorrect_student_report
 
+var chosen_report1 = null
+var chosen_report2 = null
+var chosen_report3 = null
+
 
 func _ready() -> void:
 	paper.visible = false
@@ -159,68 +163,41 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		paper_open = true
 		paper.visible = true
 		student_paper.visible = false
-		
-		# Paper is now visible for drawing
-		# Refresh paper reference for all pens
 		refresh_pens_paper_reference()
-		
-		# If we haven't selected a student report yet, choose one that hasn't been used
-		if Global.current_student_report == null:
-			
+
+		# Only choose a report the first time
+		if chosen_report1 == null:
+			var all_reports = Global.correct_student_report + Global.incorrect_student_report
 			var available_reports = []
-			
-			# Filter out reports that have already been used
+
+			# Filter out already used reports
 			for report in all_reports:
 				if not Global.used_reports.has(report):
 					available_reports.append(report)
-			
-			# If there are no available reports, reset the used reports list
-			if available_reports.size() == 0:
-				Global.used_reports = []
-				available_reports = all_reports
-			
-			# Select a random report from available ones
-			if available_reports.size() > 0:
-				var random_index = randi() % available_reports.size()
-				Global.current_student_report = available_reports[random_index]
-				Global.used_reports.append(Global.current_student_report)
-				
-				# Reset player's stamp state so they can stamp this newly-opened paper
-				if player and player.has_method("reset_stamp_state"):
-					player.reset_stamp_state()
-		
-		# Display the selected student report
-		if Global.current_student_report:
-			var report = Global.current_student_report
-			var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % report["headline"]
 
-			var highlighted_body = "%s %s %s on %s %s." % [
-			"[color=F25907][u]" + report["who"] + "[/u][/color]",
-			 report["what"],
-			 report["where"],
-			"[color=F25907][u]" + report["when"] + "[/u][/color]",
-			 report["why"]
-			]
-			report_text += highlighted_body + "\n\n" + report["additional_info"]
-			
-			paper_text.bbcode_enabled = true
-			paper_text.text = report_text
-		else:
-			# Only generate new report text if we don't have one yet
-			if current_student_report_text == "":
-				var all_reports = Global.correct_student_report + Global.incorrect_student_report
-				
-				if all_reports.size() > 0:
-					var random_index = rng.randi() % all_reports.size()
-					var report = all_reports[random_index]
-					current_student_report_text = "%s\n\n%s\n\n%s" % [
-						report["headline"],
-						report["body"],
-						report["additional_info"]
-					]
-			
-			# Always show the stored report text
-			paper_text.text = current_student_report_text
+			# Reset if empty
+			if available_reports.size() == 0:
+				Global.used_reports.clear()
+				available_reports = all_reports
+
+			# Pick this paper’s report once
+			chosen_report1 = available_reports[0]   # or pick index 2 if you want the 3rd slot
+			Global.used_reports.append(chosen_report1)
+
+		# Now always use chosen_report3
+		var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report1["headline"]
+
+		var highlighted_body = "%s %s %s on %s %s." % [
+			"[color=F25907][u]" + chosen_report1["who"] + "[/u][/color]",
+			chosen_report1["what"],
+			chosen_report1["where"],
+			"[color=F25907][u]" + chosen_report1["when"] + "[/u][/color]",
+			chosen_report1["why"]
+		]
+		report_text += highlighted_body + "\n\n" + chosen_report1["additional_info"]
+
+		paper_text.bbcode_enabled = true
+		paper_text.text = report_text
 
 func refresh_pens_paper_reference():
 	# Find all pens and refresh their paper reference
@@ -520,48 +497,41 @@ func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, s
 		paper_open = true
 		paper.visible = true
 		student_paper2.visible = false
-
-		# Paper is now visible for drawing
 		refresh_pens_paper_reference()
 
-		# Choose a different report than the one already shown in student_paper
-		var all_reports = Global.correct_student_report + Global.incorrect_student_report
-		var available_reports = []
+		# Only choose a report the first time
+		if chosen_report2 == null:
+			var all_reports = Global.correct_student_report + Global.incorrect_student_report
+			var available_reports = []
 
-		# Filter out already used reports
-		for report in all_reports:
-			if not Global.used_reports.has(report):
-				available_reports.append(report)
+			# Filter out already used reports
+			for report in all_reports:
+				if not Global.used_reports.has(report):
+					available_reports.append(report)
 
-		# If there are no available reports, reset the used list
-		if available_reports.size() == 0:
-			Global.used_reports.clear()
-			available_reports = all_reports
+			# Reset if empty
+			if available_reports.size() == 0:
+				Global.used_reports.clear()
+				available_reports = all_reports
 
-		# Select a random unused report
-		if available_reports.size() > 0:
-			var random_index = randi() % available_reports.size()
-			var chosen_report = available_reports[random_index]
-			Global.used_reports.append(chosen_report)
+			# Pick this paper’s report once
+			chosen_report2 = available_reports[0]   # or pick index 2 if you want the 3rd slot
+			Global.used_reports.append(chosen_report2)
 
-			# Reset player's stamp state for this new paper
-			if player and player.has_method("reset_stamp_state"):
-				player.reset_stamp_state()
+		# Now always use chosen_report3
+		var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report2["headline"]
 
-			# Display the chosen report
-			var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report["headline"]
+		var highlighted_body = "%s %s %s on %s %s." % [
+			"[color=F25907][u]" + chosen_report2["who"] + "[/u][/color]",
+			chosen_report2["what"],
+			chosen_report2["where"],
+			"[color=F25907][u]" + chosen_report2["when"] + "[/u][/color]",
+			chosen_report2["why"]
+		]
+		report_text += highlighted_body + "\n\n" + chosen_report2["additional_info"]
 
-			var highlighted_body = "%s %s %s on %s %s." % [
-				"[color=F25907][u]" + chosen_report["who"] + "[/u][/color]",
-				chosen_report["what"],
-				chosen_report["where"],
-				"[color=F25907][u]" + chosen_report["when"] + "[/u][/color]",
-				chosen_report["why"]
-			]
-			report_text += highlighted_body + "\n\n" + chosen_report["additional_info"]
-
-			paper_text.bbcode_enabled = true
-			paper_text.text = report_text
+		paper_text.bbcode_enabled = true
+		paper_text.text = report_text
 
 
 
@@ -571,45 +541,38 @@ func _on_area_2d_student_paper3_input_event(viewport: Node, event: InputEvent, s
 		paper_open = true
 		paper.visible = true
 		student_paper3.visible = false
-
-		# Paper is now visible for drawing
 		refresh_pens_paper_reference()
 
-		# Choose a different report than the one already shown in student_paper
-		var all_reports = Global.correct_student_report + Global.incorrect_student_report
-		var available_reports = []
+		# Only choose a report the first time
+		if chosen_report3 == null:
+			var all_reports = Global.correct_student_report + Global.incorrect_student_report
+			var available_reports = []
 
-		# Filter out already used reports
-		for report in all_reports:
-			if not Global.used_reports.has(report):
-				available_reports.append(report)
+			# Filter out already used reports
+			for report in all_reports:
+				if not Global.used_reports.has(report):
+					available_reports.append(report)
 
-		# If there are no available reports, reset the used list
-		if available_reports.size() == 0:
-			Global.used_reports.clear()
-			available_reports = all_reports
+			# Reset if empty
+			if available_reports.size() == 0:
+				Global.used_reports.clear()
+				available_reports = all_reports
 
-		# Select a random unused report
-		if available_reports.size() > 0:
-			var random_index = randi() % available_reports.size()
-			var chosen_report = available_reports[random_index]
-			Global.used_reports.append(chosen_report)
+			# Pick this paper’s report once
+			chosen_report3 = available_reports[0]   # or pick index 2 if you want the 3rd slot
+			Global.used_reports.append(chosen_report3)
 
-			# Reset player's stamp state for this new paper
-			if player and player.has_method("reset_stamp_state"):
-				player.reset_stamp_state()
+		# Now always use chosen_report3
+		var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report3["headline"]
 
-			# Display the chosen report
-			var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report["headline"]
+		var highlighted_body = "%s %s %s on %s %s." % [
+			"[color=F25907][u]" + chosen_report3["who"] + "[/u][/color]",
+			chosen_report3["what"],
+			chosen_report3["where"],
+			"[color=F25907][u]" + chosen_report3["when"] + "[/u][/color]",
+			chosen_report3["why"]
+		]
+		report_text += highlighted_body + "\n\n" + chosen_report3["additional_info"]
 
-			var highlighted_body = "%s %s %s on %s %s." % [
-				"[color=F25907][u]" + chosen_report["who"] + "[/u][/color]",
-				chosen_report["what"],
-				chosen_report["where"],
-				"[color=F25907][u]" + chosen_report["when"] + "[/u][/color]",
-				chosen_report["why"]
-			]
-			report_text += highlighted_body + "\n\n" + chosen_report["additional_info"]
-
-			paper_text.bbcode_enabled = true
-			paper_text.text = report_text
+		paper_text.bbcode_enabled = true
+		paper_text.text = report_text
