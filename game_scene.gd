@@ -192,7 +192,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 			"[color=F25907][u]" + report["who"] + "[/u][/color]",
 			 report["what"],
 			 report["where"],
-			"[color=F25907]" + report["when"] + "[/color]",
+			"[color=F25907][u]" + report["when"] + "[/u][/color]",
 			 report["why"]
 			]
 			report_text += highlighted_body + "\n\n" + report["additional_info"]
