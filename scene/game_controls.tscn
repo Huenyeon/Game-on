@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bhdg1ewgngify"]
 
-[ext_resource type="Script" uid="uid://s5warght3xmm" path="res://scripts/game_controls.gd" id="1_controls"]
+[ext_resource type="Script" uid="uid://c2vtgoeowfldw" path="res://scripts/game_controls.gd" id="1_controls"]
 [ext_resource type="Texture2D" uid="uid://cc1v5umryas3b" path="res://assets/Icons/Home.png" id="2_home"]
 [ext_resource type="Texture2D" uid="uid://d0ak3ce3e644d" path="res://assets/Icons/Pause.png" id="3_pause"]
 [ext_resource type="Texture2D" uid="uid://we1ucipjc7yi" path="res://assets/Icons/Instructions.png" id="4_help"]

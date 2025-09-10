@@ -185,7 +185,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 			Global.used_reports.append(chosen_report1)
 
 		# Now always use chosen_report3
-		var report_text = "[b][font_size=50]%s[/font_size][/b]\n\n" % chosen_report1["headline"]
+		var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report1["headline"]
 
 		var highlighted_body = "%s %s %s on %s %s." % [
 			"[color=F25907][u]" + chosen_report1["who"] + "[/u][/color]",
@@ -519,7 +519,7 @@ func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, s
 			Global.used_reports.append(chosen_report2)
 
 		# Now always use chosen_report3
-		var report_text = "[b][font_size=50]%s[/font_size][/b]\n\n" % chosen_report2["headline"]
+		var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report2["headline"]
 
 		var highlighted_body = "%s %s %s on %s %s." % [
 			"[color=F25907][u]" + chosen_report2["who"] + "[/u][/color]",
@@ -563,7 +563,7 @@ func _on_area_2d_student_paper3_input_event(viewport: Node, event: InputEvent, s
 			Global.used_reports.append(chosen_report3)
 
 		# Now always use chosen_report3
-		var report_text = "[b][font_size=50]%s[/font_size][/b]\n\n" % chosen_report3["headline"]
+		var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % chosen_report3["headline"]
 
 		var highlighted_body = "%s %s %s on %s %s." % [
 			"[color=F25907][u]" + chosen_report3["who"] + "[/u][/color]",
