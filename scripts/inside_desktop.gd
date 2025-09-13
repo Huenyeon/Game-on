@@ -84,4 +84,13 @@ func on_pressed_back_to_scene_button() -> void:
 		var controls := current_scene.get_node_or_null("CanvasLayer/UIRoot/GameControls")
 		if controls:
 			controls.visible = true
+		
+		# Close paper when desktop is closed
+		if current_scene.has_method("close_paper_if_open"):
+			current_scene.close_paper_if_open()
+		
+		# Close stamp options when desktop is closed
+		if current_scene.has_method("close_stamp_options_if_open"):
+			current_scene.close_stamp_options_if_open()
+	
 	queue_free()

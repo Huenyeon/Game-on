@@ -11,6 +11,7 @@ var state = State.ENTERING
 
 # Target position for the middle of the table
 var target_x = 350 # Adjust based on your table's position
+var start_x = -100 # Start position off-screen to the left
 var stop_distance = 5  # Distance threshold before stopping
 
 signal reached_middle
@@ -22,13 +23,14 @@ var _custom_cursor: Sprite2D = null
 var _has_stamped: bool = false  # new: player-level guard to prevent further stamp selection
 
 func _ready() -> void:
-	# Check if player has already reached middle in a previous session
-	if Global.player_has_reached_middle:
-		state = State.STOPPED
-		position.x = target_x  # Set position directly to middle
-		emit_signal("reached_middle") # Emit signal to notify other nodes
-	else:
-		state = State.ENTERING
+	# Always start from the left side for the walking animation
+	# Reset the global flag to ensure walking happens
+	Global.player_has_reached_middle = false
+	print("Player starting from left side - will walk to middle")
+	state = State.ENTERING
+	# Start from the left side for walking animation
+	position.x = start_x
+	print("Player starting position: ", position.x, " Target: ", target_x)
 
 	# Create a custom cursor sprite that follows the mouse
 	_custom_cursor = Sprite2D.new()
@@ -61,10 +63,12 @@ func _auto_move_to_middle() -> void:
 	if abs(position.x - target_x) > stop_distance:
 		var dir = sign(target_x - position.x)
 		velocity.x = dir * SPEED
+		print("Player moving: pos=", position.x, " target=", target_x, " velocity=", velocity.x)
 	else:
 		velocity.x = 0
 		state = State.STOPPED
 		Global.player_has_reached_middle = true  # Set the global flag
+		print("Player reached middle position!")
 		emit_signal("reached_middle") # Notify main scene
 
 # Update cursor position to follow mouse
@@ -75,6 +79,14 @@ func _process(_delta: float) -> void:
 # Handle stamp selection and application
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		# Check if dialog is still active
+		var game_scene = get_tree().current_scene
+		if game_scene and game_scene.has_method("is_interaction_allowed"):
+			if not game_scene.is_interaction_allowed():
+				print("Cannot interact with stamps - dialog is still playing")
+				return
+		
+		
 		var mp = get_viewport().get_mouse_position()
 		
 		# Require the stamp Area2D was clicked (stamp UI opened) before allowing stamp selection.
@@ -89,8 +101,11 @@ func _input(event):
 			if not _has_stamped and stamp_area_clicked:
 				for stamp in get_tree().get_nodes_in_group("stamp"):
 					if stamp is Sprite2D and _is_point_in_sprite(stamp, mp):
-						_select_stamp(stamp)
-						break
+						# Don't select the stamp if we're clicking on the stamp area itself (for toggling)
+						# Only select stamp option sprites, not the main stamp area
+						if "StampOption" in stamp.name or "Approve" in stamp.name or "Denied" in stamp.name:
+							_select_stamp(stamp)
+							break
 		else:
 			# A stamp is already selected, check if clicking on paper
 			var applied = false

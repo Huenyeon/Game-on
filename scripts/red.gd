@@ -77,6 +77,13 @@ func _input(event):
 					print("Cannot use this pen - another pen is active")
 					return
 			
+			# Check if dialog is still active
+			if game_scene and game_scene.has_method("is_interaction_allowed"):
+				if not game_scene.is_interaction_allowed():
+					print("Cannot use pen - dialog is still playing")
+					return
+			
+			
 			# Check if click is on the AnimatedSprite2D
 			var mouse_pos = get_global_mouse_position()
 			
@@ -122,6 +129,15 @@ func _process(delta):
 	# If drawing, add new point following pen tip
 	if drawing and current_line:
 		current_line.add_point(marker.global_position)
+
+func force_release():
+	# Immediately stop dragging and drawing
+	sticking = false
+	drawing = false
+	set_process(false)
+	if current_line:
+		current_line = null
+	print("Pen force released")
 
 func return_to_start():
 	# Create a simple animation without tween

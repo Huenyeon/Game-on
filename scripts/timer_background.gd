@@ -4,11 +4,12 @@ extends Panel
 @onready var label: Label = $TimerLabel
 
 func _ready():
-	# Start the timer (set wait_time = 90 in the Inspector)
-	timer.start()
+	# Don't start the timer here - let game_scene control it
+	# timer.start()  # Commented out - game_scene will control when to start
 	label.text = str(int(timer.wait_time))
 
 func _process(_delta):
-	if timer.time_left > 0:
+	# Only update if timer is actually running
+	if not timer.is_stopped() and timer.time_left > 0:
 		# Always update label with remaining time
 		label.text = str(int(timer.time_left))

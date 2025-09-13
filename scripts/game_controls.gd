@@ -18,11 +18,17 @@ func _ready():
 
 	pause_button.pressed.connect(_on_pause_pressed)
 	help_button.pressed.connect(_on_help_pressed)
-	exit_button.pressed.connect(func(): exit_confirm.popup_centered())
+	exit_button.pressed.connect(_on_exit_pressed)
 
 	exit_confirm.confirmed.connect(_on_exit_confirmed)
 
 func _on_pause_pressed():
+	# Force release any active pens when pause button is pressed
+	var game_scene = get_tree().current_scene
+	if game_scene and game_scene.has_method("close_pen_interactions_if_open"):
+		game_scene.close_pen_interactions_if_open()
+		print("Pen interactions force released when pause button pressed")
+	
 	is_paused = not is_paused
 	get_tree().paused = is_paused
 	_update_pause_button()
@@ -34,8 +40,29 @@ func _update_pause_button():
 		pause_button.texture_normal = load("res://assets/Icons/Pause.png")
 
 func _on_help_pressed():
+	# Force release any active pens when help button is pressed
+	var game_scene = get_tree().current_scene
+	if game_scene and game_scene.has_method("close_pen_interactions_if_open"):
+		game_scene.close_pen_interactions_if_open()
+		print("Pen interactions force released when help button pressed")
+	
 	help_dialog.popup_centered()
 
+func _on_exit_pressed():
+	# Force release any active pens when exit button is pressed
+	var game_scene = get_tree().current_scene
+	if game_scene and game_scene.has_method("close_pen_interactions_if_open"):
+		game_scene.close_pen_interactions_if_open()
+		print("Pen interactions force released when exit button pressed")
+	
+	exit_confirm.popup_centered()
+
 func _on_exit_confirmed():
+	# Force release any active pens when exit is confirmed
+	var game_scene = get_tree().current_scene
+	if game_scene and game_scene.has_method("close_pen_interactions_if_open"):
+		game_scene.close_pen_interactions_if_open()
+		print("Pen interactions force released when exit confirmed")
+	
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scene/menu.tscn")
