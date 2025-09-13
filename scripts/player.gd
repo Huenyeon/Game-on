@@ -187,9 +187,9 @@ func _apply_stamp_to_paper(paper: Sprite2D, position: Vector2) -> bool:
 		# Use the selected stamp's scale if available, otherwise a sensible default
 		# Apply 20x larger scale to the stamps
 		if _selected_stamp and _selected_stamp.scale:
-			new_stamp.scale = _selected_stamp.scale * 20.0
+			new_stamp.scale = _selected_stamp.scale * 10.0
 		else:
-			new_stamp.scale = Vector2.ONE * 40.0
+			new_stamp.scale = Vector2.ONE * 30.0
 		
 		# Ensure stamp appears above the paper
 		new_stamp.z_index = 100

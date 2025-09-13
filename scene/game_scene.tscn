@@ -1,12 +1,12 @@
-[gd_scene load_steps=38 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=41 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://bdwdklao0selj" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://le0yh5crl3un" path="res://assets/main scene bg 2.png" id="2_6chj6"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
-[ext_resource type="FontFile" uid="uid://br4ssul0iujnw" path="res://font/OpenSans-VariableFont_wdth,wght.ttf" id="5_y3ouy"]
 [ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
 [ext_resource type="Texture2D" uid="uid://dblkj16gwiu5h" path="res://assets/checklist/checklist_icon.png" id="6_81ico"]
+[ext_resource type="FontFile" uid="uid://bgqsebsgxpqwu" path="res://font/Baby Doll.otf" id="6_yyfvs"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
 [ext_resource type="Script" uid="uid://d0pyeaca5j5xs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
@@ -21,16 +21,19 @@
 [ext_resource type="Script" uid="uid://cihv1hrxt4fhu" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
 [ext_resource type="PackedScene" uid="uid://bhdg1ewgngify" path="res://scene/game_controls.tscn" id="19_controls"]
 [ext_resource type="Script" uid="uid://dnweuqa3mr35m" path="res://scripts/timer_background.gd" id="20_8q4eb"]
+[ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="21_ao44p"]
 [ext_resource type="Script" uid="uid://c5w3ycneilwj3" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
 
+[sub_resource type="Theme" id="Theme_yyfvs"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_famsg"]
-size = Vector2(167.177, 103.165)
+size = Vector2(88.6334, 83.6556)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_juocg"]
-size = Vector2(620.549, 536.295)
+size = Vector2(80.6422, 111.742)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_stamp_click"]
 size = Vector2(54.1033, 73.1598)
@@ -93,12 +96,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Theme" id="Theme_sw306"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8q4eb"]
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+shadow_size = 9
+shadow_offset = Vector2(3, 3)
 
 [node name="Game Scene" type="Node2D"]
 script = ExtResource("1_3ad2y")
@@ -127,47 +139,52 @@ texture = ExtResource("3_foe2p")
 [node name="paper" type="Sprite2D" parent="."]
 visible = false
 z_index = 100
-position = Vector2(523, 326)
-scale = Vector2(2.06383, 2)
+position = Vector2(533.5, 333.5)
+scale = Vector2(3.83654, 3.85714)
 texture = ExtResource("4_vuqbi")
 
 [node name="MarginContainer" type="MarginContainer" parent="paper"]
-offset_left = -81.0
-offset_top = -115.0
-offset_right = 76.0
-offset_bottom = 113.0
+offset_left = -45.0
+offset_top = -63.0
+offset_right = 835.0
+offset_bottom = 1209.0
+scale = Vector2(0.1, 0.1)
+pivot_offset = Vector2(0.2, 0.2)
+theme = SubResource("Theme_yyfvs")
+theme_override_constants/margin_left = 0
 
 [node name="Text" type="RichTextLabel" parent="paper/MarginContainer"]
 layout_mode = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("5_y3ouy")
-theme_override_font_sizes/normal_font_size = 9
+theme_override_fonts/normal_font = ExtResource("6_yyfvs")
+theme_override_font_sizes/normal_font_size = 64
 scroll_active = false
 tab_size = 1
 
 [node name="student paper" type="Sprite2D" parent="."]
-position = Vector2(365, 561)
+position = Vector2(358, 544)
 rotation = -0.00409461
-scale = Vector2(0.346952, 0.589293)
+scale = Vector2(0.867623, 0.798693)
 texture = ExtResource("7_54f4s")
 
 [node name="Area2D" type="Area2D" parent="student paper"]
 position = Vector2(0.04399, -8.99287)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="student paper/Area2D"]
-position = Vector2(-23.0503, -17.6372)
+position = Vector2(-0.832947, 8.2821)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_famsg")
 
 [node name="checklist_icon" type="Sprite2D" parent="."]
-position = Vector2(589, 537)
-scale = Vector2(0.181156, 0.179006)
+position = Vector2(523.746, 542.318)
+scale = Vector2(1.38507, 0.746352)
 texture = ExtResource("6_81ico")
 
 [node name="Area2D" type="Area2D" parent="checklist_icon"]
 position = Vector2(-297.207, 59.2539)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="checklist_icon/Area2D"]
-position = Vector2(273.978, -81.5996)
+position = Vector2(298.586, -58.6238)
 shape = SubResource("RectangleShape2D_juocg")
 
 [node name="Desktop" parent="." instance=ExtResource("11_desktop")]
@@ -289,21 +306,22 @@ scale = Vector2(3.44697, 3.21)
 sprite_frames = SubResource("SpriteFrames_pxt5h")
 
 [node name="TimerBackground" type="Panel" parent="."]
-offset_left = 949.0
-offset_top = 13.0
-offset_right = 1108.0
-offset_bottom = 68.0
+offset_left = 956.0
+offset_top = 20.0
+offset_right = 1121.0
+offset_bottom = 89.0
+theme = SubResource("Theme_sw306")
 theme_override_styles/panel = SubResource("StyleBoxFlat_8q4eb")
 script = ExtResource("20_8q4eb")
 
 [node name="TimerLabel" type="Label" parent="TimerBackground"]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 7.0
+offset_left = 8.0
 offset_right = 158.0
-offset_bottom = 49.0
+offset_bottom = 65.0
 theme_override_colors/font_color = Color(0, 0.596078, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("21_ao44p")
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
 
