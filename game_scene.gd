@@ -431,23 +431,46 @@ func _on_student_paper_gui_input(event):
 
 
 func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	
-	if event is InputEventMouseButton and event.pressed and is_interaction_allowed():
-		# Close paper if open when clicking stamp area
-		close_paper_if_open()
-		# Close pen interactions when clicking stamp area
-		close_pen_interactions_if_open()
+	if event is InputEventMouseButton and event.pressed:
 		if stamp_options:
 			var will_show := not stamp_options.visible
 			stamp_options.visible = will_show
 			# Track that the stamp Area2D was clicked (stamp UI opened)
 			Global.stamp_ui_opened = will_show
+			
 			# Also show/hide the student paper content when stamp options are toggled
 			if will_show:
-				# Load report data the same way student paper does
-				_load_report_data_for_stamping()
-				# Show both stamp options and student paper content using unified function
-				show_paper_with_report()
+				# Show both stamp options and student paper content
+				paper_open = true
+				paper.visible = true
+				student_paper.visible = false
+				
+				# Prefer an already-selected Global.current_student_report.
+				# If that's not present, prefer the local cached current_student_report_text.
+				# Only generate a new random report as a last resort.
+				if Global.current_student_report:
+					# Use the selected global student report so opening stamps won't change it
+					var report_text = "%s\n\n%s\n\n%s" % [
+						Global.current_student_report["headline"],
+						Global.current_student_report["body"],
+						Global.current_student_report["additional_info"]
+					]
+					paper_text.text = report_text
+				elif current_student_report_text != "":
+					# Use cached text (won't overwrite an already-generated report)
+					paper_text.text = current_student_report_text
+				else:
+					# Last resort: generate a local random report without modifying globals
+					var all_reports = Global.correct_student_report + Global.incorrect_student_report
+					if all_reports.size() > 0:
+						var random_index = rng.randi() % all_reports.size()
+						var report = all_reports[random_index]
+						current_student_report_text = "%s\n\n%s\n\n%s" % [
+							report["headline"],
+							report["body"],
+							report["additional_info"]
+						]
+						paper_text.text = current_student_report_text
 			else:
 				# Hide both stamp options and student paper content
 				paper_open = false
@@ -457,14 +480,17 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				dragging_x = false
 				check_armed = false
 				x_armed = false
+				
 				# Stamp UI closed -> clear global flag
 				Global.stamp_ui_opened = false
+			
 			# Reset positions to original on reopen
 			if will_show:
 				if check_option_sprite:
 					check_option_sprite.global_position = check_option_original_global
 				if x_option_sprite:
 					x_option_sprite.global_position = x_option_original_global
+
 
 func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
 	if tex == null:
@@ -476,49 +502,26 @@ func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
 	s.z_index = 100
 	stamps_layer.add_child(s)
 
-	# Determine which paper is being stamped
-	var stamped_report = null
-	if paper.visible and not student_paper.visible:
-		stamped_report = chosen_report1
-
-	if stamped_report != null and not stamped_papers.has(stamped_report):
-		stamped_papers.append(stamped_report)
-		stamped_papers_count += 1
-		# Check if the stamp is correct (approve for correct, deny for incorrect)
-		if tex == approve_stamp_tex and _is_report_correct(stamped_report):
-			correct_stamps_count += 1
-		elif tex == denied_stamp_tex and not _is_report_correct(stamped_report):
-			correct_stamps_count += 1
-
 	# Prevent the player from selecting another stamp after placing one via the UI
+	# Close the stamp UI and mark the player's stamped state.
 	if stamp_options:
 		stamp_options.visible = false
+	# Clear the global stamp UI opened flag so player selection requires reopening
 	if "stamp_ui_opened" in Global:
 		Global.stamp_ui_opened = false
+	# If player exists, tell it that stamping occurred so it won't allow new selection
 	if player and player.has_method("set_has_stamped"):
 		player.set_has_stamped(true)
-
-	# Only end game after 1 paper has been stamped
-	if stamped_papers_count >= 1:
-		# Hide all UI
-		paper.visible = false
-		student_paper.visible = false
-		checklist_ui.visible = false
-		# Set result and go to end scene
-		if correct_stamps_count >= 1:
-			Global.end_result_inverted = false # Win
-		else:
-			Global.end_result_inverted = true # Lose
-		get_tree().change_scene_to_file("res://scene/end_result.tscn")
-
 func _on_check_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.pressed and is_interaction_allowed():
+	if event is InputEventMouseButton and event.pressed:
 		if check_armed:
 			_place_stamp(approve_stamp_tex, check_option_sprite.global_position, check_option_sprite.scale)
 			check_armed = false
 			stamp_options.visible = false
-			# Keep the paper visible when stamp is placed using unified function
-			show_paper_with_report()
+			# Keep the paper visible when stamp is placed
+			paper_open = true
+			paper.visible = true
+			student_paper.visible = false
 			# reset option positions for next open
 			x_option_sprite.global_position = x_option_original_global
 			check_option_sprite.global_position = check_option_original_global
@@ -536,13 +539,15 @@ func _on_check_option_input_event(_viewport: Node, event: InputEvent, _shape_idx
 		check_armed = true
 
 func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.pressed and is_interaction_allowed():
+	if event is InputEventMouseButton and event.pressed:
 		if x_armed:
 			_place_stamp(denied_stamp_tex, x_option_sprite.global_position, x_option_sprite.scale)
 			x_armed = false
 			stamp_options.visible = false
-			# Keep the paper visible when stamp is placed using unified function
-			show_paper_with_report()
+			# Keep the paper visible when stamp is placed
+			paper_open = true
+			paper.visible = true
+			student_paper.visible = false
 			# reset option positions for next open
 			x_option_sprite.global_position = x_option_original_global
 			check_option_sprite.global_position = check_option_original_global
@@ -558,7 +563,6 @@ func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: in
 		# Arm for next tap to place
 		dragging_x = false
 		x_armed = true
-
 		
 func _on_game_timer_timeout():
 	timer_label.text = "0"
