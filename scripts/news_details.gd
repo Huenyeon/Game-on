@@ -2,8 +2,8 @@ extends Node2D
 
 
 @onready var set1 = $set1
-@onready var set2 = $set2
-@onready var set3 = $set3
+@onready var set2 = $set2_1
+@onready var set3 =$set3_1
 
 func _ready():
 	display_reports()

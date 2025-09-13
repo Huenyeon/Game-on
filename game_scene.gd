@@ -180,9 +180,11 @@ func _set_paper_text_from_report(report) -> void:
 	var highlighted_body = "%s %s %s on %s %s." % [
 		"[color=F25907][u]" + report["who"] + "[/u][/color]",
 		report["what"],
+		#add when (when the sutff happened)
 		report["where"],
 		"[color=F25907][u]" + report["when"] + "[/u][/color]",
 		report["why"]
+		#add published date
 	]
 	report_text += highlighted_body 
 
