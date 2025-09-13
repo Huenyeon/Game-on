@@ -1,0 +1,36 @@
+[33mcommit d9601df7867b7dd09c3e067e1cca6f67d7b5cc74[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mnel_branch[m[33m, [m[1;31morigin/nel_branch[m[33m)[m
+Merge: 44f1f68 b5a8037
+Author: Nelissa <nelissa.tuden-23@cpu.edu.ph>
+Date:   Sat Sep 13 22:05:54 2025 +0800
+
+    Merge branch 'origin/xiao' of https://github.com/Huenyeon/Game-on into nel_branch
+
+[1mdiff --cc game_scene.gd[m
+[1mindex fd66e71,cc7c8d4..676dbd5[m
+[1m--- a/game_scene.gd[m
+[1m+++ b/game_scene.gd[m
+[36m@@@ -390,8 -290,9 +392,7 @@@[m [mfunc _on_player_reached_middle()[m
+  [m
+  # New function to handle showing student paper[m
+  func show_student_paper():[m
+[31m- 	print("Student paper opened!")[m
+  	student_paper.visible = true[m
+[31m -	student_paper2.visible = true[m
+[31m -	student_paper3.visible = true[m
+  	Global.get_random_reports(3)[m
+  	Global.get_random_student_reports(1)[m
+  	[m
+[1mdiff --cc scene/end_result.tscn[m
+[1mindex 164043f,4f924e4..1bb807c[m
+[1m--- a/scene/end_result.tscn[m
+[1m+++ b/scene/end_result.tscn[m
+[36m@@@ -1,7 -1,6 +1,7 @@@[m
+[31m- [gd_scene load_steps=3 format=3 uid="uid://c15ewfy55g2c8"][m
+[32m+ [gd_scene load_steps=2 format=3 uid="uid://c15ewfy55g2c8"][m
+  [m
+[31m -[ext_resource type="Script" uid="uid://20xjx3mebojs" path="res://scripts/end_result.gd" id="1"][m
+[32m +[ext_resource type="Script" uid="uid://ukfk3kthvtg5" path="res://scripts/end_result.gd" id="1"][m
+[32m +[ext_resource type="Texture2D" uid="uid://byd0sq4jsjdau" path="res://assets/desktop/websitekono.png" id="2_ope2w"][m
+  [m
+  [node name="EndResult" type="Node2D"][m
+  script = ExtResource("1")[m
