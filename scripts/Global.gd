@@ -24,92 +24,148 @@ var end_result_inverted: bool = false
 
 # Publishers & Dates are always randomized separately
 var publishers = [
-	"BrightFuture Daily",
-	"NextWave Newsroom",
-	"Knowledge Spark Gazette",
-	"Future Focus Times"
+	"Philippine Bright",
+	"Inquire Daily",
+	"AGM News",
+	"Daily Sunlight",
+	"MMDZ",
+	"Bulletin Man",
+	"NextGen PH News",
+	"Star Sun",
+	"NextWave Times",
+	"Philippine Today"
 ]
 
-var dates = [
-	"August 21, 2025",
-	"August 19, 2025",
-	"August 17, 2025",
-	"July 30, 2025",
-	"June 15, 2025"
-]
+var published_dates = []
 
-var additional_info  = [
-	"Greenhill City Library now lets members borrow VR headsets for interactive storytelling. This was reported by Global Voice Tribune on August 18, 2025.",
-	"Metro schools passed a rule for AI-powered tutors in all classrooms, as reported by Future Horizons Weekly on August 20, 2025. This has sparked debate among teachers and parents.",
-	"The city council of Greenfield passed a law banning homework on Fridays for all students. This was published by Knowledge Spark Gazette on August 17, 2025.",
-	"According to a NextWave Newsroom report, Riverdale High will let students graduate a year early if they plant 100 trees. The article, published on August 19, 2025, included student testimonials but no official school statement.",
-	"Scientists at SunTech Academy developed a solar panel paint that can charge a phone directly from any wall. BrightFuture Daily reported on this on August 21, 2025."
-	
-]
+func generate_random_published_dates(count: int = 3):
+	published_dates.clear()
+
+	var month_names = [
+		"January", "February", "March", "April", "May", "June",
+		"July", "August", "September", "October", "November", "December"
+	]
+
+	for i in range(count):
+		var year = randi() % (2025 - 2016 + 1) + 2016  # random year 2016–2025
+		var month = randi() % 12 + 1                   # random month 1–12
+		var day = randi() % 17 + 15                    # random day 15–31
+		
+		# handle invalid dates (Feb, 30-day months)
+		var valid_date = true
+		if month == 2:
+			var is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+			if day > 29 or (day == 29 and not is_leap):
+				day = 28
+		elif month in [4, 6, 9, 11] and day > 30:
+			day = 30
+		
+		var month_name = month_names[month - 1]
+		published_dates.append("%s %d, %d" % [month_name, day, year])
+
 
 # Now each report "template" groups headline + 5Ws
 var report_templates = [
 	{
-		"headline": "Solar Paint Charges Phones 🔋 ",
-		"who": "Scientists at SunTech Academy",
-		"what": "developed a paint that acts like a solar panel",
-		"where": "in Horizon Valley",
-		"when": "August 21, 2025",
-		"why": "to promote renewable energy use"
+		"headline": "Flood Control Scandal Rocks Government ",
+		"who": "Philippine Congress & Public Works Officials",
+		"what": "implicated in a massive corruption scheme involving billions in flood control funds",
+		"where": "nationwide",
+		"when": "September 12, 2025",
+		"why": "to investigate substandard or non-existent infrastructure funded by public money"
 	},
 	{
-		"headline": "Plant Trees, Graduate Early 🌳",
-		"who": "Students of Riverdale High",
-		"what": "started planting 100 trees to graduate early",
-		"where": "in Riverdale Town",
-		"when": "August 19, 2025",
-		"why": "to encourage environmental awareness"
+		"headline": "South China Sea Tensions Escalate 🇵🇭🇨🇳",
+		"who": "Philippine Government & Chinese Officials",
+		"what": "disputed China's plan to designate Scarborough Shoal as a nature preserve",
+		"where": "Scarborough Shoal, South China Sea",
+		"when": "September 12, 2025",
+		"why": "to defend Philippine territorial claims and protect fishermen's rights"
 	},
 	{
-		"headline": "Fridays Are Now Homework-Free 📑",
-		"who": "Sity council of Greenfield",
-		"what": "passed a law banning homework on Fridays",
-		"where": "in Greenfield City",
-		"when": "August 17, 2025",
-		"why": "to reduce student stress"
+		"headline": "Guimaras Bridge Funding Suspended by South Korea 🌉",
+		"who": "Philippine Department of Finance & Korean Government",
+		"what": "suspended funding for the Panay–Guimaras–Negros Bridge project",
+		"where": "Panay, Guimaras, Negros Islands",
+		"when": "September 2025",
+		"why": "due to concerns over potential misuse and corruption amid infrastructure scandals"
+	},
+		{
+		"headline": "Elon Musk No Longer World's Richest Man 💰",
+		"who": "Elon Musk & Larry Ellison",
+		"what": "Ellison surpassed Musk as the world's richest person due to Oracle's strong earnings",
+		"where": "Global / United States",
+		"when": "September 10, 2025",
+		"why": "because Musk's Tesla stock declined while Ellison's net worth soared"
 	},
 	{
-		"headline": "AI Teacher Assistant Enters Schools 🤖",
-		"who": "Mayor Elisa Tran",
-		"what": "introduced a robot assistant for classrooms",
-		"where": "in Crestwood",
-		"when": "July 30, 2025",
-		"why": "to modernize learning"
+		"headline": "KPop Demon Hunters Takes South Korea by Storm 🎤👹",
+		"who": "K-pop group HUNTR/X & Maggie Kang",
+		"what": "fight evil using their music in the animated movie 'KPop Demon Hunters'",
+		"where": "South Korea",
+		"when": "September 2025",
+		"why": "due to the film's popularity, merchandise, and chart-topping soundtrack"
 	},
 	{
-		"headline": "Underground Library Discovered 📚",
-		"who": "A group of teachers",
-		"what": "opened a hidden library to the public",
-		"where": "in Metro City",
-		"when": "June 15, 2025",
-		"why": "to preserve cultural heritage"
+		"headline": "AI-Generated Fire Photo Tricks Manila Firefighters 🚒🤖",
+		"who": "Manila Fire Department & AI Developers",
+		"what": "responded to a truck 'on fire' that was actually AI-generated",
+		"where": "Parola, Manila",
+		"when": "September 2025",
+		"why": "to highlight dangers of AI-generated misinformation and fake news"
 	}
 ]
 
 
+# Build separate pools only for who/where/when
+func get_field_pool(field: String) -> Array:
+	var pool = []
+	for template in report_templates:
+		pool.append(template[field])
+	return pool
+
+var pool_who = get_field_pool("who")
+var pool_where = get_field_pool("where")
+var pool_when = get_field_pool("when")
+
+# Utility: return shuffled copy of array
+func shuffled_copy(arr: Array) -> Array:
+	var copy = arr.duplicate()
+	copy.shuffle()
+	return copy
 
 # Generate random reports
 func get_random_reports(count: int) -> void:
+	
 	active_reports.clear()
+	
+	# shuffle templates so headline/what/why don’t duplicate
+	var shuffled_templates = shuffled_copy(report_templates)
+	
+	# shuffle pools for who/where/when (so they don’t repeat until exhausted)
+	var shuffled_who = shuffled_copy(pool_who)
+	var shuffled_where = shuffled_copy(pool_where)
+	var shuffled_when = shuffled_copy(pool_when)
+	generate_random_published_dates()
+	
 	for i in range(count):
-		var template = report_templates[randi() % report_templates.size()]
+		var template = shuffled_templates[i % shuffled_templates.size()]
+		
 		var report = {
 			"publisher": publishers[randi() % publishers.size()],
-			"date": dates[randi() % dates.size()],
-			"additional_info": additional_info[randi() % additional_info.size()],
+			"published_date": published_dates[randi() % published_dates.size()],
+
+			# guaranteed unique per template
 			"headline": template["headline"],
-			"who": template["who"],
 			"what": template["what"],
-			"where": template["where"],
-			"when": template["when"],
-			"why": template["why"]
-		}
-		# build body text
+			"why": template["why"],
+
+			"who": shuffled_who[i % shuffled_who.size()],
+			"where": shuffled_where[i % shuffled_where.size()],
+			"when": shuffled_when[i % shuffled_when.size()]
+	}
+		
+		# Build body text
 		report["body"] = "%s %s %s on %s %s." % [
 			report["who"],
 			report["what"],
@@ -117,8 +173,10 @@ func get_random_reports(count: int) -> void:
 			report["when"],
 			report["why"]
 		]
-		active_reports.append(report)
 		
+		active_reports.append(report)
+
+#add a date that's d halata nga outdated na like (January 2025)
 func get_random_student_reports(correct_count: int) -> void:
 	correct_student_report.clear()
 	incorrect_student_report.clear()
@@ -134,8 +192,7 @@ func get_random_student_reports(correct_count: int) -> void:
 		var template = report_templates[i % report_templates.size()]
 		var report = {
 			"publisher": publishers[i % publishers.size()],
-			"date": dates[i % dates.size()],
-			"additional_info": additional_info[i % additional_info.size()],
+			"date": published_dates[i % published_dates.size()],
 			"headline": template["headline"], # keep headline
 			"who": template["who"],
 			"what": template["what"],

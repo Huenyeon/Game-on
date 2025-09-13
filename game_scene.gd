@@ -184,7 +184,7 @@ func _set_paper_text_from_report(report) -> void:
 		"[color=F25907][u]" + report["when"] + "[/u][/color]",
 		report["why"]
 	]
-	report_text += highlighted_body + "\n\n" + report["additional_info"]
+	report_text += highlighted_body 
 
 	paper_text.bbcode_enabled = true
 	paper_text.bbcode_text = report_text
@@ -409,7 +409,6 @@ func show_student_paper():
 			current_student_report_text = "%s\n\n%s\n\n%s" % [
 				report["headline"],
 				report["body"],
-				report["additional_info"]
 			]
 			print("Initial student report generated: ", report["headline"])
 	
