@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://chvhue6xh5yuy"]
 
-[ext_resource type="Script" uid="uid://bb21c0uivc0ni" path="res://scripts/intro_2.gd" id="1_nsbk6"]
+[ext_resource type="Script" uid="uid://brivhkfs7n5gj" path="res://scripts/intro_2.gd" id="1_nsbk6"]
 [ext_resource type="Texture2D" uid="uid://b2mtfi2lamwl4" path="res://assets/bg_placeholder.png" id="2_o3lo8"]
-[ext_resource type="PackedScene" path="res://scene/intro_controls.tscn" id="3_controls"]
+[ext_resource type="PackedScene" uid="uid://2cen5hkc4nah" path="res://scene/intro_controls.tscn" id="3_controls"]
 
 [node name="Intro2" type="Node2D"]
 script = ExtResource("1_nsbk6")
