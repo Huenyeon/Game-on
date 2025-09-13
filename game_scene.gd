@@ -176,7 +176,7 @@ func _set_paper_text_from_report(report) -> void:
 		paper_text.text = "No report found."
 		return
 
-	var report_text = "[b][font_size=10]%s[/font_size][/b]\n\n" % report["headline"]
+	var report_text = "[b][font_size=50]%s[/font_size][/b]\n\n" % report["headline"]
 	var highlighted_body = "%s %s %s on %s %s." % [
 		"[color=F25907][u]" + report["who"] + "[/u][/color]",
 		report["what"],
