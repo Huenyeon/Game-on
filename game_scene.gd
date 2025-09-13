@@ -10,10 +10,10 @@ extends Node2D
 @onready var checklist_icon: Sprite2D = $checklist_icon
 @onready var checklist_ui: Node2D = $ChecklistUI
 @onready var clipboard_sprite: Sprite2D = $ChecklistUI/Clipboard
-
 @onready var stamp_options: Node2D = $stamp/StampOptions
 @onready var check_option_sprite: Sprite2D = $stamp/StampOptions/CheckOption
 @onready var x_option_sprite: Sprite2D = $stamp/StampOptions/XOption
+ 
 
 @onready var game_timer: Timer = $TimerBackground/TimerLabel/GameTimer
 @onready var timer_label: Label = $TimerBackground/TimerLabel
@@ -60,6 +60,8 @@ func _ready() -> void:
 	checklist_ui.visible = false
 	
 	# Signal connection handled in scene file
+	
+	
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))
 		
@@ -390,7 +392,6 @@ func _on_player_reached_middle():
 
 # New function to handle showing student paper
 func show_student_paper():
-	print("Student paper opened!")
 	student_paper.visible = true
 	Global.get_random_reports(3)
 	Global.get_random_student_reports(1)
