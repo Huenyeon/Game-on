@@ -1,7 +1,7 @@
-[gd_scene load_steps=44 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=45 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dlscbv2kk783m" path="res://game_scene.gd" id="1_3ad2y"]
-[ext_resource type="Texture2D" uid="uid://le0yh5crl3un" path="res://assets/main scene bg 2.png" id="2_6chj6"]
+[ext_resource type="Texture2D" uid="uid://buwqopulf0mh3" path="res://assets/1.png" id="2_4l13n"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
 [ext_resource type="PackedScene" uid="uid://bn1gbdhqmg48o" path="res://scene/player.tscn" id="6_28rmr"]
@@ -22,8 +22,9 @@
 [ext_resource type="PackedScene" uid="uid://bhdg1ewgngify" path="res://scene/game_controls.tscn" id="19_controls"]
 [ext_resource type="Script" uid="uid://ocl4cyolodu8" path="res://scripts/timer_background.gd" id="20_8q4eb"]
 [ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="21_ao44p"]
+[ext_resource type="FontFile" uid="uid://bwkg7qskiqjol" path="res://font/ari-w9500.ttf" id="21_f3bwf"]
 [ext_resource type="Script" uid="uid://dcs4evvv8mmfj" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
-[ext_resource type="Texture2D" uid="uid://ceht08ul7uta0" path="res://assets/UI_TravelBook_Frame01a.png" id="24_4l13n"]
+[ext_resource type="Texture2D" uid="uid://d1mlqgomy87ve" path="res://assets/UI_TravelBook_FrameSelect01b.png" id="24_4l13n"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -100,17 +101,16 @@ animations = [{
 [sub_resource type="Theme" id="Theme_sw306"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8q4eb"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 5
-border_color = Color(0, 0, 0, 1)
+bg_color = Color(0.0110876, 0.0110876, 0.0110876, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.00843455, 0.00554701, 0.0788187, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-shadow_size = 9
 shadow_offset = Vector2(3, 3)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f3bwf"]
@@ -123,9 +123,9 @@ RichTextLabel/colors/default_color = Color(0.273541, 0.181465, 0.0237331, 1)
 script = ExtResource("1_3ad2y")
 
 [node name="background" type="Sprite2D" parent="."]
-position = Vector2(593.5, 337.402)
-scale = Vector2(1.1213, 1.27149)
-texture = ExtResource("2_6chj6")
+position = Vector2(568.55, 337.68)
+scale = Vector2(0.193817, 0.206412)
+texture = ExtResource("2_4l13n")
 
 [node name="Player" parent="." instance=ExtResource("6_28rmr")]
 position = Vector2(157, 412)
@@ -314,21 +314,22 @@ scale = Vector2(3.44697, 3.21)
 sprite_frames = SubResource("SpriteFrames_pxt5h")
 
 [node name="TimerBackground" type="Panel" parent="."]
-offset_left = 956.0
-offset_top = 20.0
-offset_right = 1121.0
-offset_bottom = 89.0
+offset_left = 479.0
+offset_top = 54.0
+offset_right = 644.0
+offset_bottom = 146.0
 theme = SubResource("Theme_sw306")
 theme_override_styles/panel = SubResource("StyleBoxFlat_8q4eb")
 script = ExtResource("20_8q4eb")
 
 [node name="TimerLabel" type="Label" parent="TimerBackground"]
 layout_mode = 0
-offset_left = 8.0
-offset_right = 158.0
-offset_bottom = 65.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = 160.0
+offset_bottom = 88.0
 theme_override_colors/font_color = Color(0, 0.596078, 0, 1)
-theme_override_fonts/font = ExtResource("21_ao44p")
+theme_override_fonts/font = ExtResource("21_f3bwf")
 theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -366,15 +367,15 @@ texture = ExtResource("24_4l13n")
 layout_mode = 0
 offset_left = 21.0
 offset_top = -15.0
-offset_right = 361.0
+offset_right = 347.0
 offset_bottom = 82.0
 theme = SubResource("Theme_uno5s")
 theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
 theme_override_constants/table_v_separation = 0
 theme_override_constants/outline_size = 0
 theme_override_fonts/normal_font = ExtResource("21_ao44p")
-theme_override_font_sizes/normal_font_size = 16
-text = "Good morning, Teacher. Here's my assignment  that you assign for us."
+theme_override_font_sizes/normal_font_size = 18
+text = "Good morning, Teacher. Here's my assignment  that you assigned for us."
 vertical_alignment = 1
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]

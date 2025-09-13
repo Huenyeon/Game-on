@@ -1,15 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://chvhue6xh5yuy"]
+[gd_scene load_steps=5 format=3 uid="uid://chvhue6xh5yuy"]
 
-[ext_resource type="Script" uid="uid://brivhkfs7n5gj" path="res://scripts/intro_2.gd" id="1_nsbk6"]
-[ext_resource type="Texture2D" uid="uid://b2mtfi2lamwl4" path="res://assets/bg_placeholder.png" id="2_o3lo8"]
+[ext_resource type="Script" uid="uid://cbd1kn83x21dg" path="res://scripts/intro_2.gd" id="1_nsbk6"]
+[ext_resource type="Texture2D" uid="uid://buwqopulf0mh3" path="res://assets/1.png" id="2_o3lo8"]
 [ext_resource type="PackedScene" uid="uid://2cen5hkc4nah" path="res://scene/intro_controls.tscn" id="3_controls"]
+[ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="3_juroh"]
 
 [node name="Intro2" type="Node2D"]
 script = ExtResource("1_nsbk6")
 
 [node name="BgPlaceholder" type="Sprite2D" parent="."]
-position = Vector2(588, 398)
-scale = Vector2(1.50477, 1.53232)
+position = Vector2(673, 454)
+scale = Vector2(0.188808, 0.192265)
 texture = ExtResource("2_o3lo8")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -19,17 +20,19 @@ zoom = Vector2(2, 2)
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
 
 [node name="Panel" type="Panel" parent="Camera2D/CanvasLayer"]
-offset_left = 244.0
-offset_top = 491.0
-offset_right = 934.0
-offset_bottom = 613.0
+offset_left = 179.0
+offset_top = 493.0
+offset_right = 974.0
+offset_bottom = 615.0
 
 [node name="Label" type="Label" parent="Camera2D/CanvasLayer/Panel"]
 layout_mode = 0
-offset_left = 54.0
-offset_top = -5.0
-offset_right = 653.0
-offset_bottom = 105.0
+offset_left = 22.0
+offset_top = 7.0
+offset_right = 777.0
+offset_bottom = 106.0
+theme_override_fonts/font = ExtResource("3_juroh")
+theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
