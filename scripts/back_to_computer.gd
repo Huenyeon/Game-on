@@ -4,6 +4,14 @@ func on_pressed_button() -> void:
 	# Close overlay if present; otherwise do nothing
 	var current_scene = get_tree().current_scene
 	if current_scene and current_scene.has_node("InsideDesktop"):
+		# Close paper when desktop is closed
+		if current_scene.has_method("close_paper_if_open"):
+			current_scene.close_paper_if_open()
+		
+		# Close stamp options when desktop is closed
+		if current_scene.has_method("close_stamp_options_if_open"):
+			current_scene.close_stamp_options_if_open()
+		
 		current_scene.get_node("InsideDesktop").queue_free()
 	
 	# Reset global state and change scene
