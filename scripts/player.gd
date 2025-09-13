@@ -6,13 +6,20 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var checklist_ui: Node2D
 
 # States
-enum State { ENTERING, STOPPED }
+enum State {ENTERING, STOPPED}
 var state = State.ENTERING
 
 # Target position for the middle of the table
 var target_x = 350 # Adjust based on your table's position
-var start_x = -100 # Start position off-screen to the left
-var stop_distance = 5  # Distance threshold before stopping
+var stop_distance = 5 # Distance threshold before stopping
+
+@onready var c1_node = $"C1"
+@onready var c2_node = $"C2"
+@onready var c3_node = $"C3"
+@onready var c1_sideview_node = $"C1 sideview"
+@onready var c2_sideview_node = $"C2 sideview"
+@onready var c3_sideview_node = $"C3 sideview"
+
 
 signal reached_middle
 
@@ -20,17 +27,30 @@ signal reached_middle
 var _selected_stamp: Sprite2D = null
 var _stamp_type: String = ""
 var _custom_cursor: Sprite2D = null
-var _has_stamped: bool = false  # new: player-level guard to prevent further stamp selection
+var _has_stamped: bool = false # new: player-level guard to prevent further stamp selection
 
 func _ready() -> void:
-	# Always start from the left side for the walking animation
-	# Reset the global flag to ensure walking happens
-	Global.player_has_reached_middle = false
-	print("Player starting from left side - will walk to middle")
-	state = State.ENTERING
-	# Start from the left side for walking animation
-	position.x = start_x
-	print("Player starting position: ", position.x, " Target: ", target_x)
+	c1_sideview_node.visible = false
+	c2_sideview_node.visible = false
+	c3_sideview_node.visible = false
+	c2_node.visible = false
+	c3_node.visible = false
+	# Check if player has already reached middle in a previous session
+	if Global.player_has_reached_middle:
+		state = State.STOPPED
+		position.x = target_x # Set position directly to middle
+		emit_signal("reached_middle") # Emit signal to notify other nodes
+		# Ensure correct sprite is visible when starting in the stopped state
+		c1_node.visible = true
+		c1_sideview_node.visible = false
+	else:
+		state = State.ENTERING
+		# Ensure correct sprite is visible when starting in the entering state
+		c1_node.visible = false
+		c1_sideview_node.visible = true
+		c2_node.visible = false
+		c3_node.visible = false
+	await _start_sideview_entry()
 
 	# Create a custom cursor sprite that follows the mouse
 	_custom_cursor = Sprite2D.new()
@@ -44,9 +64,25 @@ func _ready() -> void:
 			if not child.is_in_group("stamp"):
 				child.add_to_group("stamp")
 
+func _start_sideview_entry() -> void:
+	# Hide all front views before sideview entry
+	c1_node.visible = false
+	c2_node.visible = false
+	c3_node.visible = false
+
+	# Show C1 sideview first
+	c1_sideview_node.visible = true
+	await get_tree().create_timer(0.5).timeout # 0.5 seconds delay
+
+	# Show C2 sideview next
+	c2_sideview_node.visible = true
+	await get_tree().create_timer(0.5).timeout # 0.5 seconds delay
+
+	# Show C3 sideview last
+	c3_sideview_node.visible = true
+
 func set_checklist_ui(ui: Node2D) -> void:
 	checklist_ui = ui
-
 func _physics_process(delta: float) -> void:
 	if state == State.ENTERING:
 		_auto_move_to_middle()
@@ -56,21 +92,50 @@ func _physics_process(delta: float) -> void:
 	# Apply gravity (in case floor is sloped)
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
+		
 	move_and_slide()
 
 func _auto_move_to_middle() -> void:
 	if abs(position.x - target_x) > stop_distance:
 		var dir = sign(target_x - position.x)
 		velocity.x = dir * SPEED
-		print("Player moving: pos=", position.x, " target=", target_x, " velocity=", velocity.x)
 	else:
 		velocity.x = 0
 		state = State.STOPPED
-		Global.player_has_reached_middle = true  # Set the global flag
-		print("Player reached middle position!")
+		Global.player_has_reached_middle = true # Set the global flag
 		emit_signal("reached_middle") # Notify main scene
+	
+	# Always update visibility after movement
+	_update_sprite_visibility()
 
+# Helper function to update sprite visibility based on state
+func _update_sprite_visibility() -> void:
+	if state == State.ENTERING:
+		# Show side view when moving, front view when not moving
+		if abs(velocity.x) > 0:
+			c1_node.visible = false
+			c2_node.visible = false
+			c3_node.visible = false
+			c1_sideview_node.visible = true
+			c2_sideview_node.visible = true
+			c3_sideview_node.visible = true
+		else:
+			c1_node.visible = true
+			c2_node.visible = true
+			c3_node.visible = true
+			c2_sideview_node.visible = false
+			c3_sideview_node.visible = false
+			c1_sideview_node.visible = false
+			print("C1 should be visible now. c1_node.visible:", c1_node.visible, "Texture:", c1_node.texture)
+	else: # STOPPED state
+		c1_node.visible = true
+		c2_node.visible = true
+		c3_node.visible = true
+		c1_sideview_node.visible = false
+		c2_sideview_node.visible = false
+		c3_sideview_node.visible = false
+		print("C1 STOPPED: c1_node.visible:", c1_node.visible, "Texture:", c1_node.texture)
+		
 # Update cursor position to follow mouse
 func _process(_delta: float) -> void:
 	if _custom_cursor and _custom_cursor.visible:
@@ -79,14 +144,6 @@ func _process(_delta: float) -> void:
 # Handle stamp selection and application
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		# Check if dialog is still active
-		var game_scene = get_tree().current_scene
-		if game_scene and game_scene.has_method("is_interaction_allowed"):
-			if not game_scene.is_interaction_allowed():
-				print("Cannot interact with stamps - dialog is still playing")
-				return
-		
-		
 		var mp = get_viewport().get_mouse_position()
 		
 		# Require the stamp Area2D was clicked (stamp UI opened) before allowing stamp selection.
@@ -101,11 +158,8 @@ func _input(event):
 			if not _has_stamped and stamp_area_clicked:
 				for stamp in get_tree().get_nodes_in_group("stamp"):
 					if stamp is Sprite2D and _is_point_in_sprite(stamp, mp):
-						# Don't select the stamp if we're clicking on the stamp area itself (for toggling)
-						# Only select stamp option sprites, not the main stamp area
-						if "StampOption" in stamp.name or "Approve" in stamp.name or "Denied" in stamp.name:
-							_select_stamp(stamp)
-							break
+						_select_stamp(stamp)
+						break
 		else:
 			# A stamp is already selected, check if clicking on paper
 			var applied = false
