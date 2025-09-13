@@ -743,6 +743,43 @@ func _is_click_on_exempted_elements(mouse_pos: Vector2) -> bool:
 	
 	return false
 
+# Function to check if a pen can be used (called by pens before activation)
+func can_use_pen(pen_node: Node) -> bool:
+	# If no pen is active, allow this pen
+	if not pen_interaction_active:
+		return true
+	
+	# If this pen is already active, allow it to continue
+	if pen_node == active_pen_node:
+		return true
+	
+	# If another pen is active and being dragged, don't allow switching
+	if pen_interaction_active and active_pen_node != null:
+		# Check if the active pen is currently being dragged (sticking)
+		if active_pen_node.has_method("is_sticking") and active_pen_node.is_sticking():
+			print("Cannot use this pen - another pen is currently being dragged")
+			return false
+		# If the pen is not being dragged, allow switching
+		else:
+			print("Releasing inactive pen to switch to: ", pen_node.name)
+			# Release the currently active pen
+			if active_pen_node.has_method("force_release"):
+				active_pen_node.force_release()
+			# Reset the pen interaction state
+			pen_interaction_active = false
+			active_pen_node = null
+	
+	return true
+
+# Function to release the currently active pen
+func release_active_pen():
+	if pen_interaction_active and active_pen_node != null:
+		print("Releasing active pen: ", active_pen_node.name)
+		if active_pen_node.has_method("force_release"):
+			active_pen_node.force_release()
+		pen_interaction_active = false
+		active_pen_node = null
+
 # Function for pens to call when they start/stop interaction
 func set_pen_interaction(active: bool, pen_node: Node = null):
 	if active and pen_node:

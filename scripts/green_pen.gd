@@ -143,6 +143,9 @@ func force_release():
 		current_line = null
 	print("Pen force released")
 
+func is_sticking() -> bool:
+	return sticking
+
 func return_to_start():
 	# Create a simple animation without tween
 	var duration = 0.3
