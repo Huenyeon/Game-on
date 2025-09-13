@@ -145,11 +145,10 @@ func _select_stamp(stamp: Sprite2D) -> void:
 	# Hide the original stamp sprite
 	stamp.visible = false
 	
-	# Set the cursor to the stamp texture and make it 20x smaller
+	# Set the cursor to the stamp texture and use a fixed scale for consistency
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	_custom_cursor.texture = stamp.texture
-	var base_scale = stamp.scale if stamp.scale else Vector2.ONE
-	_custom_cursor.scale = base_scale / 5.0
+	_custom_cursor.scale = Vector2.ONE * 0.02
 	_custom_cursor.visible = true
 
 # Deselect the stamp and restore cursor
@@ -184,12 +183,8 @@ func _apply_stamp_to_paper(paper: Sprite2D, position: Vector2) -> bool:
 	if stamp_texture:
 		new_stamp.texture = stamp_texture
 		
-		# Use the selected stamp's scale if available, otherwise a sensible default
-		# Apply 20x larger scale to the stamps
-		if _selected_stamp and _selected_stamp.scale:
-			new_stamp.scale = _selected_stamp.scale * 10.0
-		else:
-			new_stamp.scale = Vector2.ONE * 30.0
+		# Always use a fixed scale for the placed stamp for consistency
+		new_stamp.scale = Vector2.ONE * 1.0  # Adjust 1.0 to your desired placed stamp size
 		
 		# Ensure stamp appears above the paper
 		new_stamp.z_index = 100

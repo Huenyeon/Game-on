@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cvm2dcudf4h0m" path="res://assets/desktop/news-cover1.png" id="11_hv70y"]
 [ext_resource type="Texture2D" uid="uid://bx1skw2tj7u40" path="res://assets/desktop/news-cover2.png" id="12_pl64k"]
 [ext_resource type="Texture2D" uid="uid://bps66c50njl1r" path="res://assets/desktop/news-cover3.png" id="13_lkogr"]
-[ext_resource type="Script" path="res://scripts/news_details.gd" id="14_ofnyq"]
+[ext_resource type="Script" uid="uid://dfa6gw0eeiahd" path="res://scripts/news_details.gd" id="14_ofnyq"]
 
 [node name="InsideDesktop" type="Node2D"]
 z_index = 500
