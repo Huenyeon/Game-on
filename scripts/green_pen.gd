@@ -165,8 +165,8 @@ func start_drawing():
 	current_line = Line2D.new()
 	current_line.width = pen_width
 	current_line.default_color = pen_color
-	current_line.z_index = 1000  # Very high z-index to appear above paper texture
 	canvas_board.add_child(current_line)
+
 	
 	# Convert the marker's global position to the canvas board's local space
 	var local_pos = canvas_board.to_local(marker.global_position)

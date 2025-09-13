@@ -93,10 +93,10 @@ var report_templates = [
 
 
 
-# Generate random reports
 func get_random_reports(count: int) -> void:
 	active_reports.clear()
-	for i in range(count):
+	var attempts = 0
+	while active_reports.size() < 3:
 		var template = report_templates[randi() % report_templates.size()]
 		var report = {
 			"publisher": publishers[randi() % publishers.size()],
@@ -109,7 +109,6 @@ func get_random_reports(count: int) -> void:
 			"when": template["when"],
 			"why": template["why"]
 		}
-		# build body text
 		report["body"] = "%s %s %s on %s %s." % [
 			report["who"],
 			report["what"],
@@ -117,8 +116,14 @@ func get_random_reports(count: int) -> void:
 			report["when"],
 			report["why"]
 		]
-		active_reports.append(report)
-		
+		if not active_reports.has(report):
+			active_reports.append(report)
+		attempts += 1
+		if attempts > 100: # Prevent infinite loop
+			break
+
+
+
 func get_random_student_reports(correct_count: int) -> void:
 	correct_student_report.clear()
 	incorrect_student_report.clear()
@@ -159,4 +164,3 @@ func get_random_student_reports(correct_count: int) -> void:
 func reset_report_tracking():
 	current_student_report = null
 	used_reports = []
-

@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://du2sua2nvleui"]
 
-[ext_resource type="Script" uid="uid://bp514eygo2imc" path="res://scripts/green_pen.gd" id="1_nd0h0"]
+[ext_resource type="Script" uid="uid://bjk3iqrm3tq5c" path="res://scripts/green_pen.gd" id="1_nd0h0"]
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="2_nd0h0"]
-[ext_resource type="Script" uid="uid://c3xu7615jtftj" path="res://scripts/red.gd" id="3_nd0h0"]
+[ext_resource type="Script" uid="uid://vy30n7ppj78x" path="res://scripts/red.gd" id="3_nd0h0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4657r"]
 atlas = ExtResource("2_nd0h0")
@@ -72,6 +72,7 @@ scale = Vector2(2.5, 2.5)
 script = ExtResource("1_nd0h0")
 
 [node name="green" type="AnimatedSprite2D" parent="Green"]
+z_index = 23
 position = Vector2(8, 10)
 sprite_frames = SubResource("SpriteFrames_luksr")
 
@@ -90,6 +91,7 @@ scale = Vector2(2.5, 2.5)
 script = ExtResource("3_nd0h0")
 
 [node name="red" type="AnimatedSprite2D" parent="Red"]
+z_index = 23
 position = Vector2(22.8, 12)
 sprite_frames = SubResource("SpriteFrames_b2kyu")
 
