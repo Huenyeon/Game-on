@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c15ewfy55g2c8"]
 
-[ext_resource type="Script" uid="uid://dv4rgtp4qx5uo" path="res://scripts/end_result.gd" id="1"]
+[ext_resource type="Script" uid="uid://ukfk3kthvtg5" path="res://scripts/end_result.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://byd0sq4jsjdau" path="res://assets/desktop/websitekono.png" id="2_ope2w"]
 
 [node name="EndResult" type="Node2D"]
