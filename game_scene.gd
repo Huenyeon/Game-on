@@ -563,17 +563,23 @@ func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: in
 		
 func _on_game_timer_timeout():
 	timer_label.text = "0"
-	# Action when time runs out
 	print("Time’s up! Game over.")
-	# Example: hide everything or end scene
+
+	$BellSound.play()
+
+	await get_tree().create_timer(3.0).timeout
+
+	# End scene
 	paper.visible = false
 	student_paper.visible = false
 	checklist_ui.visible = false
 
-	# Show end_result scene with tex_bad (denied)
 	Global.last_stamp = null
 	Global.end_result_inverted = false
 	get_tree().change_scene_to_file("res://scene/end_result.tscn")
+
+	
+
 
 func _initialize_timer_label() -> void:
 	# Show the full timer duration when dialog is still playing
