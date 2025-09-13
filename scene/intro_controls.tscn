@@ -113,7 +113,9 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("6_font")
 theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
-text = "[center]Skip the intro?[/center]"
+text = "[center]
+
+Skip the intro?[/center]"
 scroll_active = false
 autowrap_mode = 2
 
@@ -134,6 +136,8 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("6_font")
 theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
-text = "[center]Exit to main menu?[/center]"
+text = "[center]
+
+Exit to main menu?[/center]"
 scroll_active = false
 autowrap_mode = 2
