@@ -174,34 +174,6 @@ position = Vector2(0.04399, -8.99287)
 position = Vector2(-3.49223, 6.47332)
 shape = SubResource("RectangleShape2D_famsg")
 
-[node name="student paper2" type="Sprite2D" parent="."]
-position = Vector2(324.756, 545.903)
-rotation = -0.0110492
-scale = Vector2(0.96589, 0.843264)
-skew = 0.00454378
-texture = ExtResource("7_54f4s")
-
-[node name="Area2D" type="Area2D" parent="student paper2"]
-position = Vector2(0.04399, -8.99287)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="student paper2/Area2D"]
-position = Vector2(3.51414, -0.401915)
-shape = SubResource("RectangleShape2D_famsg")
-
-[node name="student paper3" type="Sprite2D" parent="."]
-position = Vector2(232, 546)
-rotation = -0.0311333
-scale = Vector2(0.994706, 0.804493)
-skew = 0.0210496
-texture = ExtResource("7_54f4s")
-
-[node name="Area2D" type="Area2D" parent="student paper3"]
-position = Vector2(0.04399, -8.99287)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="student paper3/Area2D"]
-position = Vector2(-2.02456, 5.18739)
-shape = SubResource("RectangleShape2D_famsg")
-
 [node name="checklist_icon" type="Sprite2D" parent="."]
 position = Vector2(523.746, 542.318)
 scale = Vector2(1.38507, 0.746352)
@@ -264,15 +236,15 @@ scale = Vector2(13.3333, 11.407)
 
 [node name="CheckOption" type="Sprite2D" parent="stamp/StampOptions"]
 z_index = 201
-position = Vector2(-3.93693, -373.863)
-scale = Vector2(0.0852962, 0.10012)
+position = Vector2(-2.63917, -298.45)
+scale = Vector2(0.0512434, 0.0712471)
 texture = ExtResource("13_silwv")
 
 [node name="Area2D" type="Area2D" parent="stamp/StampOptions/CheckOption"]
 position = Vector2(-1.45895, -426.607)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/CheckOption/Area2D"]
-position = Vector2(13.0195, 292.104)
+position = Vector2(63.0858, 508.732)
 shape = SubResource("RectangleShape2D_check_option")
 
 [node name="XOption" type="Sprite2D" parent="stamp/StampOptions"]
@@ -384,8 +356,6 @@ offset_bottom = 127.0
 text = "Good morning, teacher. I have gathered my classmates' papers. I’ll just put them on your desk for you to check. Only three students have passed though."
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
-[connection signal="input_event" from="student paper2/Area2D" to="." method="_on_area_2d_student_paper2_input_event"]
-[connection signal="input_event" from="student paper3/Area2D" to="." method="_on_area_2d_student_paper3_input_event"]
 [connection signal="input_event" from="checklist_icon/Area2D" to="." method="_on_checklist_icon_input_event"]
 [connection signal="input_event" from="stamp/Area2D" to="." method="_on_stamp_area_input_event"]
 [connection signal="input_event" from="stamp/StampOptions/CheckOption/Area2D" to="." method="_on_check_option_input_event"]

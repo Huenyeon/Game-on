@@ -2,8 +2,6 @@ extends Node2D
 
 @onready var paper = $paper
 @onready var student_paper = $"student paper"
-@onready var student_paper2 = $"student paper2"
-@onready var student_paper3 = $"student paper3"
 @onready var paper_text: RichTextLabel = $paper/MarginContainer/Text
 @onready var player = $Player
 
@@ -41,8 +39,6 @@ var active_pen_node: Node = null # Track the currently active pen node
 var all_reports = Global.correct_student_report + Global.incorrect_student_report
 
 var chosen_report1 = null
-var chosen_report2 = null
-var chosen_report3 = null
 
 # Track stamping state for win/lose logic
 var stamped_papers_count := 0
@@ -56,9 +52,6 @@ func _is_report_correct(report: Dictionary) -> bool:
 func _ready() -> void:
 	paper.visible = false
 	student_paper.visible = false
-	student_paper2.visible = false
-	student_paper3.visible = false
-	
 	checklist_ui.visible = false
 	
 	# Signal connection handled in scene file
@@ -192,8 +185,6 @@ func open_paper_with_report(report_data: Dictionary) -> void:
 	paper_open = true
 	paper.visible = true
 	student_paper.visible = false
-	student_paper2.visible = false
-	student_paper3.visible = false
 
 	# Refresh pen references (good practice)
 	refresh_pens_paper_reference()
@@ -256,8 +247,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				paper_open = false
 				paper.visible = false
 				student_paper.visible = true
-				student_paper2.visible = true
-				student_paper3.visible = true
 				
 				
 				# Reset pen interaction flag when paper is closed
@@ -312,8 +301,6 @@ func _on_player_reached_middle():
 func show_student_paper():
 	print("Student paper opened!")
 	student_paper.visible = true
-	student_paper2.visible = true
-	student_paper3.visible = true
 	Global.get_random_reports(3)
 	Global.get_random_student_reports(1)
 	
@@ -363,8 +350,6 @@ func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				paper_open = false
 				paper.visible = false
 				student_paper.visible = true
-				student_paper2.visible = true
-				student_paper3.visible = true
 				dragging_check = false
 				dragging_x = false
 				check_armed = false
@@ -392,10 +377,6 @@ func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
 	var stamped_report = null
 	if paper.visible and not student_paper.visible:
 		stamped_report = chosen_report1
-	elif paper.visible and not student_paper2.visible:
-		stamped_report = chosen_report2
-	elif paper.visible and not student_paper3.visible:
-		stamped_report = chosen_report3
 
 	if stamped_report != null and not stamped_papers.has(stamped_report):
 		stamped_papers.append(stamped_report)
@@ -419,8 +400,6 @@ func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
 		# Hide all UI
 		paper.visible = false
 		student_paper.visible = false
-		student_paper2.visible = false
-		student_paper3.visible = false
 		checklist_ui.visible = false
 		# Set result and go to end scene
 		if correct_stamps_count >= 2:
@@ -524,51 +503,3 @@ func set_pen_interaction(active: bool, pen_node: Node = null):
 		active_pen_node = null
 		print("Pen interaction ended")
 		return true
-
-
-
-func _on_area_2d_student_paper2_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		# Only choose a report the first time
-		if chosen_report2 == null:
-			var all_reports = Global.correct_student_report + Global.incorrect_student_report
-			var available_reports = []
-
-			# Filter out already used reports
-			for report in all_reports:
-				if not Global.used_reports.has(report):
-					available_reports.append(report)
-
-			# Reset if empty
-			if available_reports.size() == 0:
-				Global.used_reports.clear()
-				available_reports = all_reports
-
-			# Pick this paper’s report once
-			chosen_report2 = available_reports[1]   # or pick index 2 if you want the 3rd slot
-			Global.used_reports.append(chosen_report2)
-
-		open_paper_with_report(chosen_report2)
-
-func _on_area_2d_student_paper3_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		# Only choose a report the first time
-		if chosen_report3 == null:
-			var all_reports = Global.correct_student_report + Global.incorrect_student_report
-			var available_reports = []
-
-			# Filter out already used reports
-			for report in all_reports:
-				if not Global.used_reports.has(report):
-					available_reports.append(report)
-
-			# Reset if empty
-			if available_reports.size() == 0:
-				Global.used_reports.clear()
-				available_reports = all_reports
-
-			# Pick this paper’s report once
-			chosen_report3 = available_reports[2]   # or pick index 2 if you want the 3rd slot
-			Global.used_reports.append(chosen_report3)
-			
-		open_paper_with_report(chosen_report3)

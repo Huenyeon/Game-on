@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dotxbd76lgkyo"]
+[gd_scene load_steps=15 format=3 uid="uid://c7trr7x0cru6m"]
 
 [ext_resource type="Script" uid="uid://6axrely6bisx" path="res://scripts/inside_desktop.gd" id="1_obpd4"]
 [ext_resource type="Texture2D" uid="uid://byd0sq4jsjdau" path="res://assets/desktop/websitekono.png" id="2_ofnyq"]
