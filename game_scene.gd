@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var paper = $paper
 @onready var student_paper = $"student paper"
+@onready var student_paper2 = $"student paper2"
+@onready var student_paper3 = $"student paper3"
 
 
 @onready var paper_text: RichTextLabel = $paper/MarginContainer/Text
@@ -35,10 +37,10 @@ var stamps_layer: Node2D
 var check_armed := false
 var x_armed := false
 var placed_stamp_target_scale := 3.0
-var current_student_report_text: String = ""  # Store the current report text
-var pen_interaction_active := false  # Flag to track when a pen is being interacted with
+var current_student_report_text: String = "" # Store the current report text
+var pen_interaction_active := false # Flag to track when a pen is being interacted with
 var active_pen_node: Node = null # Track the currently active pen node
-var dialog_active := true  # Flag to track if dialog is currently playing
+var dialog_active := true # Flag to track if dialog is currently playing
 
 var all_reports = Global.correct_student_report + Global.incorrect_student_report
 
@@ -56,9 +58,22 @@ func _is_report_correct(report: Dictionary) -> bool:
 func _ready() -> void:
 	paper.visible = false
 	student_paper.visible = false
-	
 	checklist_ui.visible = false
-	
+
+	# At the start of _ready()
+	Global.get_random_reports(3)
+	Global.get_random_student_reports(3)
+
+	# Assign reports to each student paper
+	if student_paper and Global.correct_student_report.size() > 0:
+		student_paper.call("set_report", Global.correct_student_report[0])
+	if student_paper2 and Global.correct_student_report.size() > 1:
+		student_paper2.call("set_report", Global.correct_student_report[1])
+	if student_paper3 and Global.correct_student_report.size() > 2:
+		student_paper3.call("set_report", Global.correct_student_report[2])
+		
+
+
 	# Signal connection handled in scene file
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))
@@ -74,8 +89,8 @@ func _ready() -> void:
 		
 	# Setup timer (but don't start yet - wait for dialog to finish)
 	game_timer.one_shot = true
-	game_timer.autostart = false  # Disable autostart so we can control when it starts
-	game_timer.stop()  # Force stop the timer immediately
+	game_timer.autostart = false # Disable autostart so we can control when it starts
+	game_timer.stop() # Force stop the timer immediately
 	game_timer.timeout.connect(_on_game_timer_timeout)
 	print("Timer setup - is_stopped: ", game_timer.is_stopped(), " time_left: ", game_timer.time_left)
 	
@@ -184,7 +199,7 @@ func _set_paper_text_from_report(report) -> void:
 		"[color=F25907][u]" + report["when"] + "[/u][/color]",
 		report["why"]
 	]
-	report_text += highlighted_body 
+	report_text += highlighted_body
 
 	paper_text.bbcode_enabled = true
 	paper_text.bbcode_text = report_text
@@ -268,7 +283,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 				available_reports = all_reports
 
 			# Pick this paper’s report once
-			chosen_report1 = available_reports[0]   # or pick index 2 if you want the 3rd slot
+			chosen_report1 = available_reports[0] # or pick index 2 if you want the 3rd slot
 			Global.used_reports.append(chosen_report1)
 
 		# Now always use chosen_report1
@@ -312,7 +327,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				# Don't close paper if clicking on exempted elements
 				pass
 			else:
-				var tex_size = paper.texture.get_size()*paper.scale
+				var tex_size = paper.texture.get_size() * paper.scale
 				var top_left = paper.global_position - (tex_size * 0.5)
 				var paper_rect = Rect2(top_left, tex_size)
 				
@@ -429,9 +444,7 @@ func _on_student_paper_gui_input(event):
 		show_paper_with_report()
 		
 
-
 func _on_stamp_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	
 	if event is InputEventMouseButton and event.pressed and is_interaction_allowed():
 		# Close paper if open when clicking stamp area
 		close_paper_if_open()
@@ -612,7 +625,7 @@ func _start_timer_when_dialog_done():
 	# If dialog is visible, wait for it to become invisible
 	print("Dialog is visible, waiting for it to finish...")
 	var check_timer = Timer.new()
-	check_timer.wait_time = 0.1  # Check every 0.1 seconds
+	check_timer.wait_time = 0.1 # Check every 0.1 seconds
 	check_timer.timeout.connect(_check_dialog_visibility)
 	add_child(check_timer)
 	check_timer.start()
@@ -681,13 +694,13 @@ func _is_click_on_stamp_options(mouse_pos: Vector2) -> bool:
 	
 	# Check if click is on stamp options sprites
 	if check_option_sprite:
-		var check_rect = Rect2(check_option_sprite.global_position - check_option_sprite.texture.get_size() * check_option_sprite.scale * 0.5, 
+		var check_rect = Rect2(check_option_sprite.global_position - check_option_sprite.texture.get_size() * check_option_sprite.scale * 0.5,
 							  check_option_sprite.texture.get_size() * check_option_sprite.scale)
 		if check_rect.has_point(mouse_pos):
 			return true
 	
 	if x_option_sprite:
-		var x_rect = Rect2(x_option_sprite.global_position - x_option_sprite.texture.get_size() * x_option_sprite.scale * 0.5, 
+		var x_rect = Rect2(x_option_sprite.global_position - x_option_sprite.texture.get_size() * x_option_sprite.scale * 0.5,
 						  x_option_sprite.texture.get_size() * x_option_sprite.scale)
 		if x_rect.has_point(mouse_pos):
 			return true
