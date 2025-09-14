@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Global="*res://scripts/Global.gd"
 GlobalCursorManager="*res://scripts/autoload_cursor_manager.gd"
+AudioManager="*res://scripts/audio_manager.gd"
 
 [display]
 

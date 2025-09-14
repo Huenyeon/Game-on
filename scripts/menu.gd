@@ -2,6 +2,8 @@ extends Node2D
 
 func _ready():
 	randomize()
+	# Start background music
+	AudioManager.play_background_music()
 	
 	
 func _on_start_pressed() -> void:

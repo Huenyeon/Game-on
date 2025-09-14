@@ -59,6 +59,9 @@ func _ready() -> void:
 	
 	checklist_ui.visible = false
 	
+	# Start background music
+	AudioManager.play_background_music()
+	
 	# Signal connection handled in scene file
 	if player:
 		player.connect("reached_middle", Callable(self, "_on_player_reached_middle"))

@@ -19,6 +19,9 @@ var char_index := 0
 func _ready():
 	print("Camera found: ", camera != null)
 	print("Dialogue label found: ", dialogue_label != null)
+	
+	# Start background music
+	AudioManager.play_background_music()
 
 	if camera:
 		camera.make_current()

@@ -9,6 +9,9 @@ extends Node2D
 @export var result_scale: float = 0.25
 
 func _ready() -> void:
+	# Stop background music for end scene
+	AudioManager.stop_background_music()
+	
 	# Apply desired scale to the result image
 	result_sprite.scale = Vector2.ONE * result_scale
 	# Safe read of the last stamp info
