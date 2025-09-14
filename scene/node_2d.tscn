@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dile7j7wlpfsy"]
+[gd_scene load_steps=5 format=3 uid="uid://dile7j7wlpfsy"]
 
-[ext_resource type="Script" uid="uid://7o2qi2d54pdc" path="res://scripts/first_intro.gd" id="1_guiot"]
-[ext_resource type="Texture2D" uid="uid://o105it3jxdn1" path="res://assets/images/background start.jpg" id="2_guiot"]
+[ext_resource type="Script" uid="uid://pg3f6w051ebf" path="res://scripts/first_intro.gd" id="1_guiot"]
+[ext_resource type="Texture2D" uid="uid://dc3hiob7cgdd2" path="res://assets/2.png" id="2_ppd22"]
+[ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="3_3cebx"]
 [ext_resource type="PackedScene" uid="uid://2cen5hkc4nah" path="res://scene/intro_controls.tscn" id="3_controls"]
 
 [node name="Node2D" type="Node2D"]
@@ -9,9 +10,9 @@ position = Vector2(-51, 26)
 script = ExtResource("1_guiot")
 
 [node name="BackgroundStart" type="Sprite2D" parent="."]
-position = Vector2(654.75, 279)
-scale = Vector2(1.0146, 1)
-texture = ExtResource("2_guiot")
+position = Vector2(597, 322)
+scale = Vector2(0.180073, 0.177481)
+texture = ExtResource("2_ppd22")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(376, 370)
@@ -21,20 +22,24 @@ zoom = Vector2(2, 2)
 
 [node name="Panel" type="Panel" parent="Camera2D/CanvasLayer"]
 anchors_preset = -1
-anchor_right = 0.0147569
-anchor_bottom = 0.0339506
-offset_left = 276.0
-offset_top = 510.0
-offset_right = 880.0
-offset_bottom = 623.0
+anchor_left = -0.0112847
+anchor_top = -0.0169753
+anchor_right = 0.185764
+anchor_bottom = -0.0169753
+offset_left = 166.0
+offset_top = 507.0
+offset_right = 770.0
+offset_bottom = 620.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Camera2D/CanvasLayer/Panel"]
 layout_mode = 0
-offset_left = 35.0
-offset_top = 15.0
-offset_right = 368.0
-offset_bottom = 38.0
+offset_left = 13.0
+offset_top = 16.0
+offset_right = 821.0
+offset_bottom = 100.0
+theme_override_fonts/font = ExtResource("3_3cebx")
+theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 vertical_alignment = 1
 
