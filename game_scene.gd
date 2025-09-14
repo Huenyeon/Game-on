@@ -59,8 +59,8 @@ func _ready() -> void:
 	
 	checklist_ui.visible = false
 	
-	# Start background music
-	AudioManager.play_background_music()
+	# Stop background music for game scene
+	AudioManager.stop_background_music()
 	
 	# Signal connection handled in scene file
 	if player:

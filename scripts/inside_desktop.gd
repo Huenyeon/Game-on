@@ -1,6 +1,9 @@
 extends Node2D
 
 func _ready():
+	# Start background music
+	AudioManager.play_background_music()
+	
 	# Default visibility
 	$NewsContent.visible = true
 	$PublishersContent.visible = false

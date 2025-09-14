@@ -11,6 +11,10 @@ var is_paused := false
 func _ready():
 	# Ensure UI stays active when the scene tree is paused
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	# Start background music
+	AudioManager.play_background_music()
+	
 	_update_pause_button()
 
 	pause_button.pressed.connect(_on_pause_pressed)
