@@ -81,9 +81,6 @@ func _on_desktop_clicked(event):
 
 
 func _ready():
-	# Start background music
-	AudioManager.play_background_music()
-	
 	# Show news by default, hide publishers
 	$NewsContent.visible = true
 	$PublishersContent.visible = false
