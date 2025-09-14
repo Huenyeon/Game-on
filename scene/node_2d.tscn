@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dile7j7wlpfsy"]
 
-[ext_resource type="Script" uid="uid://pg3f6w051ebf" path="res://scripts/first_intro.gd" id="1_guiot"]
+[ext_resource type="Script" uid="uid://7o2qi2d54pdc" path="res://scripts/first_intro.gd" id="1_guiot"]
 [ext_resource type="Texture2D" uid="uid://dc3hiob7cgdd2" path="res://assets/2.png" id="2_ppd22"]
 [ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="3_3cebx"]
 [ext_resource type="PackedScene" uid="uid://2cen5hkc4nah" path="res://scene/intro_controls.tscn" id="3_controls"]
@@ -10,8 +10,8 @@ position = Vector2(-51, 26)
 script = ExtResource("1_guiot")
 
 [node name="BackgroundStart" type="Sprite2D" parent="."]
-position = Vector2(597, 322)
-scale = Vector2(0.180073, 0.177481)
+position = Vector2(629.891, 311.75)
+scale = Vector2(0.191036, 0.183555)
 texture = ExtResource("2_ppd22")
 
 [node name="Camera2D" type="Camera2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=44 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dlscbv2kk783m" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://buwqopulf0mh3" path="res://assets/1.png" id="2_4l13n"]
@@ -22,8 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bhdg1ewgngify" path="res://scene/game_controls.tscn" id="19_controls"]
 [ext_resource type="Script" uid="uid://dnweuqa3mr35m" path="res://scripts/timer_background.gd" id="20_8q4eb"]
 [ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="21_ao44p"]
-[ext_resource type="FontFile" uid="uid://bwkg7qskiqjol" path="res://font/ari-w9500.ttf" id="21_f3bwf"]
-[ext_resource type="Script" uid="uid://dcs4evvv8mmfj" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
+[ext_resource type="Script" uid="uid://c5w3ycneilwj3" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
 [ext_resource type="Texture2D" uid="uid://ceht08ul7uta0" path="res://assets/UI_TravelBook_Frame01a.png" id="24_4l13n"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
