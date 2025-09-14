@@ -252,7 +252,6 @@ position = Vector2(-1.45895, -426.607)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/CheckOption/Area2D"]
 position = Vector2(-13.2158, 380.981)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_check_option")
 
 [node name="XOption" type="Sprite2D" parent="stamp/StampOptions"]
@@ -266,7 +265,6 @@ position = Vector2(-24.1126, -445.934)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stamp/StampOptions/XOption/Area2D"]
 position = Vector2(53.5884, 433.13)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_x_option")
 
 [node name="Pens" type="Node2D" parent="."]
