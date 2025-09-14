@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://eg8aervxc26f"]
+[gd_scene load_steps=42 format=3 uid="uid://eg8aervxc26f"]
 
 [ext_resource type="Script" uid="uid://dlscbv2kk783m" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://le0yh5crl3un" path="res://assets/main scene bg 2.png" id="2_6chj6"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://cxpo2rchil4em" path="res://scripts/timer_background.gd" id="20_8q4eb"]
 [ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="21_ao44p"]
 [ext_resource type="Script" uid="uid://b5dqcqmqb3vos" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
+[ext_resource type="Texture2D" uid="uid://csslhcdg6is08" path="res://assets/desktop/desktop_new.png" id="23_ao44p"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -191,6 +192,7 @@ offset_left = 609.0
 offset_top = 223.0
 offset_right = 1000.0
 offset_bottom = 636.0
+texture = ExtResource("23_ao44p")
 
 [node name="ChecklistUI" type="Node2D" parent="."]
 visible = false

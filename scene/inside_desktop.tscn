@@ -1,21 +1,23 @@
-[gd_scene load_steps=24 format=3 uid="uid://c7trr7x0cru6m"]
+[gd_scene load_steps=26 format=3 uid="uid://c7trr7x0cru6m"]
 
 [ext_resource type="Script" uid="uid://6axrely6bisx" path="res://scripts/inside_desktop.gd" id="1_obpd4"]
+[ext_resource type="Script" uid="uid://b3tdcp2wwpi8e" path="res://scripts/credible.gd" id="7_843rd"]
 [ext_resource type="Texture2D" uid="uid://c2axt3tnw41xh" path="res://assets/desktop/publisher-card1.png" id="8_cyjqy"]
 [ext_resource type="Texture2D" uid="uid://cde4eyvixpuke" path="res://assets/desktop/publisher-card2.png" id="9_auwcg"]
 [ext_resource type="Texture2D" uid="uid://bsmn505bdr1fb" path="res://assets/desktop/publisher-card3.png" id="10_14kj4"]
 [ext_resource type="Texture2D" uid="uid://cvm2dcudf4h0m" path="res://assets/desktop/news-cover1.png" id="11_hv70y"]
 [ext_resource type="Texture2D" uid="uid://bx1skw2tj7u40" path="res://assets/desktop/news-cover2.png" id="12_pl64k"]
 [ext_resource type="Texture2D" uid="uid://bps66c50njl1r" path="res://assets/desktop/news-cover3.png" id="13_lkogr"]
-[ext_resource type="Script" uid="uid://dfa6gw0eeiahd" path="res://scripts/news_details.gd" id="14_ofnyq"]
 [ext_resource type="Texture2D" uid="uid://jsde6h1xmb2c" path="res://assets/desktop/Carmine N Friends Real(2080 x 1080 px)-export.png" id="14_pwwv0"]
+[ext_resource type="Texture2D" uid="uid://b3v3vtewbplm1" path="res://assets/desktop/muscify_bg_big.png" id="14_ug3hc"]
 [ext_resource type="Texture2D" uid="uid://cotk8h8ne3biq" path="res://assets/desktop/Browser.png" id="15_2flab"]
+[ext_resource type="Texture2D" uid="uid://brxfhd2u44swr" path="res://assets/desktop/red_note1.png" id="15_843rd"]
 [ext_resource type="ButtonGroup" uid="uid://bycsus5exwsyj" path="res://scripts/site.tres" id="15_cyjqy"]
-[ext_resource type="Texture2D" uid="uid://du8fufqd18lm2" path="res://assets/desktop/News_window.png" id="15_ug3hc"]
-[ext_resource type="Texture2D" uid="uid://b11cqx77l5yx5" path="res://assets/desktop/window_exit_button_normal1.png" id="16_843rd"]
+[ext_resource type="Texture2D" uid="uid://cf8wuyu0b0cyr" path="res://assets/desktop/close_icon_site.png" id="15_pwwv0"]
 [ext_resource type="Texture2D" uid="uid://bdfyx4rnqtelp" path="res://assets/desktop/icon_site_not_active1.png" id="16_auwcg"]
+[ext_resource type="Texture2D" uid="uid://im36tscugil" path="res://assets/desktop/blue_note1.png" id="16_pwwv0"]
 [ext_resource type="Texture2D" uid="uid://dn2thi8wvlmen" path="res://assets/desktop/icon_site_not.png" id="17_14kj4"]
-[ext_resource type="Texture2D" uid="uid://qfor651u12b5" path="res://assets/desktop/window_exit_button_press1.png" id="17_pwwv0"]
+[ext_resource type="Texture2D" uid="uid://cqou2s5qs278p" path="res://assets/desktop/violet_note.png" id="17_cyjqy"]
 [ext_resource type="Texture2D" uid="uid://ccrmyrqar166f" path="res://assets/desktop/song_icon_animated_final.png" id="19_pwwv0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cyjqy"]
@@ -70,89 +72,124 @@ position = Vector2(577, 327)
 scale = Vector2(0.556731, 0.607407)
 texture = ExtResource("14_pwwv0")
 
-[node name="News" type="TextureButton" parent="CarmineNFriendsReal(2080X1080Px)-export"]
-offset_left = -765.0
-offset_top = -527.0
-offset_right = -361.0
-offset_bottom = -426.0
+[node name="News" type="TextureButton" parent="."]
+offset_left = 165.0
+offset_right = 429.0
+offset_bottom = 66.0
 toggle_mode = true
+button_mask = 7
 button_group = ExtResource("15_cyjqy")
 texture_normal = ExtResource("16_auwcg")
 texture_pressed = ExtResource("17_14kj4")
 stretch_mode = 0
 
-[node name="Credible" type="Label" parent="CarmineNFriendsReal(2080X1080Px)-export"]
-offset_left = -653.817
-offset_top = -492.256
-offset_right = -427.817
-offset_bottom = -420.256
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "Reliable New.com"
-
-[node name="Browser" type="Sprite2D" parent="CarmineNFriendsReal(2080X1080Px)-export"]
-position = Vector2(-686.148, -477.439)
-scale = Vector2(0.490954, 0.490954)
+[node name="Browser" type="Sprite2D" parent="News"]
+position = Vector2(52, 32)
+scale = Vector2(0.355233, 0.341222)
 texture = ExtResource("15_2flab")
 
-[node name="Muscify2" type="TextureButton" parent="CarmineNFriendsReal(2080X1080Px)-export"]
-offset_left = -383.0
-offset_top = -527.0
-offset_right = -79.0001
-offset_bottom = -423.0
+[node name="Credible" type="Label" parent="."]
+offset_left = 234.0
+offset_top = 23.0
+offset_right = 454.0
+offset_bottom = 59.0
+scale = Vector2(0.7, 0.7)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Reliable News.com"
+script = ExtResource("7_843rd")
+
+[node name="Muscify2" type="TextureButton" parent="."]
+offset_left = 427.0
+offset_top = -1.0
+offset_right = 640.0
+offset_bottom = 65.0
 toggle_mode = true
+button_mask = 7
 button_group = ExtResource("15_cyjqy")
 texture_normal = ExtResource("16_auwcg")
 texture_pressed = ExtResource("17_14kj4")
 stretch_mode = 0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CarmineNFriendsReal(2080X1080Px)-export"]
-position = Vector2(-312.951, -472.912)
-scale = Vector2(0.547107, 0.547107)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Muscify2"]
+position = Vector2(51, 34)
+scale = Vector2(0.373063, 0.373063)
 sprite_frames = SubResource("SpriteFrames_lkogr")
 animation = &"new_animation"
 autoplay = "new_animation"
 frame_progress = 0.432366
 
-[node name="Muscify" type="Label" parent="CarmineNFriendsReal(2080X1080Px)-export"]
-offset_left = -295.475
-offset_top = -491.433
-offset_right = -69.4749
-offset_bottom = -419.433
+[node name="Muscify" type="Label" parent="."]
+anchors_preset = -1
+anchor_right = 0.072
+offset_left = 493.0
+offset_top = 22.0
+offset_right = 638.0
+offset_bottom = 56.0
+scale = Vector2(0.7, 0.7)
+mouse_filter = 1
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "Muscify.com"
 
 [node name="NewsControl" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1088.0
-offset_bottom = 586.0
+offset_left = 36.0
+offset_top = 23.0
+offset_right = 1124.0
+offset_bottom = 609.0
 
-[node name="news5" type="Sprite2D" parent="NewsControl"]
-position = Vector2(455, 452)
-scale = Vector2(3.03, 2.685)
-texture = ExtResource("13_lkogr")
+[node name="news5" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = 573.0
+offset_top = 90.0
+offset_right = 688.0
+offset_bottom = 205.0
+scale = Vector2(2.5, 2.215)
+texture_normal = ExtResource("11_hv70y")
+stretch_mode = 0
 
-[node name="news4" type="Sprite2D" parent="NewsControl"]
-position = Vector2(210.5, 452)
+[node name="news4" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = 222.0
+offset_top = 292.0
+offset_right = 322.0
+offset_bottom = 392.0
 scale = Vector2(3.03, 2.66)
-texture = ExtResource("12_pl64k")
+texture_normal = ExtResource("12_pl64k")
+stretch_mode = 0
 
-[node name="news2" type="Sprite2D" parent="NewsControl"]
-position = Vector2(977, 255)
+[node name="news2" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = -18.0
+offset_top = 292.0
+offset_right = 82.0
+offset_bottom = 392.0
 scale = Vector2(3.03, 2.685)
-texture = ExtResource("13_lkogr")
+texture_normal = ExtResource("12_pl64k")
+stretch_mode = 0
 
-[node name="news1" type="Sprite2D" parent="NewsControl"]
-position = Vector2(732.5, 255)
-scale = Vector2(3.03, 2.66)
-texture = ExtResource("12_pl64k")
+[node name="news1" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = 788.0
+offset_top = 90.0
+offset_right = 903.0
+offset_bottom = 205.0
+scale = Vector2(2.522, 2.215)
+texture_normal = ExtResource("11_hv70y")
+stretch_mode = 0
 
-[node name="news3" type="Sprite2D" parent="NewsControl"]
-position = Vector2(889.5, 481.5)
+[node name="news3" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = 396.0
+offset_top = 292.0
+offset_right = 515.0
+offset_bottom = 411.0
 scale = Vector2(6.49, 2.25)
-texture = ExtResource("11_hv70y")
+texture_normal = ExtResource("13_lkogr")
+stretch_mode = 0
 
 [node name="PublishersContent" type="Control" parent="."]
 visible = false
@@ -193,554 +230,89 @@ scale = Vector2(4, 4)
 texture_normal = ExtResource("10_14kj4")
 metadata/_edit_group_ = true
 
-[node name="NewsDetails" type="Node2D" parent="."]
-position = Vector2(0, -140)
-script = ExtResource("14_ofnyq")
-
-[node name="set1" type="Node2D" parent="NewsDetails"]
-position = Vector2(-286, -812)
-
-[node name="NewsWindow" type="Sprite2D" parent="NewsDetails/set1"]
-position = Vector2(864.813, 1299.5)
-scale = Vector2(8.72375, 7.11)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsDetails/set1/NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
+[node name="Button" type="TextureButton" parent="."]
+offset_left = 1053.0
+offset_top = 40.0
+offset_right = 1109.0
+offset_bottom = 103.0
+texture_normal = ExtResource("15_pwwv0")
 stretch_mode = 0
 
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set1/NewsWindow"]
-offset_left = -42.0
-offset_top = -28.0
+[node name="MuscifyBgBig" type="Sprite2D" parent="."]
+position = Vector2(543.25, 351.25)
+scale = Vector2(5.5075, 4.655)
+texture = ExtResource("14_ug3hc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(857, 320)
+scale = Vector2(4.07153, 3.78058)
+sprite_frames = SubResource("SpriteFrames_lkogr")
+animation = &"new_animation"
+autoplay = "new_animation"
+frame_progress = 0.432366
+
+[node name="MuscifyControls" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
-offset_bottom = 22.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 10
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set1/NewsWindow"]
-offset_left = -43.1939
-offset_top = -16.2447
-offset_right = 43.8061
-offset_bottom = 74.7553
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set1/NewsWindow"]
-offset_left = -40.672
-offset_top = -39.3108
-offset_right = 23.328
-offset_bottom = 113.689
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET1"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set1/NewsWindow"]
-offset_left = 26.0
-offset_top = -28.0
-offset_right = 48.0
-offset_bottom = -17.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 5
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="set2_1" type="Node2D" parent="NewsDetails"]
-position = Vector2(-302, -678)
-
-[node name="NewsWindow" type="Sprite2D" parent="NewsDetails/set2_1"]
-position = Vector2(874, 1179)
-scale = Vector2(8.72375, 7.11)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsDetails/set2_1/NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
-stretch_mode = 0
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set2_1/NewsWindow"]
-offset_left = -42.0
-offset_top = -28.0
-offset_right = 40.0
-offset_bottom = 22.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 10
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set2_1/NewsWindow"]
-offset_left = -43.1939
-offset_top = -16.2447
-offset_right = 43.8061
-offset_bottom = 74.7553
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set2_1/NewsWindow"]
-offset_left = -40.672
-offset_top = -39.3108
-offset_right = 23.328
-offset_bottom = 113.689
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET1"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set2_1/NewsWindow"]
-offset_left = 26.0
-offset_top = -28.0
-offset_right = 48.0
-offset_bottom = -17.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 5
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="set3_1" type="Node2D" parent="NewsDetails"]
-position = Vector2(-286, -804)
-
-[node name="NewsWindow" type="Sprite2D" parent="NewsDetails/set3_1"]
-position = Vector2(864.813, 1299.5)
-scale = Vector2(8.72375, 7.11)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsDetails/set3_1/NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
-stretch_mode = 0
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set3_1/NewsWindow"]
-offset_left = -42.0
-offset_top = -28.0
-offset_right = 40.0
-offset_bottom = 22.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 10
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set3_1/NewsWindow"]
-offset_left = -43.1939
-offset_top = -16.2447
-offset_right = 43.8061
-offset_bottom = 74.7553
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set3_1/NewsWindow"]
-offset_left = -40.672
-offset_top = -39.3108
-offset_right = 23.328
-offset_bottom = 113.689
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET1"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set3_1/NewsWindow"]
-offset_left = 26.0
-offset_top = -28.0
-offset_right = 48.0
-offset_bottom = -17.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 5
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="set4_1" type="Node2D" parent="NewsDetails"]
-position = Vector2(-286, -804)
-
-[node name="NewsWindow" type="Sprite2D" parent="NewsDetails/set4_1"]
-position = Vector2(864.813, 1299.5)
-scale = Vector2(8.72375, 7.11)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsDetails/set4_1/NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
-stretch_mode = 0
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set4_1/NewsWindow"]
-offset_left = -42.0
-offset_top = -28.0
-offset_right = 40.0
-offset_bottom = 22.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 10
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set4_1/NewsWindow"]
-offset_left = -43.1939
-offset_top = -16.2447
-offset_right = 43.8061
-offset_bottom = 74.7553
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set4_1/NewsWindow"]
-offset_left = -40.672
-offset_top = -39.3108
-offset_right = 23.328
-offset_bottom = 113.689
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET1"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set4_1/NewsWindow"]
-offset_left = 26.0
-offset_top = -28.0
-offset_right = 48.0
-offset_bottom = -17.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 5
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="set5_1" type="Node2D" parent="NewsDetails"]
-position = Vector2(-286, -804)
-
-[node name="NewsWindow" type="Sprite2D" parent="NewsDetails/set5_1"]
-position = Vector2(864.813, 1299.5)
-scale = Vector2(8.72375, 7.11)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsDetails/set5_1/NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
-stretch_mode = 0
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set5_1/NewsWindow"]
-offset_left = -42.0
-offset_top = -28.0
-offset_right = 40.0
-offset_bottom = 22.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 10
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set5_1/NewsWindow"]
-offset_left = -43.1939
-offset_top = -16.2447
-offset_right = 43.8061
-offset_bottom = 74.7553
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set5_1/NewsWindow"]
-offset_left = -40.672
-offset_top = -39.3108
-offset_right = 23.328
-offset_bottom = 113.689
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 7
-text = "SET1"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set5_1/NewsWindow"]
-offset_left = 26.0
-offset_top = -28.0
-offset_right = 48.0
-offset_bottom = -17.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 5
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="set2" type="Node2D" parent="NewsDetails"]
-visible = false
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set2"]
-offset_left = -1449.0
-offset_top = 253.0
-offset_right = -477.0
-offset_bottom = 363.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 40
-text = "SET2"
-autowrap_mode = 3
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set2"]
-offset_left = -1137.0
-offset_top = 199.0
-offset_right = -218.0
-offset_bottom = 352.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET2"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set2"]
-offset_left = -1176.0
-offset_top = 648.0
-offset_right = -257.0
-offset_bottom = 801.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET2"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set2"]
-offset_left = -883.0
-offset_top = 441.0
-offset_right = 36.0
-offset_bottom = 594.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET2"
-autowrap_mode = 3
-
-[node name="NewsWindow" type="Sprite2D" parent="NewsDetails/set2"]
-position = Vector2(1949, 1213)
-scale = Vector2(6.2275, 5.82)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsDetails/set2/NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
-stretch_mode = 0
-
-[node name="set3" type="Node2D" parent="NewsDetails"]
-visible = false
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set3"]
-offset_left = -965.0
-offset_top = 357.0
-offset_right = 7.0
-offset_bottom = 467.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 40
-text = "SET3"
-autowrap_mode = 3
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set3"]
-offset_left = -786.0
-offset_top = 724.0
-offset_right = 133.0
-offset_bottom = 877.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET3"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set3"]
-offset_left = -1026.0
-offset_top = 469.0
-offset_right = -107.0
-offset_bottom = 622.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET3"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set3"]
-offset_left = -1392.0
-offset_top = 381.0
-offset_right = -473.0
-offset_bottom = 534.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET3"
-autowrap_mode = 3
-
-[node name="NewsWindow" type="Sprite2D" parent="NewsDetails/set3"]
-position = Vector2(2911, 1795)
-scale = Vector2(6.2275, 5.82)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsDetails/set3/NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
-stretch_mode = 0
-
-[node name="set4" type="Node2D" parent="NewsDetails"]
-visible = false
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set4"]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set4"]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set4"]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set4"]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="NewsWindow" type="Sprite2D" parent="NewsDetails/set4"]
-position = Vector2(1071, 2155)
-scale = Vector2(6.2275, 5.82)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsDetails/set4/NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
-stretch_mode = 0
-
-[node name="set5" type="Node2D" parent="NewsDetails"]
-visible = false
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set5"]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set5"]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set5"]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set5"]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="NewsWindow" type="Sprite2D" parent="NewsDetails/set5"]
-position = Vector2(-583, 1749)
-scale = Vector2(6.2275, 5.82)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsDetails/set5/NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
-stretch_mode = 0
-
-[node name="BackButton" type="Button" parent="NewsDetails"]
-z_index = 300
-offset_left = 1071.0
-offset_top = 168.0
-offset_right = 1121.0
-offset_bottom = 199.0
-text = "BACK"
-
-[node name="Button" type="Button" parent="."]
-offset_left = 996.0
-offset_top = 28.0
-offset_right = 1127.0
-offset_bottom = 59.0
-text = "back to desktop"
-
-[node name="NewsWindow" type="Sprite2D" parent="."]
-position = Vector2(-1527, 1142)
-scale = Vector2(6.2275, 5.82)
-texture = ExtResource("15_ug3hc")
-
-[node name="TextureButton" type="TextureButton" parent="NewsWindow"]
-offset_left = 36.863
-offset_top = -35.9281
-offset_right = 57.863
-offset_bottom = -10.9281
-scale = Vector2(0.2, 0.2)
-texture_normal = ExtResource("16_843rd")
-texture_pressed = ExtResource("17_pwwv0")
-stretch_mode = 0
-
-[connection signal="pressed" from="Button" to="." method="on_pressed_back_to_scene_button"]
+offset_bottom = 40.0
+
+[node name="RedNote1" type="TextureButton" parent="MuscifyControls"]
+offset_left = 105.0
+offset_top = 233.0
+offset_right = 189.0
+offset_bottom = 322.0
+texture_normal = ExtResource("15_843rd")
+
+[node name="ColorRect" type="ColorRect" parent="MuscifyControls/RedNote1"]
+modulate = Color(0.321569, 0.321569, 0.321569, 0.454902)
+self_modulate = Color(0.298039, 0.321569, 0.321569, 0.454902)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.011
+offset_bottom = 0.0209961
+mouse_filter = 2
+color = Color(0.258824, 0.278431, 0.278431, 0.8)
+
+[node name="BlueNote1" type="TextureButton" parent="MuscifyControls"]
+offset_left = 223.0
+offset_top = 234.0
+offset_right = 307.0
+offset_bottom = 323.0
+texture_normal = ExtResource("16_pwwv0")
+
+[node name="ColorRect" type="ColorRect" parent="MuscifyControls/BlueNote1"]
+modulate = Color(0.321569, 0.321569, 0.321569, 0.454902)
+self_modulate = Color(0.298039, 0.321569, 0.321569, 0.454902)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.989
+offset_bottom = -0.0210037
+mouse_filter = 2
+color = Color(0.321569, 0.321569, 0.321569, 0)
+
+[node name="VioletNote1" type="TextureButton" parent="MuscifyControls"]
+offset_left = 343.0
+offset_top = 233.0
+offset_right = 427.0
+offset_bottom = 322.0
+texture_normal = ExtResource("17_cyjqy")
+
+[node name="ColorRect" type="ColorRect" parent="MuscifyControls/VioletNote1"]
+modulate = Color(0.321569, 0.321569, 0.321569, 0.454902)
+self_modulate = Color(0.298039, 0.321569, 0.321569, 0.454902)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.321569, 0.321569, 0.321569, 0)
+
+[connection signal="pressed" from="News" to="." method="_on_news_pressed"]
+[connection signal="pressed" from="Muscify2" to="." method="_on_muscify_button_press"]
+[connection signal="pressed" from="Button" to="." method="_on_leave_button_pressed"]
+[connection signal="pressed" from="MuscifyControls/RedNote1" to="." method="_on_RedNote_pressed"]
+[connection signal="pressed" from="MuscifyControls/BlueNote1" to="." method="_on_BlueNote_pressed"]
+[connection signal="pressed" from="MuscifyControls/VioletNote1" to="." method="_on_VioletNote_pressed"]

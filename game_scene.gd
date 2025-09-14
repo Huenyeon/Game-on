@@ -49,11 +49,17 @@ var stamped_papers_count := 0
 var correct_stamps_count := 0
 var stamped_papers := [] # To track which papers have been stamped
 
+
 # Helper to check if a report is correct
 func _is_report_correct(report: Dictionary) -> bool:
 	return Global.correct_student_report.has(report)
 
 func _ready() -> void:
+	
+	if not Global.audio_player.playing:
+		Global._set_gamescene_song(Global.current_song_index)
+	
+
 	paper.visible = false
 	student_paper.visible = false
 	
@@ -394,7 +400,7 @@ func _on_player_reached_middle():
 func show_student_paper():
 	print("Student paper opened!")
 	student_paper.visible = true
-	Global.get_random_reports(3)
+	Global.get_random_reports(5)
 	Global.get_random_student_reports(1)
 	
 	# Reset player's stamp state when the student paper view opens
@@ -761,3 +767,7 @@ func set_pen_interaction(active: bool, pen_node: Node = null):
 		active_pen_node = null
 		print("Pen interaction ended")
 		return true
+		
+		
+func _exit_tree():
+	Global.stop_music()

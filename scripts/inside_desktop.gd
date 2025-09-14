@@ -1,106 +1,124 @@
 extends Node2D
 
+@onready var window_scene = preload("res://scene/window.tscn")
+
+var open_windows := {}
+var z_index_counter := 0
+var current_note_pressed: String = ""  # tracks which note is currently active
+
 func _ready():
-	# Default visibility
 	$NewsControl.visible = true
-	$NewsDetails.visible = false
-
-	# Connect back button
-	$NewsDetails/BackButton.pressed.connect(_on_back_button_pressed)
-
+	$MuscifyControls.visible = false
+	$MuscifyBgBig.visible = false
+	$AnimatedSprite2D.visible = false
+	
+	$Credible.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	$Muscify.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Connect each news button
 	for i in range($NewsControl.get_child_count()):
-		var sprite = $NewsControl.get_child(i)
-		if sprite is Sprite2D:
-			sprite.input_event.connect(_on_news_item_input.bind(i))
-
-
-func _on_news_item_input(viewport, event, shape_idx, index):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_on_news_item_pressed(index)
-
-func _on_news_button_pressed():
-	# Cursor effect will play automatically via global input
-	#$NewsControl.visible = true
-	#$PublishersContent.visible = false
-	#$NewsDetails.visible = false
-	#$NewsButton.button_pressed = true
-	#$PublishersButton.button_pressed = false
-	pass
-
-
-func _on_publisher_button_pressed():
-	# Cursor effect will play automatically via global input
-	#$NewsControl.visible = false
-	#$PublishersContent.visible = true
-	#$NewsDetails.visible = false
-	#$NewsButton.button_pressed = false
-	#$PublishersButton.button_pressed = true
-	pass
-
+		var child = $NewsControl.get_child(i)
+		if child is TextureButton:
+			child.pressed.connect(_on_news_item_pressed.bind(i))
+			
+	#Global._set_gamescene_song(1)
 
 func _on_news_item_pressed(index: int):
-	# Hide news list
-	$NewsDetails.visible = true
-	$Button.visible = false
-	#$PublishersButton.visible = false
-	#$NewsButton.visible = false
+	# If window already exists, just bring it to front
+	if index in open_windows and is_instance_valid(open_windows[index]):
+		bring_window_to_front(open_windows[index])
+		return
 
-	# Hide all detail sets first
-	for child in $NewsDetails.get_children():
-		if child.name != "BackButton":
-			child.visible = false
+	# Create new window
+	var new_window = window_scene.instantiate()
+	var cam = get_viewport().get_camera_2d()
+	if cam:
+		var cam_pos = cam.global_position
+		var sprite = new_window.get_node("Sprite2D")
+		if sprite and sprite.texture:
+			var window_size = sprite.texture.get_size()
+			new_window.position = cam_pos - (window_size / 2)
+		else:
+			new_window.position = cam_pos
+	
+	# Set up the window with data
+	if new_window.has_method("setup_window"):
+		var report = Global.active_reports[index]
+		new_window.setup_window(index, self, report)
+	
+	# Set initial z-index and add to scene
+	new_window.z_index = z_index_counter
+	z_index_counter += 1
+	add_child(new_window)  # Add directly to main scene
+	open_windows[index] = new_window
 
-	# Map index -> detail node name
-	var mapping = {
-		0: "set1",
-		1: "set2_1",
-		2: "set3_1",
-		3: "set4_1",
-		4: "set5_1"
-	}
+func bring_window_to_front(window):
+	window.z_index = z_index_counter
+	z_index_counter += 1
 
-	# Show the correct detail set
-	if mapping.has(index):
-		var target_set = $NewsDetails.get_node(mapping[index])
-		if target_set:
-			target_set.visible = true
-			print(target_set)
-
+func remove_window(index):
+	if index in open_windows:
+		open_windows.erase(index)
 
 func _on_back_button_pressed():
-	# Cursor effect will play automatically via global input
-	# Hide details, return to news list
-	$NewsDetails.visible = false
+	# Close all windows when going back
+	for index in open_windows.keys():
+		if is_instance_valid(open_windows[index]):
+			open_windows[index].queue_free()
+	open_windows.clear()
+
+
+func _on_muscify_button_press():
+	$MuscifyControls.visible = true
+	$NewsControl.visible = false
+	$MuscifyBgBig.visible=true
+	$AnimatedSprite2D.visible = true
+	
+
+
+func _on_news_pressed() -> void:
+	$MuscifyControls.visible = false
 	$NewsControl.visible = true
-	$PublishersButton.visible = true
-	$NewsButton.visible = true
-	$Button.visible= true
+	$MuscifyBgBig.visible= false
+	$AnimatedSprite2D. visible = false
+
+
+func _on_RedNote_pressed() -> void:
+	print("redpressed")
+	_activate_note("red", 1)
+
+func _on_BlueNote_pressed() -> void:
+	_activate_note("blue", 2)
+	print("bluepressed")
 	
 
-func _on_back_pressed() -> void:
-	pass # Replace with function body.
+func _on_VioletNote_pressed() -> void:
+	print("violetpressed")
+	_activate_note("violet", 3)
 
-
-func _on_button_pressed() -> void:
-	pass # Replace with function body.
-
-
-
-func on_pressed_back_to_scene_button() -> void:
-	# Close the overlay without reloading the game scene
-	# Show the game controls again
-	var current_scene = get_tree().current_scene
-	if current_scene:
-		var controls := current_scene.get_node_or_null("CanvasLayer/UIRoot/GameControls")
-		if controls:
-			controls.visible = true
+func _activate_note(note_name: String, song_index: int):
+	if current_note_pressed == note_name:
+		return
 		
-		# Close paper when desktop is closed
-		if current_scene.has_method("close_paper_if_open"):
-			current_scene.close_paper_if_open()
+	if current_note_pressed != "":
+		var prev_color_rect = $MuscifyControls.get_node("%sNote1/ColorRect" % current_note_pressed.capitalize())
+		prev_color_rect.color = Color(0,0,0,0)  
 		
-		# Close stamp options when desktop is closed
-		if current_scene.has_method("close_stamp_options_if_open"):
-			current_scene.close_stamp_options_if_open()
+	var new_color_rect = $MuscifyControls.get_node("%sNote1/ColorRect" % note_name.capitalize())
+	new_color_rect.color = Color("#424747cc")  
+	current_note_pressed = note_name
 	
-	queue_free()
+	# Update global song index AND note name separately
+	Global.current_song_index = song_index
+	Global.current_note_name = note_name
+	Global._set_gamescene_song(song_index)  # Only pass the index
+
+
+	
+
+
+func _on_leave_button_pressed() -> void:
+	var game_scene = load("res://scene/game_scene.tscn").instantiate()
+	get_tree().root.add_child(game_scene)
+	get_tree().current_scene.queue_free()  # Remove current scene
+	get_tree().current_scene = game_scene  # Set new current scene

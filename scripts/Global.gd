@@ -38,7 +38,7 @@ var publishers = [
 
 var published_dates = []
 
-func generate_random_published_dates(count: int = 3):
+func generate_random_published_dates(count: int = 5):
 	published_dates.clear()
 
 	var month_names = [
@@ -116,7 +116,15 @@ var report_templates = [
 	}
 ]
 
+# Audio player
+var audio_player: AudioStreamPlayer
 
+func _ready():
+	audio_player = AudioStreamPlayer.new()
+	add_child(audio_player)
+	audio_player.autoplay = false
+	
+	
 # Build separate pools only for who/where/when
 func get_field_pool(field: String) -> Array:
 	var pool = []
@@ -216,3 +224,32 @@ func get_random_student_reports(correct_count: int) -> void:
 func reset_report_tracking():
 	current_student_report = null
 	used_reports = []
+	
+	
+var gamescene_songs = {
+	"music1" :"res://assets/music/music1.mp3",
+	"music2" :"res://assets/music/music2.mp3",
+	"music3": "res://assets/music/music3.mp3"
+}
+
+var current_song_index: int = 1  # Track which song is selected globally
+var current_note_name: String = "red"  # Track which note is selected
+
+func _set_gamescene_song(index = 1):
+	var song_name = "music%d" % index
+	if gamescene_songs.has(song_name):
+		var music_path = gamescene_songs[song_name]
+		var audio_stream = load(music_path)
+		if audio_stream:
+			audio_stream.loop = true
+			audio_player.stream = audio_stream
+			audio_player.play()
+			current_song_index = index  # Update global tracking
+		else:
+			print("Failed to load audio:", music_path)
+	else:
+		print("Song not found:", song_name)
+
+func stop_music():
+	if audio_player:
+		audio_player.stop()
