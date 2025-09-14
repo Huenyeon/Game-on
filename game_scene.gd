@@ -307,23 +307,17 @@ func _unhandled_input(event: InputEvent) -> void:
 				Global.stamp_ui_opened = false
 		# Only close paper if stamp options are NOT visible, not dragging, and no pen interaction
 		elif paper_open and not dragging_check and not dragging_x and not pen_interaction_active:
-			# Check if click is on exempted elements (pens or upper-left buttons)
-			if _is_click_on_exempted_elements(mouse_pos):
-				# Don't close paper if clicking on exempted elements
-				pass
-			else:
-				var tex_size = paper.texture.get_size()*paper.scale
-				var top_left = paper.global_position - (tex_size * 0.5)
-				var paper_rect = Rect2(top_left, tex_size)
+			var tex_size = paper.texture.get_size()*paper.scale
+			var top_left = paper.global_position - (tex_size * 0.5)
+			var paper_rect = Rect2(top_left, tex_size)
+			
+			if not paper_rect.has_point(mouse_pos):
+				paper_open = false
+				paper.visible = false
+				student_paper.visible = true
 				
-				if not paper_rect.has_point(mouse_pos):
-					# Don't play cursor effect here - this was causing it to play everywhere
-					paper_open = false
-					paper.visible = false
-					student_paper.visible = true
-					
-					# Force release any active pens when closing paper
-					close_pen_interactions_if_open()
+				# Force release any active pens when closing paper
+				close_pen_interactions_if_open()
 		
 		# Handle checklist closing when clicking outside
 		if checklist_ui.visible:
@@ -562,17 +556,23 @@ func _on_x_option_input_event(_viewport: Node, event: InputEvent, _shape_idx: in
 		
 func _on_game_timer_timeout():
 	timer_label.text = "0"
-	# Action when time runs out
 	print("Time’s up! Game over.")
-	# Example: hide everything or end scene
+
+	$BellSound.play()
+
+	await get_tree().create_timer(3.0).timeout
+
+	# End scene
 	paper.visible = false
 	student_paper.visible = false
 	checklist_ui.visible = false
 
-	# Show end_result scene with tex_bad (denied)
 	Global.last_stamp = null
 	Global.end_result_inverted = false
 	get_tree().change_scene_to_file("res://scene/end_result.tscn")
+
+	
+
 
 func _initialize_timer_label() -> void:
 	# Show the full timer duration when dialog is still playing

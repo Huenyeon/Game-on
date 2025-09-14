@@ -44,9 +44,7 @@ func _ready() -> void:
 		info_label.text = "Great job scanning the paper!"
 	else:
 		result_sprite.texture = tex_bad
-		info_label.text = "It looks like the scan didn’t come out quite right."
-	# Ensure the TextureRect uses centered scaling (scene already uses CenterContainer + stretch mode)
-	continue_btn.pressed.connect(_on_continue_pressed)
+		info_label.text = "It looks like the scan didn't come out quite right."
 
 func _on_continue_pressed() -> void:
 	# Clear last stamp
@@ -55,6 +53,16 @@ func _on_continue_pressed() -> void:
 
 	# Clear current student report
 	Global.current_student_report = null
-	# Return to game scene
+	# Return to main menu
+	get_tree().change_scene_to_file("res://scene/menu.tscn")
+
+func _on_back_to_menu_pressed() -> void:
+	# Clear last stamp
+	if "last_stamp" in Global:
+		Global.last_stamp = null
+
+	# Clear current student report
+	Global.current_student_report = null
+	# Return to main menu
 	get_tree().change_scene_to_file("res://scene/menu.tscn")
 	

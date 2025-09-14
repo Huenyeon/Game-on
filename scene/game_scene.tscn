@@ -1,6 +1,6 @@
 [gd_scene load_steps=44 format=3 uid="uid://eg8aervxc26f"]
 
-[ext_resource type="Script" uid="uid://dlscbv2kk783m" path="res://game_scene.gd" id="1_3ad2y"]
+[ext_resource type="Script" uid="uid://cm65eotx5tk1d" path="res://game_scene.gd" id="1_3ad2y"]
 [ext_resource type="Texture2D" uid="uid://buwqopulf0mh3" path="res://assets/1.png" id="2_4l13n"]
 [ext_resource type="Texture2D" uid="uid://cofk5ejitq6m8" path="res://assets/images/table2.png" id="3_foe2p"]
 [ext_resource type="Texture2D" uid="uid://d1gfqp0jlskxw" path="res://assets/images/image-removebg-preview.png" id="4_vuqbi"]
@@ -23,7 +23,8 @@
 [ext_resource type="Script" uid="uid://dnweuqa3mr35m" path="res://scripts/timer_background.gd" id="20_8q4eb"]
 [ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="21_ao44p"]
 [ext_resource type="Script" uid="uid://c5w3ycneilwj3" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
-[ext_resource type="Texture2D" uid="uid://ceht08ul7uta0" path="res://assets/UI_TravelBook_Frame01a.png" id="24_4l13n"]
+[ext_resource type="AudioStream" uid="uid://bcow54prekybg" path="res://assets/bell-sound.mp3" id="24_4l13n"]
+[ext_resource type="Texture2D" uid="uid://ceht08ul7uta0" path="res://assets/UI_TravelBook_Frame01a.png" id="25_ui_frame"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -212,17 +213,14 @@ texture = ExtResource("8_f3g3v")
 [node name="CheckboxContainer" type="Node2D" parent="ChecklistUI"]
 position = Vector2(302, 55)
 
-[node name="Checkbox" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
-position = Vector2(138, 145)
-
 [node name="Checkbox2" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
-position = Vector2(137, 196)
+position = Vector2(139, 144)
 
 [node name="Checkbox3" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
-position = Vector2(138, 245)
+position = Vector2(139, 215)
 
 [node name="Checkbox4" parent="ChecklistUI/CheckboxContainer" instance=ExtResource("10_w3nls")]
-position = Vector2(139, 295)
+position = Vector2(139, 289)
 
 [node name="stamp" type="Sprite2D" parent="."]
 position = Vector2(1048, 522)
@@ -358,7 +356,7 @@ script = ExtResource("22_sw306")
 [node name="Sprite2D" type="Sprite2D" parent="JinuDialogue"]
 position = Vector2(187.25, 38)
 scale = Vector2(5.99194, 6.42858)
-texture = ExtResource("24_4l13n")
+texture = ExtResource("25_ui_frame")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="JinuDialogue"]
 layout_mode = 0
@@ -374,6 +372,10 @@ theme_override_fonts/normal_font = ExtResource("21_ao44p")
 theme_override_font_sizes/normal_font_size = 18
 text = "Good morning, Teacher. Here's my assignment  that you assigned for us."
 vertical_alignment = 1
+
+[node name="BellSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("24_4l13n")
+volume_db = 9.267
 
 [connection signal="input_event" from="student paper/Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="input_event" from="checklist_icon/Area2D" to="." method="_on_checklist_icon_input_event"]
