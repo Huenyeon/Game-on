@@ -9,22 +9,20 @@
 [ext_resource type="FontFile" uid="uid://bgqsebsgxpqwu" path="res://font/Baby Doll.otf" id="6_yyfvs"]
 [ext_resource type="Texture2D" uid="uid://bucoh2t1utumm" path="res://assets/images/paper on table.png" id="7_54f4s"]
 [ext_resource type="Texture2D" uid="uid://cqdtxbudc0te1" path="res://assets/checklist/checklist.png" id="8_f3g3v"]
-[ext_resource type="Script" uid="uid://ggqpl0gwc27k" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
+[ext_resource type="Script" uid="uid://jnyxl67mtccs" path="res://scripts/clipboard_ui.gd" id="9_c8mr4"]
 [ext_resource type="PackedScene" uid="uid://0tni2b678qcb" path="res://scene/Checkbox.tscn" id="10_w3nls"]
 [ext_resource type="PackedScene" uid="uid://c8fb7rgbb8ya3" path="res://scene/desktop.tscn" id="11_desktop"]
 [ext_resource type="Texture2D" uid="uid://bymbirs7ujrpj" path="res://assets/Stamp.png" id="12_stamp"]
 [ext_resource type="Texture2D" uid="uid://df1dgi1cosbfu" path="res://assets/Stamp checkbox.png" id="13_silwv"]
 [ext_resource type="Texture2D" uid="uid://cp1bjprkw0ia3" path="res://assets/Stamp x.png" id="14_stamp_x"]
-[ext_resource type="Script" uid="uid://btryuyasalm7d" path="res://scripts/red_on_game.gd" id="15_nf1ce"]
-[ext_resource type="Script" uid="uid://dp2qsc03apjjx" path="res://scripts/all_pens.gd" id="16_vynom"]
+[ext_resource type="Script" uid="uid://b1mjgctjgc72g" path="res://scripts/red_on_game.gd" id="15_nf1ce"]
+[ext_resource type="Script" uid="uid://bm2ytj15eafqj" path="res://scripts/all_pens.gd" id="16_vynom"]
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="17_vynom"]
-[ext_resource type="Script" uid="uid://bctbh1k3qt3q7" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
+[ext_resource type="Script" uid="uid://uh251rcetris" path="res://scripts/green_on_game.gd" id="18_pxt5h"]
 [ext_resource type="PackedScene" uid="uid://bhdg1ewgngify" path="res://scene/game_controls.tscn" id="19_controls"]
-[ext_resource type="Script" uid="uid://ocl4cyolodu8" path="res://scripts/timer_background.gd" id="20_8q4eb"]
-[ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="21_ao44p"]
-[ext_resource type="Script" uid="uid://dcs4evvv8mmfj" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
 [ext_resource type="Script" uid="uid://bsce1yhtd568d" path="res://scripts/timer_background.gd" id="20_8q4eb"]
-[ext_resource type="Script" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
+[ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="21_ao44p"]
+[ext_resource type="Script" uid="uid://b15aqysrb7gsb" path="res://scripts/jinu_dialogue.gd" id="22_sw306"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qvnrh"]
 distance = -265.0
@@ -139,7 +137,6 @@ scale = Vector2(1.22656, 0.549154)
 texture = ExtResource("3_foe2p")
 
 [node name="paper" type="Sprite2D" parent="."]
-visible = false
 z_index = 100
 position = Vector2(533.5, 333.5)
 scale = Vector2(3.83654, 3.85714)
@@ -173,7 +170,6 @@ texture = ExtResource("7_54f4s")
 position = Vector2(0.04399, -8.99287)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="student paper/Area2D"]
-position = Vector2(-23.0503, -17.6372)
 position = Vector2(-3.49223, 6.47332)
 shape = SubResource("RectangleShape2D_famsg")
 
@@ -267,8 +263,6 @@ scale = Vector2(13.3333, 11.407)
 
 [node name="CheckOption" type="Sprite2D" parent="stamp/StampOptions"]
 z_index = 201
-position = Vector2(-2.96908, -285.559)
-scale = Vector2(0.0521972, 0.0682899)
 position = Vector2(-3.93693, -373.863)
 scale = Vector2(0.0852962, 0.10012)
 texture = ExtResource("13_silwv")
