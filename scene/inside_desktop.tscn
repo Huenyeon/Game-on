@@ -1,7 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://c7trr7x0cru6m"]
 
 [ext_resource type="Script" uid="uid://6axrely6bisx" path="res://scripts/inside_desktop.gd" id="1_obpd4"]
-[ext_resource type="Script" uid="uid://b3tdcp2wwpi8e" path="res://scripts/credible.gd" id="7_843rd"]
+[ext_resource type="Script" uid="uid://lsblqlhw5i5q" path="res://scripts/credible.gd" id="7_843rd"]
 [ext_resource type="Texture2D" uid="uid://c2axt3tnw41xh" path="res://assets/desktop/publisher-card1.png" id="8_cyjqy"]
 [ext_resource type="Texture2D" uid="uid://cde4eyvixpuke" path="res://assets/desktop/publisher-card2.png" id="9_auwcg"]
 [ext_resource type="Texture2D" uid="uid://bsmn505bdr1fb" path="res://assets/desktop/publisher-card3.png" id="10_14kj4"]
@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b3v3vtewbplm1" path="res://assets/desktop/muscify_bg_big.png" id="14_ug3hc"]
 [ext_resource type="Texture2D" uid="uid://cotk8h8ne3biq" path="res://assets/desktop/Browser.png" id="15_2flab"]
 [ext_resource type="Texture2D" uid="uid://brxfhd2u44swr" path="res://assets/desktop/red_note1.png" id="15_843rd"]
-[ext_resource type="ButtonGroup" uid="uid://bycsus5exwsyj" path="res://scripts/site.tres" id="15_cyjqy"]
+[ext_resource type="ButtonGroup" path="res://scripts/site.tres" id="15_cyjqy"]
 [ext_resource type="Texture2D" uid="uid://cf8wuyu0b0cyr" path="res://assets/desktop/close_icon_site.png" id="15_pwwv0"]
 [ext_resource type="Texture2D" uid="uid://bdfyx4rnqtelp" path="res://assets/desktop/icon_site_not_active1.png" id="16_auwcg"]
 [ext_resource type="Texture2D" uid="uid://im36tscugil" path="res://assets/desktop/blue_note1.png" id="16_pwwv0"]
@@ -258,6 +258,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="RedNote1" type="TextureButton" parent="MuscifyControls"]
+layout_mode = 0
 offset_left = 105.0
 offset_top = 233.0
 offset_right = 189.0
@@ -276,6 +277,7 @@ mouse_filter = 2
 color = Color(0.258824, 0.278431, 0.278431, 0.8)
 
 [node name="BlueNote1" type="TextureButton" parent="MuscifyControls"]
+layout_mode = 0
 offset_left = 223.0
 offset_top = 234.0
 offset_right = 307.0
@@ -294,6 +296,7 @@ mouse_filter = 2
 color = Color(0.321569, 0.321569, 0.321569, 0)
 
 [node name="VioletNote1" type="TextureButton" parent="MuscifyControls"]
+layout_mode = 0
 offset_left = 343.0
 offset_top = 233.0
 offset_right = 427.0
@@ -307,6 +310,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 color = Color(0.321569, 0.321569, 0.321569, 0)
 
