@@ -183,6 +183,7 @@ func _set_paper_text_from_report(report) -> void:
 		return
 
 	var report_text = "[b][font_size=50]%s[/font_size][/b]\n\n" % report["headline"]
+	var report_text = "[b][font_size=50]%s[/font_size][/b]\n\n" % report["headline"]
 	var highlighted_body = "%s %s %s on %s %s." % [
 		"[color=F25907][u]" + report["who"] + "[/u][/color]",
 		report["what"],
@@ -489,6 +490,7 @@ func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
 	if paper.visible and not student_paper.visible:
 		stamped_report = chosen_report1
 
+
 	if stamped_report != null and not stamped_papers.has(stamped_report):
 		stamped_papers.append(stamped_report)
 		stamped_papers_count += 1
@@ -511,6 +513,7 @@ func _place_stamp(tex: Texture2D, global_pos: Vector2, scale: Vector2) -> void:
 		# Hide all UI
 		paper.visible = false
 		student_paper.visible = false
+
 		checklist_ui.visible = false
 		# Set result and go to end scene
 		if correct_stamps_count >= 1:
