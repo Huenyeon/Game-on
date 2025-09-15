@@ -6,7 +6,7 @@ extends Node2D
 
 @export var tex_ok: Texture2D = preload("res://assets/images/Win.png")
 @export var tex_bad: Texture2D = preload("res://assets/images/Lose.png")
-@export var result_scale: float = 0.25
+@export var result_scale: float = 0.3
 
 func _ready() -> void:
 	# Stop background music for end scene
