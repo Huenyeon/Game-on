@@ -6,14 +6,22 @@ extends Node2D
 
 @export var tex_ok: Texture2D = preload("res://assets/images/Win.png")
 @export var tex_bad: Texture2D = preload("res://assets/images/Lose.png")
-@export var result_scale: float = 0.3
+@export var result_scale: float = 0.25
+@export var target_result_height: float = 300.0
+@export var match_to_lose_size: bool = true
+@export var reference_scale: float = 1.0
+@export var win_position_offset: Vector2 = Vector2(0, -20)
+
+var _base_result_position: Vector2
 
 func _ready() -> void:
 	# Stop background music for end scene
 	AudioManager.stop_background_music()
 	
-	# Apply desired scale to the result image
+	# Ensure consistent centering and baseline scale for the result image
+	result_sprite.centered = true
 	result_sprite.scale = Vector2.ONE * result_scale
+	_base_result_position = result_sprite.position
 	# Safe read of the last stamp info
 	var info = null
 	if "last_stamp" in Global:
@@ -43,11 +51,36 @@ func _ready() -> void:
 
 	# Show result image and message
 	if correct_decision:
-		result_sprite.texture = tex_ok
+		_apply_result_texture(tex_ok)
 		info_label.text = "Great job scanning the paper!"
 	else:
-		result_sprite.texture = tex_bad
+		_apply_result_texture(tex_bad)
 		info_label.text = "It looks like the scan didn't come out quite right."
+
+func _apply_result_texture(texture: Texture2D) -> void:
+	# Apply texture and normalize its on-screen size so Win/Lose appear identically positioned and sized
+	result_sprite.texture = texture
+	if texture == null:
+		return
+	var tex_size: Vector2 = texture.get_size()
+	if tex_size.y <= 0.0:
+		return
+	# Determine target height: either fixed or based on Lose image to match sizes
+	var desired_height: float = target_result_height
+	if match_to_lose_size and tex_bad != null:
+		var lose_h := tex_bad.get_size().y
+		if lose_h > 0.0:
+			desired_height = lose_h * reference_scale
+	# Compute scale to reach the target height (maintains aspect ratio), then apply user multiplier
+	var scale_factor: float = desired_height / tex_size.y
+	var final_scale: float = scale_factor * result_scale
+	result_sprite.scale = Vector2.ONE * final_scale
+
+	# Apply per-result positional offset: move only Win upward, keep Lose at base
+	if texture == tex_ok:
+		result_sprite.position = _base_result_position + win_position_offset
+	else:
+		result_sprite.position = _base_result_position
 
 func _on_continue_pressed() -> void:
 	# Clear last stamp
