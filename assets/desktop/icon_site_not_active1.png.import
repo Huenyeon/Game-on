@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fha4wlviv6ti"
-path="res://.godot/imported/UI_TravelBook_SpritesheetInfo01a.png-90eaca0beec8f25479fb3be72145b2e0.ctex"
+uid="uid://bdfyx4rnqtelp"
+path="res://.godot/imported/icon_site_not_active1.png-493e5f66c2ad0b669909628c810b36c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/UI_TravelBook_SpritesheetInfo01a.png"
-dest_files=["res://.godot/imported/UI_TravelBook_SpritesheetInfo01a.png-90eaca0beec8f25479fb3be72145b2e0.ctex"]
+source_file="res://assets/desktop/icon_site_not_active1.png"
+dest_files=["res://.godot/imported/icon_site_not_active1.png-493e5f66c2ad0b669909628c810b36c0.ctex"]
 
 [params]
 

@@ -1,52 +1,195 @@
-[gd_scene load_steps=15 format=3 uid="uid://c7trr7x0cru6m"]
+[gd_scene load_steps=26 format=3 uid="uid://c7trr7x0cru6m"]
 
 [ext_resource type="Script" uid="uid://6axrely6bisx" path="res://scripts/inside_desktop.gd" id="1_obpd4"]
-[ext_resource type="Texture2D" uid="uid://byd0sq4jsjdau" path="res://assets/desktop/websitekono.png" id="2_ofnyq"]
-[ext_resource type="ButtonGroup" uid="uid://bn5loh716mh40" path="res://assets/publishers-news.tres" id="3_ae7f0"]
-[ext_resource type="Texture2D" uid="uid://d381n4dn4rvvn" path="res://assets/desktop/publishers-unclicked.png" id="4_2flab"]
-[ext_resource type="Texture2D" uid="uid://chhhfieeu03u3" path="res://assets/desktop/publishers-clicked.png" id="5_ug3hc"]
-[ext_resource type="Texture2D" uid="uid://4snvctsmlgtj" path="res://assets/desktop/news-unclicked-updated.png" id="6_843rd"]
-[ext_resource type="Texture2D" uid="uid://dj17kxhrauq5b" path="res://assets/desktop/news-clicked-upadated.png" id="7_pwwv0"]
+[ext_resource type="Script" uid="uid://b3tdcp2wwpi8e" path="res://scripts/credible.gd" id="7_843rd"]
 [ext_resource type="Texture2D" uid="uid://c2axt3tnw41xh" path="res://assets/desktop/publisher-card1.png" id="8_cyjqy"]
 [ext_resource type="Texture2D" uid="uid://cde4eyvixpuke" path="res://assets/desktop/publisher-card2.png" id="9_auwcg"]
 [ext_resource type="Texture2D" uid="uid://bsmn505bdr1fb" path="res://assets/desktop/publisher-card3.png" id="10_14kj4"]
 [ext_resource type="Texture2D" uid="uid://cvm2dcudf4h0m" path="res://assets/desktop/news-cover1.png" id="11_hv70y"]
 [ext_resource type="Texture2D" uid="uid://bx1skw2tj7u40" path="res://assets/desktop/news-cover2.png" id="12_pl64k"]
 [ext_resource type="Texture2D" uid="uid://bps66c50njl1r" path="res://assets/desktop/news-cover3.png" id="13_lkogr"]
-[ext_resource type="Script" uid="uid://dfa6gw0eeiahd" path="res://scripts/news_details.gd" id="14_ofnyq"]
+[ext_resource type="Texture2D" uid="uid://jsde6h1xmb2c" path="res://assets/desktop/Carmine N Friends Real(2080 x 1080 px)-export.png" id="14_pwwv0"]
+[ext_resource type="Texture2D" uid="uid://b3v3vtewbplm1" path="res://assets/desktop/muscify_bg_big.png" id="14_ug3hc"]
+[ext_resource type="Texture2D" uid="uid://cotk8h8ne3biq" path="res://assets/desktop/Browser.png" id="15_2flab"]
+[ext_resource type="Texture2D" uid="uid://brxfhd2u44swr" path="res://assets/desktop/red_note1.png" id="15_843rd"]
+[ext_resource type="ButtonGroup" uid="uid://bycsus5exwsyj" path="res://scripts/site.tres" id="15_cyjqy"]
+[ext_resource type="Texture2D" uid="uid://cf8wuyu0b0cyr" path="res://assets/desktop/close_icon_site.png" id="15_pwwv0"]
+[ext_resource type="Texture2D" uid="uid://bdfyx4rnqtelp" path="res://assets/desktop/icon_site_not_active1.png" id="16_auwcg"]
+[ext_resource type="Texture2D" uid="uid://im36tscugil" path="res://assets/desktop/blue_note1.png" id="16_pwwv0"]
+[ext_resource type="Texture2D" uid="uid://dn2thi8wvlmen" path="res://assets/desktop/icon_site_not.png" id="17_14kj4"]
+[ext_resource type="Texture2D" uid="uid://cqou2s5qs278p" path="res://assets/desktop/violet_note.png" id="17_cyjqy"]
+[ext_resource type="Texture2D" uid="uid://ccrmyrqar166f" path="res://assets/desktop/song_icon_animated_final.png" id="19_pwwv0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cyjqy"]
+atlas = ExtResource("19_pwwv0")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_auwcg"]
+atlas = ExtResource("19_pwwv0")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14kj4"]
+atlas = ExtResource("19_pwwv0")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hv70y"]
+atlas = ExtResource("19_pwwv0")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pl64k"]
+atlas = ExtResource("19_pwwv0")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lkogr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cyjqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_auwcg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14kj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hv70y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pl64k")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
 
 [node name="InsideDesktop" type="Node2D"]
 z_index = 500
 script = ExtResource("1_obpd4")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_left = -85.0
-offset_top = -193.0
-offset_right = 1234.0
-offset_bottom = 887.0
-texture = ExtResource("2_ofnyq")
+[node name="CarmineNFriendsReal(2080X1080Px)-export" type="Sprite2D" parent="."]
+position = Vector2(577, 327)
+scale = Vector2(0.556731, 0.607407)
+texture = ExtResource("14_pwwv0")
 
-[node name="PublishersButton" type="TextureButton" parent="."]
-offset_left = 241.0
-offset_top = -84.0
-offset_right = 341.0
-offset_bottom = 16.0
-scale = Vector2(4, 4)
+[node name="News" type="TextureButton" parent="."]
+offset_left = 165.0
+offset_right = 429.0
+offset_bottom = 66.0
 toggle_mode = true
-button_group = ExtResource("3_ae7f0")
-texture_normal = ExtResource("4_2flab")
-texture_pressed = ExtResource("5_ug3hc")
+button_mask = 7
+button_group = ExtResource("15_cyjqy")
+texture_normal = ExtResource("16_auwcg")
+texture_pressed = ExtResource("17_14kj4")
+stretch_mode = 0
 
-[node name="NewsButton" type="TextureButton" parent="."]
-offset_left = -5.0
-offset_top = -99.0
-offset_right = 95.0
-offset_bottom = 1.0
-scale = Vector2(4, 4)
+[node name="Browser" type="Sprite2D" parent="News"]
+position = Vector2(52, 32)
+scale = Vector2(0.355233, 0.341222)
+texture = ExtResource("15_2flab")
+
+[node name="Credible" type="Label" parent="."]
+offset_left = 234.0
+offset_top = 23.0
+offset_right = 454.0
+offset_bottom = 59.0
+scale = Vector2(0.7, 0.7)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Reliable News.com"
+script = ExtResource("7_843rd")
+
+[node name="Muscify2" type="TextureButton" parent="."]
+offset_left = 427.0
+offset_top = -1.0
+offset_right = 640.0
+offset_bottom = 65.0
 toggle_mode = true
-button_group = ExtResource("3_ae7f0")
-texture_normal = ExtResource("6_843rd")
-texture_pressed = ExtResource("7_pwwv0")
+button_mask = 7
+button_group = ExtResource("15_cyjqy")
+texture_normal = ExtResource("16_auwcg")
+texture_pressed = ExtResource("17_14kj4")
+stretch_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Muscify2"]
+position = Vector2(51, 34)
+scale = Vector2(0.373063, 0.373063)
+sprite_frames = SubResource("SpriteFrames_lkogr")
+animation = &"new_animation"
+autoplay = "new_animation"
+frame_progress = 0.432366
+
+[node name="Muscify" type="Label" parent="."]
+anchors_preset = -1
+anchor_right = 0.072
+offset_left = 493.0
+offset_top = 22.0
+offset_right = 638.0
+offset_bottom = 56.0
+scale = Vector2(0.7, 0.7)
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Muscify.com"
+
+[node name="NewsControl" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 36.0
+offset_top = 23.0
+offset_right = 1124.0
+offset_bottom = 609.0
+
+[node name="news5" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = 573.0
+offset_top = 90.0
+offset_right = 688.0
+offset_bottom = 205.0
+scale = Vector2(2.5, 2.215)
+texture_normal = ExtResource("11_hv70y")
+stretch_mode = 0
+
+[node name="news4" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = 222.0
+offset_top = 292.0
+offset_right = 322.0
+offset_bottom = 392.0
+scale = Vector2(3.03, 2.66)
+texture_normal = ExtResource("12_pl64k")
+stretch_mode = 0
+
+[node name="news2" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = -18.0
+offset_top = 292.0
+offset_right = 82.0
+offset_bottom = 392.0
+scale = Vector2(3.03, 2.685)
+texture_normal = ExtResource("12_pl64k")
+stretch_mode = 0
+
+[node name="news1" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = 788.0
+offset_top = 90.0
+offset_right = 903.0
+offset_bottom = 205.0
+scale = Vector2(2.522, 2.215)
+texture_normal = ExtResource("11_hv70y")
+stretch_mode = 0
+
+[node name="news3" type="TextureButton" parent="NewsControl"]
+layout_mode = 0
+offset_left = 396.0
+offset_top = 292.0
+offset_right = 515.0
+offset_bottom = 411.0
+scale = Vector2(6.49, 2.25)
+texture_normal = ExtResource("13_lkogr")
+stretch_mode = 0
 
 [node name="PublishersContent" type="Control" parent="."]
 visible = false
@@ -87,236 +230,89 @@ scale = Vector2(4, 4)
 texture_normal = ExtResource("10_14kj4")
 metadata/_edit_group_ = true
 
-[node name="NewsContent" type="Control" parent="."]
-visible = false
+[node name="Button" type="TextureButton" parent="."]
+offset_left = 1053.0
+offset_top = 40.0
+offset_right = 1109.0
+offset_bottom = 103.0
+texture_normal = ExtResource("15_pwwv0")
+stretch_mode = 0
+
+[node name="MuscifyBgBig" type="Sprite2D" parent="."]
+position = Vector2(543.25, 351.25)
+scale = Vector2(5.5075, 4.655)
+texture = ExtResource("14_ug3hc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(857, 320)
+scale = Vector2(4.07153, 3.78058)
+sprite_frames = SubResource("SpriteFrames_lkogr")
+animation = &"new_animation"
+autoplay = "new_animation"
+frame_progress = 0.432366
+
+[node name="MuscifyControls" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -32.0
-offset_top = -149.0
-offset_right = 336.0
-offset_bottom = -109.0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="TextureButton" type="TextureButton" parent="NewsContent"]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 333.0
-offset_right = 112.0
-offset_bottom = 373.0
-scale = Vector2(4, 4)
-texture_normal = ExtResource("11_hv70y")
-metadata/_edit_group_ = true
+[node name="RedNote1" type="TextureButton" parent="MuscifyControls"]
+offset_left = 105.0
+offset_top = 233.0
+offset_right = 189.0
+offset_bottom = 322.0
+texture_normal = ExtResource("15_843rd")
 
-[node name="TextureButton2" type="TextureButton" parent="NewsContent"]
-layout_mode = 0
-offset_left = 412.0
-offset_top = 313.0
-offset_right = 512.0
-offset_bottom = 413.0
-scale = Vector2(4, 4)
-texture_normal = ExtResource("12_pl64k")
-metadata/_edit_group_ = true
+[node name="ColorRect" type="ColorRect" parent="MuscifyControls/RedNote1"]
+modulate = Color(0.321569, 0.321569, 0.321569, 0.454902)
+self_modulate = Color(0.298039, 0.321569, 0.321569, 0.454902)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.011
+offset_bottom = 0.0209961
+mouse_filter = 2
+color = Color(0.258824, 0.278431, 0.278431, 0.8)
 
-[node name="TextureButton3" type="TextureButton" parent="NewsContent"]
-layout_mode = 0
-offset_left = 765.0
-offset_top = 313.0
-offset_right = 865.0
-offset_bottom = 413.0
-scale = Vector2(4, 4)
-texture_normal = ExtResource("13_lkogr")
-metadata/_edit_group_ = true
+[node name="BlueNote1" type="TextureButton" parent="MuscifyControls"]
+offset_left = 223.0
+offset_top = 234.0
+offset_right = 307.0
+offset_bottom = 323.0
+texture_normal = ExtResource("16_pwwv0")
 
-[node name="NewsDetails" type="Node2D" parent="."]
-position = Vector2(0, -140)
-script = ExtResource("14_ofnyq")
+[node name="ColorRect" type="ColorRect" parent="MuscifyControls/BlueNote1"]
+modulate = Color(0.321569, 0.321569, 0.321569, 0.454902)
+self_modulate = Color(0.298039, 0.321569, 0.321569, 0.454902)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.989
+offset_bottom = -0.0210037
+mouse_filter = 2
+color = Color(0.321569, 0.321569, 0.321569, 0)
 
-[node name="set1" type="Node2D" parent="NewsDetails"]
+[node name="VioletNote1" type="TextureButton" parent="MuscifyControls"]
+offset_left = 343.0
+offset_top = 233.0
+offset_right = 427.0
+offset_bottom = 322.0
+texture_normal = ExtResource("17_cyjqy")
 
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set1"]
-offset_left = 77.0
-offset_top = 206.0
-offset_right = 1049.0
-offset_bottom = 316.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 40
-text = "SET 1"
-autowrap_mode = 3
+[node name="ColorRect" type="ColorRect" parent="MuscifyControls/VioletNote1"]
+modulate = Color(0.321569, 0.321569, 0.321569, 0.454902)
+self_modulate = Color(0.298039, 0.321569, 0.321569, 0.454902)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.321569, 0.321569, 0.321569, 0)
 
-[node name="BodyLabel" type="Label" parent="NewsDetails/set1"]
-offset_left = 77.0
-offset_top = 357.0
-offset_right = 996.0
-offset_bottom = 510.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set1"]
-offset_left = 77.0
-offset_top = 469.0
-offset_right = 996.0
-offset_bottom = 622.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET1"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set1"]
-offset_left = 641.0
-offset_top = 469.0
-offset_right = 1560.0
-offset_bottom = 622.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="AdditionalInfo" type="Label" parent="NewsDetails/set1"]
-offset_left = 77.0
-offset_top = 564.0
-offset_right = 996.0
-offset_bottom = 717.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="set2" type="Node2D" parent="NewsDetails"]
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set2"]
-offset_left = 77.0
-offset_top = 206.0
-offset_right = 1049.0
-offset_bottom = 316.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 40
-text = "SET2"
-autowrap_mode = 3
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set2"]
-offset_left = 77.0
-offset_top = 357.0
-offset_right = 996.0
-offset_bottom = 510.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET2"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set2"]
-offset_left = 77.0
-offset_top = 469.0
-offset_right = 996.0
-offset_bottom = 622.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET2"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set2"]
-offset_left = 641.0
-offset_top = 469.0
-offset_right = 1560.0
-offset_bottom = 622.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET2"
-autowrap_mode = 3
-
-[node name="AdditionalInfo" type="Label" parent="NewsDetails/set2"]
-offset_left = 77.0
-offset_top = 564.0
-offset_right = 996.0
-offset_bottom = 717.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="set3" type="Node2D" parent="NewsDetails"]
-
-[node name="HeadlineLabel" type="Label" parent="NewsDetails/set3"]
-offset_left = 77.0
-offset_top = 206.0
-offset_right = 1049.0
-offset_bottom = 316.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 0
-theme_override_font_sizes/font_size = 40
-text = "SET3"
-autowrap_mode = 3
-
-[node name="BodyLabel" type="Label" parent="NewsDetails/set3"]
-offset_left = 77.0
-offset_top = 357.0
-offset_right = 996.0
-offset_bottom = 510.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET3"
-autowrap_mode = 3
-
-[node name="PublisherLabel" type="Label" parent="NewsDetails/set3"]
-offset_left = 77.0
-offset_top = 469.0
-offset_right = 996.0
-offset_bottom = 622.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET3"
-autowrap_mode = 3
-
-[node name="DateLabel" type="Label" parent="NewsDetails/set3"]
-offset_left = 641.0
-offset_top = 469.0
-offset_right = 1560.0
-offset_bottom = 622.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET3"
-autowrap_mode = 3
-
-[node name="AdditionalInfo" type="Label" parent="NewsDetails/set3"]
-offset_left = 77.0
-offset_top = 564.0
-offset_right = 996.0
-offset_bottom = 717.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
-text = "SET 1"
-autowrap_mode = 3
-
-[node name="BackButton" type="Button" parent="NewsDetails"]
-z_index = 300
-offset_left = 1071.0
-offset_top = 168.0
-offset_right = 1121.0
-offset_bottom = 199.0
-text = "BACK"
-
-[node name="Button" type="Button" parent="."]
-offset_left = 996.0
-offset_top = 28.0
-offset_right = 1127.0
-offset_bottom = 59.0
-text = "back to desktop"
-
-[connection signal="pressed" from="Button" to="." method="on_pressed_back_to_scene_button"]
+[connection signal="pressed" from="News" to="." method="_on_news_pressed"]
+[connection signal="pressed" from="Muscify2" to="." method="_on_muscify_button_press"]
+[connection signal="pressed" from="Button" to="." method="_on_leave_button_pressed"]
+[connection signal="pressed" from="MuscifyControls/RedNote1" to="." method="_on_RedNote_pressed"]
+[connection signal="pressed" from="MuscifyControls/BlueNote1" to="." method="_on_BlueNote_pressed"]
+[connection signal="pressed" from="MuscifyControls/VioletNote1" to="." method="_on_VioletNote_pressed"]

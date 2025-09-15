@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddjqukaafpreg"
-path="res://.godot/imported/UI_TravelBook_Spritesheet01a.png-eb880413c0bdbdfd0523f26470b907b0.ctex"
+uid="uid://du8fufqd18lm2"
+path="res://.godot/imported/News_window.png-bbae5f303828a167154506d3da6d5594.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/UI_TravelBook_Spritesheet01a.png"
-dest_files=["res://.godot/imported/UI_TravelBook_Spritesheet01a.png-eb880413c0bdbdfd0523f26470b907b0.ctex"]
+source_file="res://assets/desktop/News_window.png"
+dest_files=["res://.godot/imported/News_window.png-bbae5f303828a167154506d3da6d5594.ctex"]
 
 [params]
 

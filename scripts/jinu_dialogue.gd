@@ -4,6 +4,8 @@ extends Panel
 @export var typing_speed: float = 0.03  # seconds per character
 @export var hide_after: float = 3.0  # seconds after typing finishes
 
+signal dialog_finished
+
 var full_text: String = ""
 var current_index: int = 0
 var typing_timer: Timer
@@ -32,3 +34,5 @@ func _on_typing_timer_timeout() -> void:
 		await get_tree().create_timer(hide_after).timeout
 		text_box.visible = false
 		visible = false
+		# Emit signal when dialog is completely finished
+		dialog_finished.emit()

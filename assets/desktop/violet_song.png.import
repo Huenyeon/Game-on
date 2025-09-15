@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d33wclm6fdi21"
-path="res://.godot/imported/UI_TravelBookAnimated_Spritesheet01a.png-7fafe96ad859ca74ec0e85737fe123de.ctex"
+uid="uid://dmxtyudhvhure"
+path="res://.godot/imported/violet_song.png-ef4dd208543b71f2ef26061e20da24f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/UI_TravelBookAnimated_Spritesheet01a.png"
-dest_files=["res://.godot/imported/UI_TravelBookAnimated_Spritesheet01a.png-7fafe96ad859ca74ec0e85737fe123de.ctex"]
+source_file="res://assets/desktop/violet_song.png"
+dest_files=["res://.godot/imported/violet_song.png-ef4dd208543b71f2ef26061e20da24f5.ctex"]
 
 [params]
 

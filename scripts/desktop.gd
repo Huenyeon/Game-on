@@ -2,25 +2,81 @@ extends Control
 func _on_desktop_clicked(event):
 	# Only handle left mouse button presses
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		# Only play cursor effect if clicking on the actual desktop area
-		# Check if the click is within the desktop bounds
+		# Check if dialog is still active
+		var game_scene = get_tree().current_scene
+		if game_scene and game_scene.has_method("is_interaction_allowed"):
+			if not game_scene.is_interaction_allowed():
+				print("Cannot interact with desktop - dialog is still playing")
+				return
+		
+		
+		# Check if the click is within the desktop bounds first
 		var desktop_rect = Rect2(Vector2.ZERO, size)
 		var local_pos = get_local_mouse_position()
 		
 		# Only trigger if clicking within the desktop bounds
 		if desktop_rect.has_point(local_pos):
-			# Open inside_desktop as an overlay instead of changing the whole scene
 			var current_scene = get_tree().current_scene
-			if current_scene and not current_scene.has_node("InsideDesktop"):
-				var inside_desktop_scene: PackedScene = load("res://scene/inside_desktop.tscn")
-				var overlay = inside_desktop_scene.instantiate()
-				# Ensure the root node keeps its name for lookup when closing
-				overlay.name = "InsideDesktop"
-				current_scene.add_child(overlay)
-				# Hide top-left controls while desktop is open
+			
+			# Close paper if open when clicking desktop
+			if current_scene and current_scene.has_method("close_paper_if_open"):
+				current_scene.close_paper_if_open()
+			
+			# Close clipboard if open when clicking desktop
+			if current_scene and current_scene.has_method("close_clipboard_if_open"):
+				current_scene.close_clipboard_if_open()
+			
+			# Check if desktop is already open
+			if current_scene and current_scene.has_node("InsideDesktop"):
+				print("Desktop already open - closing desktop overlay")
+				
+				# Force release any active pens when closing desktop
+				if current_scene.has_method("close_pen_interactions_if_open"):
+					current_scene.close_pen_interactions_if_open()
+					print("Pen interactions force released when desktop closed")
+				
+				# Close the desktop overlay
+				var inside_desktop = current_scene.get_node("InsideDesktop")
+				if inside_desktop:
+					inside_desktop.queue_free()
+				
+				# Show game controls again
 				var controls := current_scene.get_node_or_null("CanvasLayer/UIRoot/GameControls")
 				if controls:
-					controls.visible = false
+					controls.visible = true
+					print("Game controls shown")
+				
+				print("Desktop closed")
+			else:
+				print("Desktop clicked - opening desktop overlay")
+				
+				# Close paper, stamp options, and pen interactions when desktop opens
+				if current_scene.has_method("close_paper_if_open"):
+					current_scene.close_paper_if_open()
+					print("Paper closed when desktop opened")
+				if current_scene.has_method("close_stamp_options_if_open"):
+					current_scene.close_stamp_options_if_open()
+					print("Stamp options closed when desktop opened")
+				if current_scene.has_method("close_pen_interactions_if_open"):
+					current_scene.close_pen_interactions_if_open()
+					print("Pen interactions closed when desktop opened")
+				
+				# Open inside_desktop as an overlay instead of changing the whole scene
+				if current_scene and not current_scene.has_node("InsideDesktop"):
+					print("Creating InsideDesktop overlay")
+					var inside_desktop_scene: PackedScene = load("res://scene/inside_desktop.tscn")
+					var overlay = inside_desktop_scene.instantiate()
+					# Ensure the root node keeps its name for lookup when closing
+					overlay.name = "InsideDesktop"
+					current_scene.add_child(overlay)
+					print("InsideDesktop overlay added to scene")
+					# Hide top-left controls while desktop is open
+					var controls := current_scene.get_node_or_null("CanvasLayer/UIRoot/GameControls")
+					if controls:
+						controls.visible = false
+						print("Game controls hidden")
+				else:
+					print("InsideDesktop already exists, not creating new one")
 	# Ignore all other input events - don't trigger cursor effect
 
 

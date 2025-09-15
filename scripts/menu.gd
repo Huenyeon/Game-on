@@ -17,7 +17,7 @@ func _on_start_pressed() -> void:
 	for report in Global.active_reports:
 		print("==========================")
 		print("Publisher:", report["publisher"])
-		print("Date:", report["date"])
+		print("Date:", report["published_date"])
 		print("Headline:", report["headline"])
 		print("Who:", report["who"])
 		print("What:", report["what"])
@@ -31,7 +31,7 @@ func _on_start_pressed() -> void:
 	for student_report in Global.correct_student_report:
 		print("==========================")
 		print("Publisher:", student_report["publisher"])
-		print("Date:", student_report["date"])
+		print("Date:", student_report["published_date"])
 		print("Headline:", student_report["headline"])
 		print("Who:", student_report["who"])
 		print("What:", student_report["what"])

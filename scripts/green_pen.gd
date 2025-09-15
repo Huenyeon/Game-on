@@ -99,6 +99,10 @@ func _input(event):
 					var sprite_global_rect = Rect2(sprite.global_position - actual_size/2, actual_size)
 					
 					if sprite_global_rect.has_point(mouse_pos):
+						# Close all UI elements when pen is clicked
+						if game_scene and game_scene.has_method("close_all_ui_elements"):
+							game_scene.close_all_ui_elements()
+						
 						# Clicked on sprite - snap pen tip to cursor
 						drag_offset = marker.global_position - global_position
 						var new_pen_position = mouse_pos - drag_offset
@@ -129,6 +133,15 @@ func _process(delta):
 	# If drawing, add new point following pen tip
 	if drawing and current_line:
 		current_line.add_point(marker.global_position)
+
+func force_release():
+	# Immediately stop dragging and drawing
+	sticking = false
+	drawing = false
+	set_process(false)
+	if current_line:
+		current_line = null
+	print("Pen force released")
 
 func return_to_start():
 	# Create a simple animation without tween
