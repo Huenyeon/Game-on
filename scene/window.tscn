@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://k0t7f2poeeu3"]
 
-[ext_resource type="Script" path="res://scripts/window_main.gd" id="1_7nq3k"]
+[ext_resource type="Script" uid="uid://ddeoo0s26e8nk" path="res://scripts/window_main.gd" id="1_7nq3k"]
 [ext_resource type="Texture2D" uid="uid://du8fufqd18lm2" path="res://assets/desktop/News_window.png" id="1_8xq32"]
-[ext_resource type="Script" path="res://scripts/news_window.gd" id="2_7nq3k"]
+[ext_resource type="Script" uid="uid://drqkt45idf6ym" path="res://scripts/news_window.gd" id="2_7nq3k"]
 [ext_resource type="Texture2D" uid="uid://b11cqx77l5yx5" path="res://assets/desktop/window_exit_button_normal1.png" id="4_y3h1v"]
 [ext_resource type="Texture2D" uid="uid://qfor651u12b5" path="res://assets/desktop/window_exit_button_press1.png" id="5_go2yb"]
 
