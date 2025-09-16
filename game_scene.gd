@@ -631,6 +631,11 @@ func _check_dialog_visibility():
 		for timer in check_timer:
 			timer.queue_free()
 
+func _exit_tree() -> void:
+	# Ensure game scene-specific music (set via Global._set_gamescene_song) is stopped when leaving
+	if "stop_game_music" in Global:
+		Global.stop_game_music()
+
 # Helper function to check if interactions should be allowed
 func is_interaction_allowed() -> bool:
 	return not dialog_active

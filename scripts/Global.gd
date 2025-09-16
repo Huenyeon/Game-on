@@ -254,3 +254,8 @@ func _set_gamescene_song(index = 1):
 func stop_music():
 	if audio_player.stream and audio_player.stream.resource_path.ends_with("BG_Music.mp3"):
 		audio_player.stop()
+
+# Stop any currently playing game scene music (regardless of which track)
+func stop_game_music():
+	if audio_player and audio_player.playing:
+		audio_player.stop()
