@@ -22,6 +22,8 @@ var last_stamp = null
 var end_result_inverted: bool = false
 
 
+var audio_player: AudioStreamPlayer
+
 # Publishers & Dates are always randomized separately
 var publishers = [
 	"Philippine Bright",
@@ -37,6 +39,12 @@ var publishers = [
 ]
 
 var published_dates = []
+
+
+func _ready():
+	audio_player = AudioStreamPlayer.new()
+	add_child(audio_player)
+	audio_player.autoplay = false
 
 func generate_random_published_dates(count: int = 3):
 	published_dates.clear()
@@ -216,3 +224,33 @@ func get_random_student_reports(correct_count: int) -> void:
 func reset_report_tracking():
 	current_student_report = null
 	used_reports = []
+	
+	
+		
+var gamescene_songs = {
+	"music1" :"res://assets/desktop/music1.mp3",
+	"music2" :"res://assets/desktop/music2.mp3",
+	"music3": "res://assets/desktop/music3.mp3"
+}
+
+var current_song_index: int = 1  # Track which song is selected globally
+var current_note_name: String = "red"  # Track which note is selected
+
+func _set_gamescene_song(index = 1):
+	var song_name = "music%d" % index
+	if gamescene_songs.has(song_name):
+		var music_path = gamescene_songs[song_name]
+		var audio_stream = load(music_path)
+		if audio_stream:
+			audio_stream.loop = true
+			audio_player.stream = audio_stream
+			audio_player.play()
+			current_song_index = index  # Update global tracking
+		else:
+			print("Failed to load audio:", music_path)
+	else:
+		print("Song not found:", song_name)
+
+func stop_music():
+	if audio_player.stream and audio_player.stream.resource_path.ends_with("BG_Music.mp3"):
+		audio_player.stop()
