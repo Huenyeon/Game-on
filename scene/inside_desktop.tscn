@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c7trr7x0cru6m"]
+[gd_scene load_steps=24 format=3 uid="uid://c7trr7x0cru6m"]
 
 [ext_resource type="Script" uid="uid://6axrely6bisx" path="res://scripts/inside_desktop.gd" id="1_obpd4"]
 [ext_resource type="Texture2D" uid="uid://dmn4p2qqh6o55" path="res://assets/desktop/Carmine_N_Friends_Real2080_x_1080_px-export.png" id="2_843rd"]
@@ -10,13 +10,12 @@
 [ext_resource type="Texture2D" uid="uid://b7v255ji6cccf" path="res://assets/desktop/muscify_bg_big.png" id="14_ug3hc"]
 [ext_resource type="Texture2D" uid="uid://xlnygjsl67aq" path="res://assets/desktop/Browser.png" id="15_2flab"]
 [ext_resource type="Texture2D" uid="uid://wxljij2irkl3" path="res://assets/desktop/red_note1.png" id="15_843rd"]
-[ext_resource type="ButtonGroup" uid="uid://cr6ftsd6tj4v3" path="res://scripts/site.tres" id="15_cyjqy"]
+[ext_resource type="ButtonGroup" path="res://scripts/site.tres" id="15_cyjqy"]
 [ext_resource type="Texture2D" uid="uid://cvub1ur28royq" path="res://assets/desktop/icon_site_not_active1.png" id="16_auwcg"]
 [ext_resource type="Texture2D" uid="uid://okowhrske4rs" path="res://assets/desktop/blue_note1.png" id="16_pwwv0"]
 [ext_resource type="Texture2D" uid="uid://csygmx3jc1qer" path="res://assets/desktop/window_exit_button_normal1.png" id="16_ug3hc"]
 [ext_resource type="Texture2D" uid="uid://bsr2p8me1mb2i" path="res://assets/desktop/window_exit_button_press1.png" id="17_843rd"]
 [ext_resource type="Texture2D" uid="uid://dekiurtbthj1" path="res://assets/desktop/violet_note.png" id="17_cyjqy"]
-[ext_resource type="Script" uid="uid://dmarpodpnr45n" path="res://scripts/rich_text_label.gd" id="18_843rd"]
 [ext_resource type="Texture2D" uid="uid://mivw7sd32n80" path="res://assets/desktop/song_icon_animated_final.png" id="19_pwwv0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_auwcg"]
@@ -265,17 +264,6 @@ scale = Vector2(2, 2)
 texture_normal = ExtResource("16_ug3hc")
 texture_pressed = ExtResource("17_843rd")
 metadata/_edit_use_anchors_ = true
-
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-modulate = Color(0, 0, 0, 1)
-offset_left = 2378.0
-offset_top = 632.0
-offset_right = 2418.0
-offset_bottom = 672.0
-theme_override_fonts/normal_font = ExtResource("7_cyjqy")
-theme_override_font_sizes/normal_font_size = 30
-text = "N"
-script = ExtResource("18_843rd")
 
 [connection signal="pressed" from="Muscify" to="." method="_on_muscify_button_press"]
 [connection signal="pressed" from="News" to="." method="_on_news_pressed"]

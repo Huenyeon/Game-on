@@ -18,4 +18,4 @@ func display_reports():
 		set_node.get_node("HeadlineLabel").text = report["headline"]
 		set_node.get_node("BodyLabel").text = report["body"]
 		set_node.get_node("PublisherLabel").text = "Publisher: " + report["publisher"]
-		set_node.get_node("DateLabel").text = "Date: " + report["published_date"]
+		set_node.get_node("DateLabel").text = "Date Published: " + report["published_date"]
