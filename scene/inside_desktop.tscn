@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c7trr7x0cru6m"]
+[gd_scene load_steps=25 format=3 uid="uid://c7trr7x0cru6m"]
 
 [ext_resource type="Script" uid="uid://6axrely6bisx" path="res://scripts/inside_desktop.gd" id="1_obpd4"]
 [ext_resource type="Texture2D" uid="uid://dmn4p2qqh6o55" path="res://assets/desktop/Carmine_N_Friends_Real2080_x_1080_px-export.png" id="2_843rd"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://csygmx3jc1qer" path="res://assets/desktop/window_exit_button_normal1.png" id="16_ug3hc"]
 [ext_resource type="Texture2D" uid="uid://bsr2p8me1mb2i" path="res://assets/desktop/window_exit_button_press1.png" id="17_843rd"]
 [ext_resource type="Texture2D" uid="uid://dekiurtbthj1" path="res://assets/desktop/violet_note.png" id="17_cyjqy"]
+[ext_resource type="Script" uid="uid://dmarpodpnr45n" path="res://scripts/rich_text_label.gd" id="18_843rd"]
 [ext_resource type="Texture2D" uid="uid://mivw7sd32n80" path="res://assets/desktop/song_icon_animated_final.png" id="19_pwwv0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_auwcg"]
@@ -67,8 +68,8 @@ position = Vector2(-1736, -173)
 script = ExtResource("1_obpd4")
 
 [node name="CarmineNFriendsReal2080X1080Px-export" type="Sprite2D" parent="."]
-position = Vector2(2313, 500)
-scale = Vector2(0.559615, 0.616667)
+position = Vector2(2309.5, 501)
+scale = Vector2(0.561058, 0.616667)
 texture = ExtResource("2_843rd")
 
 [node name="Muscify" type="TextureButton" parent="."]
@@ -127,7 +128,6 @@ theme_override_font_sizes/font_size = 16
 text = "Reliable.com"
 
 [node name="NewsControl" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -55.0
@@ -172,8 +172,8 @@ scale = Vector2(5.49, 4.83)
 texture = ExtResource("14_ug3hc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(2606, 516)
-scale = Vector2(4.5, 4.5)
+position = Vector2(2583, 473)
+scale = Vector2(3.24, 3.24)
 sprite_frames = SubResource("SpriteFrames_6egp4")
 autoplay = "default"
 frame_progress = 0.291986
@@ -239,6 +239,8 @@ offset_bottom = 487.0
 texture_normal = ExtResource("17_cyjqy")
 
 [node name="ColorRect" type="ColorRect" parent="MuscifyControls/VioletNote1"]
+modulate = Color(0.258824, 0.278431, 0.278431, 0.431373)
+self_modulate = Color(0.258824, 0.278431, 0.278431, 0.431373)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.093
@@ -263,6 +265,17 @@ scale = Vector2(2, 2)
 texture_normal = ExtResource("16_ug3hc")
 texture_pressed = ExtResource("17_843rd")
 metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 2378.0
+offset_top = 632.0
+offset_right = 2418.0
+offset_bottom = 672.0
+theme_override_fonts/normal_font = ExtResource("7_cyjqy")
+theme_override_font_sizes/normal_font_size = 30
+text = "N"
+script = ExtResource("18_843rd")
 
 [connection signal="pressed" from="Muscify" to="." method="_on_muscify_button_press"]
 [connection signal="pressed" from="News" to="." method="_on_news_pressed"]

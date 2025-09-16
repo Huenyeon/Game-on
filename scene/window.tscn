@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bpp0t2iq86mgk"]
 
-[ext_resource type="Script" uid="uid://cny3ui6gqvv6p" path="res://scripts/window.gd" id="1_7nq3k"]
+[ext_resource type="Script" path="res://scripts/window.gd" id="1_7nq3k"]
 [ext_resource type="Texture2D" uid="uid://o7mie28tc1lf" path="res://assets/desktop/News_window.png" id="1_8xq32"]
 [ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="3_iwxln"]
 [ext_resource type="Texture2D" uid="uid://csygmx3jc1qer" path="res://assets/desktop/window_exit_button_normal1.png" id="4_y3h1v"]
@@ -56,16 +56,18 @@ func _on_button_button_up() -> void:
 	
 func _on_close_window_button_pressed():
 	print(\"Closing window: \", name)
-	queue_free()  # Remove the window from the scene
+	$\"..\".visible = false
 	
 "
 
 [node name="Node2D" type="Node2D"]
+z_index = 510
+scale = Vector2(10, 10)
 script = ExtResource("1_7nq3k")
 
 [node name="NewsWindow" type="Sprite2D" parent="."]
-position = Vector2(143, -4.00003)
-scale = Vector2(6.04, 6.04)
+position = Vector2(21.4, 8.2)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_8xq32")
 centered = false
 script = SubResource("GDScript_y3h1v")
@@ -76,14 +78,15 @@ anchor_left = 0.068
 anchor_top = 0.228
 anchor_right = 0.518
 anchor_bottom = 0.324
-offset_left = -0.83973
-offset_top = -0.945694
-offset_right = 29.1603
-offset_bottom = 5.45431
+offset_left = -0.674172
+offset_top = 1.37219
+offset_right = 29.3259
+offset_bottom = 7.7722
 scale = Vector2(0.6, 0.6)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_iwxln")
 text = "Headline"
+clip_text = true
 
 [node name="BodyLabel" type="RichTextLabel" parent="NewsWindow"]
 anchors_preset = -1
@@ -116,10 +119,10 @@ anchor_left = 0.73
 anchor_top = 0.253
 anchor_right = 0.92
 anchor_bottom = 0.325
-offset_left = 0.675491
-offset_top = -0.299999
-offset_right = 19.6755
-offset_bottom = 6.83334
+offset_left = 1.83443
+offset_top = -1.45893
+offset_right = 20.8344
+offset_bottom = 5.6744
 scale = Vector2(0.5, 0.5)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_iwxln")
@@ -132,10 +135,9 @@ anchor_left = 0.07
 anchor_top = 0.12
 anchor_right = 0.86
 anchor_bottom = 0.21
-offset_left = 0.947025
-offset_top = -0.576153
-offset_right = 0.947021
-offset_bottom = -0.576153
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 1.0
 
 [node name="CloseWindowButton" type="TextureButton" parent="NewsWindow"]
 anchors_preset = -1

@@ -20,13 +20,15 @@ func _ready():
 		if child is TextureButton:
 			child.pressed.connect(_on_news_item_pressed.bind(i))
 			
-	#Global._set_gamescene_song(1)
 
 
 func _on_news_item_pressed(index: int) -> void:
 	# If window already exists, just bring it to front
 	if index in open_windows and is_instance_valid(open_windows[index]):
 		bring_window_to_front(open_windows[index])
+		var existing_window: Node2D = open_windows[index]
+		if !existing_window.visible:
+			existing_window.visible = true
 		return
 
 	# Create new window
@@ -34,10 +36,10 @@ func _on_news_item_pressed(index: int) -> void:
 	
 	# Get the NewsWindow child and fix its position and scale
 	var news_window = new_window.get_node("NewsWindow") as Node2D
-	if news_window:
-		# RESET the problematic position and scale
-		news_window.position = Vector2.ZERO
-		news_window.scale = Vector2.ONE
+	#if news_window:
+		## RESET the problematic position and scale
+		#news_window.position = Vector2.ZERO
+		#news_window.scale = Vector2.ONE
 	
 	# Set up the window with data
 	if new_window.has_method("setup_window"):
@@ -51,9 +53,10 @@ func _on_news_item_pressed(index: int) -> void:
 	
 	# Now that it's in the scene tree, set its global position to the center of the viewport
 	var viewport_size = get_viewport().get_visible_rect().size
-	new_window.global_position = viewport_size / 2
+	new_window.global_position = viewport_size / 4
 	
 	open_windows[index] = new_window
+	
 
 	print("Window spawned at: ", new_window.global_position)
 
@@ -119,11 +122,10 @@ func _activate_note(note_name: String, song_index: int):
 	new_color_rect.color = Color("#424747cc")  
 	current_note_pressed = note_name
 	
-	# Update global song index AND note name separately
+	
 	Global.current_song_index = song_index
 	Global.current_note_name = note_name
-	Global._set_gamescene_song(song_index)  # Only pass the index
-
+	Global._set_gamescene_song(song_index)  
 
 
 
@@ -143,5 +145,4 @@ func on_pressed_back_to_scene_button() -> void:
 		# Close stamp options when desktop is closed
 		if current_scene.has_method("close_stamp_options_if_open"):
 			current_scene.close_stamp_options_if_open()
-	
 	queue_free()
