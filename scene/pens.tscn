@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://du2sua2nvleui"]
 
-[ext_resource type="Script" uid="uid://b4eaekfgqc7xu" path="res://scripts/green_pen.gd" id="1_nd0h0"]
+[ext_resource type="Script" uid="uid://uaav66l77r7n" path="res://scripts/green_pen.gd" id="1_nd0h0"]
 [ext_resource type="Texture2D" uid="uid://s6j2oola4xqf" path="res://assets/pens w holder.png" id="2_nd0h0"]
-[ext_resource type="Script" uid="uid://da3sjnpvhme12" path="res://scripts/red.gd" id="3_nd0h0"]
+[ext_resource type="Script" uid="uid://c64fd4oemuvid" path="res://scripts/red.gd" id="3_nd0h0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4657r"]
 atlas = ExtResource("2_nd0h0")

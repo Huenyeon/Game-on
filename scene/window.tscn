@@ -1,0 +1,157 @@
+[gd_scene load_steps=7 format=3 uid="uid://bpp0t2iq86mgk"]
+
+[ext_resource type="Script" uid="uid://cny3ui6gqvv6p" path="res://scripts/window.gd" id="1_7nq3k"]
+[ext_resource type="Texture2D" uid="uid://o7mie28tc1lf" path="res://assets/desktop/News_window.png" id="1_8xq32"]
+[ext_resource type="FontFile" uid="uid://ch3056mltqymd" path="res://font/VCR_OSD_MONO_1.001.ttf" id="3_iwxln"]
+[ext_resource type="Texture2D" uid="uid://csygmx3jc1qer" path="res://assets/desktop/window_exit_button_normal1.png" id="4_y3h1v"]
+[ext_resource type="Texture2D" uid="uid://bsr2p8me1mb2i" path="res://assets/desktop/window_exit_button_press1.png" id="5_go2yb"]
+
+[sub_resource type="GDScript" id="GDScript_y3h1v"]
+script/source = "extends Sprite2D
+class_name NewsWindow
+
+var dragging = false
+var of = Vector2.ZERO
+
+func _process(delta: float) -> void:
+	if dragging:
+		var new_pos = get_global_mouse_position() - of
+
+		var cam := get_viewport().get_camera_2d()
+		if cam and texture:
+			# Get the camera's actual visible world area
+			var viewport_size = get_viewport().get_visible_rect().size
+			var zoom = cam.zoom
+			var cam_center = cam.global_position
+			
+			# Calculate the camera's world boundaries
+			var cam_world_left = cam_center.x - (viewport_size.x / 2.0) / zoom.x
+			var cam_world_right = cam_center.x + (viewport_size.x / 2.0) / zoom.x
+			var cam_world_top = cam_center.y - (viewport_size.y / 2.0) / zoom.y
+			var cam_world_bottom = cam_center.y + (viewport_size.y / 2.0) / zoom.y
+			
+			var tex_size = texture.get_size()
+			
+			# Clamp position to keep sprite fully visible
+			new_pos.x = clamp(
+				new_pos.x,
+				cam_world_left,  # Can't go past left edge
+				cam_world_right - tex_size.x  # Can't go past right edge
+			)
+
+			new_pos.y = clamp(
+				new_pos.y,
+				cam_world_top,  # Can't go past top edge
+				cam_world_bottom - tex_size.y  # Can't go past bottom edge
+			)
+
+		global_position = new_pos
+
+func _on_button_button_down() -> void:
+	dragging = true
+	of = get_global_mouse_position() - global_position
+
+func _on_button_button_up() -> void:
+	dragging = false
+	
+func _on_close_window_button_pressed():
+	print(\"Closing window: \", name)
+	queue_free()  # Remove the window from the scene
+	
+"
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_7nq3k")
+
+[node name="NewsWindow" type="Sprite2D" parent="."]
+position = Vector2(143, -4.00003)
+scale = Vector2(6.04, 6.04)
+texture = ExtResource("1_8xq32")
+centered = false
+script = SubResource("GDScript_y3h1v")
+
+[node name="HeadlineLabel" type="Label" parent="NewsWindow"]
+anchors_preset = -1
+anchor_left = 0.068
+anchor_top = 0.228
+anchor_right = 0.518
+anchor_bottom = 0.324
+offset_left = -0.83973
+offset_top = -0.945694
+offset_right = 29.1603
+offset_bottom = 5.45431
+scale = Vector2(0.6, 0.6)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_iwxln")
+text = "Headline"
+
+[node name="BodyLabel" type="RichTextLabel" parent="NewsWindow"]
+anchors_preset = -1
+anchor_left = 0.073
+anchor_top = 0.331
+anchor_right = 0.193
+anchor_bottom = 0.4
+offset_left = 0.812586
+offset_top = 0.840401
+offset_right = 28.8126
+offset_bottom = 16.9404
+scale = Vector2(0.3, 0.3)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_iwxln")
+text = "Body"
+
+[node name="PublisherLabel" type="Label" parent="NewsWindow"]
+offset_left = 7.45033
+offset_top = 13.4106
+offset_right = 148.45
+offset_bottom = 36.4106
+scale = Vector2(0.4, 0.4)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_iwxln")
+text = "PusblisherLabel"
+
+[node name="DateLabel" type="Label" parent="NewsWindow"]
+anchors_preset = -1
+anchor_left = 0.73
+anchor_top = 0.253
+anchor_right = 0.92
+anchor_bottom = 0.325
+offset_left = 0.675491
+offset_top = -0.299999
+offset_right = 19.6755
+offset_bottom = 6.83334
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_iwxln")
+text = "Date"
+
+[node name="Button" type="Button" parent="NewsWindow"]
+modulate = Color(1, 1, 1, 0.00392157)
+anchors_preset = -1
+anchor_left = 0.07
+anchor_top = 0.12
+anchor_right = 0.86
+anchor_bottom = 0.21
+offset_left = 0.947025
+offset_top = -0.576153
+offset_right = 0.947021
+offset_bottom = -0.576153
+
+[node name="CloseWindowButton" type="TextureButton" parent="NewsWindow"]
+anchors_preset = -1
+anchor_left = 0.892
+anchor_top = 0.163
+anchor_right = 0.892
+anchor_bottom = 0.163
+offset_left = -2.11391
+offset_top = -2.22715
+offset_right = 18.8861
+offset_bottom = 19.7729
+scale = Vector2(0.2, 0.2)
+texture_normal = ExtResource("4_y3h1v")
+texture_pressed = ExtResource("5_go2yb")
+stretch_mode = 0
+
+[connection signal="button_down" from="NewsWindow/Button" to="NewsWindow" method="_on_button_button_down"]
+[connection signal="button_up" from="NewsWindow/Button" to="NewsWindow" method="_on_button_button_up"]
+[connection signal="pressed" from="NewsWindow/CloseWindowButton" to="NewsWindow" method="_on_close_window_button_pressed"]
