@@ -15,7 +15,7 @@ func setup_window(index: int, main_scene_ref: Node, report_data: Dictionary):
 	$NewsWindow/HeadlineLabel.text = report_data["headline"]
 	$NewsWindow/BodyLabel.text = report_data["body"]
 	$NewsWindow/PublisherLabel.text = "Publisher: " + report_data["publisher"]
-	$NewsWindow/DateLabel.text = "Date Published: " + report_data["published_date"]
+	$NewsWindow/DateLabel.text = "Date: " + report_data["published_date"]
 
 
 func start_dragging(event):
