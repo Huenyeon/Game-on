@@ -49,9 +49,34 @@ var stamped_papers_count := 0
 var correct_stamps_count := 0
 var stamped_papers := [] # To track which papers have been stamped
 
+
+func date_string_to_int(date_str: String) -> int:
+	var months = {
+		"January": 1, "February": 2, "March": 3, "April": 4, "May": 5, "June": 6,
+		"July": 7, "August": 8, "September": 9, "October": 10, "November": 11, "December": 12
+	}
+	var parts = date_str.split(" ")
+	if parts.size() < 3:
+		return 0 # Invalid format
+	var month = months.get(parts[0], 0)
+	var day = int(parts[1].replace(",", ""))
+	var year = int(parts[2])
+	return year * 10000 + month * 100 + day
+	
 # Helper to check if a report is correct
 func _is_report_correct(report: Dictionary) -> bool:
-	return Global.correct_student_report.has(report)
+	#var report_exists = Global.correct_student_report.has(report)
+	#var report_date : String = report["date"]
+	#var published_dates_array = Global.active_reports.map(func(report): return report["published_date"])
+	#var proper_report_date = date_string_to_int(report_date)
+	#
+	#for i in published_dates_array:
+		#var proper_published_date = date_string_to_int(i)
+		#if report_exists and proper_report_date > proper_published_date:
+			#return true
+	#Only return false after checking all dates
+	#return false
+	return Global.correct_student_report.has(report) 
 
 func _ready() -> void:
 	paper.visible = false

@@ -3,7 +3,7 @@ extends Node
 
 
 
-var active_reports: Array = []
+var active_reports: Array[Dictionary] = []
 var correct_student_report: Array = []
 var incorrect_student_report: Array =[]
 
@@ -79,7 +79,7 @@ var report_templates = [
 		"who": "Philippine Congress & Public Works Officials",
 		"what": "implicated in a massive corruption scheme involving billions in flood control funds",
 		"where": "nationwide",
-		"when": "September 12, 2025",
+		"when": "July 20, 2025",
 		"why": "to investigate substandard or non-existent infrastructure funded by public money"
 	},
 	{
@@ -87,7 +87,7 @@ var report_templates = [
 		"who": "Philippine Government & Chinese Officials",
 		"what": "disputed China's plan to designate Scarborough Shoal as a nature preserve",
 		"where": "Scarborough Shoal, South China Sea",
-		"when": "September 12, 2025",
+		"when": "September 1, 2024",
 		"why": "to defend Philippine territorial claims and protect fishermen's rights"
 	},
 	{
@@ -95,7 +95,7 @@ var report_templates = [
 		"who": "Philippine Department of Finance & Korean Government",
 		"what": "suspended funding for the Panay–Guimaras–Negros Bridge project",
 		"where": "Panay, Guimaras, Negros Islands",
-		"when": "September 2025",
+		"when": "August 8, 2025",
 		"why": "due to concerns over potential misuse and corruption amid infrastructure scandals"
 	},
 		{
@@ -103,7 +103,7 @@ var report_templates = [
 		"who": "Elon Musk & Larry Ellison",
 		"what": "Ellison surpassed Musk as the world's richest person due to Oracle's strong earnings",
 		"where": "Global / United States",
-		"when": "September 10, 2025",
+		"when": "March 10, 2025",
 		"why": "because Musk's Tesla stock declined while Ellison's net worth soared"
 	},
 	{
@@ -111,7 +111,7 @@ var report_templates = [
 		"who": "K-pop group HUNTR/X & Maggie Kang",
 		"what": "fight evil using their music in the animated movie 'KPop Demon Hunters'",
 		"where": "South Korea",
-		"when": "September 2025",
+		"when": "December 7, 2024",
 		"why": "due to the film's popularity, merchandise, and chart-topping soundtrack"
 	},
 	{
@@ -119,7 +119,7 @@ var report_templates = [
 		"who": "Manila Fire Department & AI Developers",
 		"what": "responded to a truck 'on fire' that was actually AI-generated",
 		"where": "Parola, Manila",
-		"when": "September 2025",
+		"when": "September 30, 2025",
 		"why": "to highlight dangers of AI-generated misinformation and fake news"
 	}
 ]
