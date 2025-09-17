@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b7v255ji6cccf" path="res://assets/desktop/muscify_bg_big.png" id="14_ug3hc"]
 [ext_resource type="Texture2D" uid="uid://xlnygjsl67aq" path="res://assets/desktop/Browser.png" id="15_2flab"]
 [ext_resource type="Texture2D" uid="uid://wxljij2irkl3" path="res://assets/desktop/red_note1.png" id="15_843rd"]
-[ext_resource type="ButtonGroup" path="res://scripts/site.tres" id="15_cyjqy"]
+[ext_resource type="ButtonGroup" uid="uid://cr6ftsd6tj4v3" path="res://scripts/site.tres" id="15_cyjqy"]
 [ext_resource type="Texture2D" uid="uid://cvub1ur28royq" path="res://assets/desktop/icon_site_not_active1.png" id="16_auwcg"]
 [ext_resource type="Texture2D" uid="uid://okowhrske4rs" path="res://assets/desktop/blue_note1.png" id="16_pwwv0"]
 [ext_resource type="Texture2D" uid="uid://csygmx3jc1qer" path="res://assets/desktop/window_exit_button_normal1.png" id="16_ug3hc"]
