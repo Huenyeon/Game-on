@@ -23,6 +23,7 @@ AudioManager="*res://scripts/audio_manager.gd"
 
 [display]
 
+window/size/mode=2
 window/stretch/mode="canvas_items"
 mouse_cursor/custom_image="uid://vtcq5lvk1t1u"
 

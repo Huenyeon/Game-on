@@ -201,6 +201,7 @@ func _set_paper_text_from_report(report) -> void:
 	
 # Unified function to display paper with report content
 func show_paper_with_report(report_data: Dictionary = {}) -> void:
+
 	# Use provided report data or current student report
 	var report_to_use = report_data if report_data.size() > 0 else Global.current_student_report
 	
@@ -219,7 +220,14 @@ func show_paper_with_report(report_data: Dictionary = {}) -> void:
 		print("Paper opened with no report data")
 	else:
 		# Set the global variable
+		
+		
+		
+		print(all_reports)
+	
 		Global.current_student_report = report_to_use
+		
+		var all_reports = Global.correct_student_report + Global.incorrect_student_report
 		# Use your helper function to display the content
 		_set_paper_text_from_report(Global.current_student_report)
 		print("Paper opened with report: ", report_to_use["headline"])
@@ -278,7 +286,8 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 				available_reports = all_reports
 
 			# Pick this paper’s report once
-			chosen_report1 = available_reports[0]   # or pick index 2 if you want the 3rd slot
+			var random_index = randi() % 3
+			chosen_report1 = available_reports[random_index]   # or pick index 2 if you want the 3rd slot
 			Global.used_reports.append(chosen_report1)
 
 		# Now always use chosen_report1
