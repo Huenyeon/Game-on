@@ -14,6 +14,15 @@ extends Node2D
 
 var _base_result_position: Vector2
 
+func _is_report_match(report_a: Dictionary, report_b: Dictionary) -> bool:
+	if report_a == null or report_b == null:
+		return false
+	var fields = ["publisher", "published_date", "headline", "body"]
+	for field in fields:
+		if report_a.get(field, "") != report_b.get(field, ""):
+			return false
+	return true
+
 func _ready() -> void:
 	# Stop background music for end scene
 	AudioManager.stop_background_music()
@@ -38,7 +47,7 @@ func _ready() -> void:
 	var matched := false
 	if report != null:
 		for r in Global.active_reports:
-			if r.has("headline") and r["headline"] == report.get("headline", ""):
+			if _is_report_match(r, report):
 				matched = true
 				break
 
@@ -46,10 +55,6 @@ func _ready() -> void:
 	var normal_correct := (matched and stamp_type == "approved") or (not matched and stamp_type == "denied")
 	var correct_decision := normal_correct
 	# Apply invert flag if present
-	if "end_result_inverted" in Global and Global.end_result_inverted:
-		correct_decision = not normal_correct
-
-	# Show result image and message
 	if correct_decision:
 		_apply_result_texture(tex_ok)
 		info_label.text = "Great job scanning the paper!"
@@ -101,4 +106,3 @@ func _on_back_to_menu_pressed() -> void:
 	Global.current_student_report = null
 	# Return to main menu
 	get_tree().change_scene_to_file("res://scene/menu.tscn")
-	
