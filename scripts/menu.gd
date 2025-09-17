@@ -47,7 +47,7 @@ func _on_start_pressed() -> void:
 	for student_report in Global.incorrect_student_report:
 		print("==========================")
 		print("Publisher:", student_report["publisher"])
-		print("Date:", student_report["date"])
+		print("Date:", student_report["published_date"])
 		print("Headline:", student_report["headline"])
 		print("Who:", student_report["who"])
 		print("What:", student_report["what"])

@@ -200,7 +200,7 @@ func get_random_student_reports(correct_count: int) -> void:
 		var template = report_templates[i % report_templates.size()]
 		var report = {
 			"publisher": publishers[i % publishers.size()],
-			"date": published_dates[i % published_dates.size()],
+			"published_date": published_dates[i % published_dates.size()],
 			"headline": template["headline"], # keep headline
 			"who": template["who"],
 			"what": template["what"],

@@ -187,7 +187,14 @@ func _set_paper_text_from_report(report) -> void:
 		"[color=F25907][u]" + report["when"] + "[/u][/color]",
 		report["why"]
 	]
-	report_text += highlighted_body 
+
+	
+	var publisher = "\n\n[b][font_size=40]%s[/font_size][/b]\n" % report["publisher"]
+	var published_date = "[b][font_size=30]%s[/font_size][/b]" % report["published_date"]
+	
+	var publish_dets = publisher + published_date
+	
+	report_text += highlighted_body + publish_dets
 
 	paper_text.bbcode_enabled = true
 	paper_text.bbcode_text = report_text
